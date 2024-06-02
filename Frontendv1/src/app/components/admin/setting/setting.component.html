@@ -1,0 +1,49 @@
+<section class="user mt-5 mb-5">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Setting WEBSITE</h4>
+                    </div>
+
+                    
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">SĐT</label>
+                            <input type="text" class="form-control" placeholder="+84..." [(ngModel)]="updateForm.phone" name="phone">
+                        </div>
+                        
+                        <div class="col-md-12"><label class="labels">Email</label>
+                            <input type="text" class="form-control" placeholder="@gmail.com" [(ngModel)]="updateForm.gmail" name="gmail">
+                        </div>
+                        <div class="col-md-12"><label class="labels">Logo</label>
+                            <input type="text" class="form-control" [(ngModel)]="updateForm.logo" name="logo">
+                        </div>
+                        <div class="col-md-12"><label class="labels">Địa Chỉ</label>
+                            <input type="text" class="form-control" [(ngModel)]="updateForm.diachi" name="diachi">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6"><label class="labels">Fb</label>
+                            <input type="text" class="form-control" [(ngModel)]="updateForm.facebook" name="facebook">
+                        </div>
+                        <div class="col-md-6"><label class="labels">Youtube</label>
+                            <input type="text" class="form-control" [(ngModel)]="updateForm.youtube" name="youtube">
+                        </div>
+                        <div class="col-md-6"><label class="labels">Telegram</label>
+                            <input type="text" class="form-control" [(ngModel)]="updateForm.telegram" name="telegram">
+                        </div>
+                        <div class="col-md-6"><label class="labels">Instagram</label>
+                            <input type="text" class="form-control" [(ngModel)]="updateForm.instagram" name="instagram">
+                        </div>
+                    </div>
+                    <div class="mt-5 text-center">
+                        <button class="btn btn-primary profile-button" type="button" (click)="updateProfile()">Save</button>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</section>

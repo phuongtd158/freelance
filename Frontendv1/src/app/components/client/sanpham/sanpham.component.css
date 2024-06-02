@@ -1,0 +1,37 @@
+
+/* Style product item */
+.product-item {
+    text-align: center;
+    padding: 10px;
+    
+    border-radius: 5px;
+}
+
+.product-item img {
+    width: 100%;
+    height: auto;
+}
+
+.product-detail {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.featured__item {
+    margin: 20px;
+    border: 1px solid #dee2e6; /* Màu và độ dày viền có thể điều chỉnh */
+    margin-bottom: 20px; /* Khoảng cách giữa các sản phẩm */
+    padding: 25px; /* Khoảng cách nội dung bên trong sản phẩm */
+}
+
+
+.featured__item__pic {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.featured__item__pic:hover {
+    transform: scale(1.1); /* Phóng to hình ảnh khi rê chuột vào */
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2); /* Thêm đổ bóng để tạo hiệu ứng mềm mại */
+}
