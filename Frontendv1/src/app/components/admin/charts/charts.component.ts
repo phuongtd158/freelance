@@ -6,6 +6,7 @@ import {faCalculator, faDollarSign, faComment, faClipboard, faFile} from '@forta
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themesAnimated from '@amcharts/amcharts4/themes/animated';
+import {DatePipe} from "@angular/common";
 
 am4core.useTheme(am4themesAnimated)
 
@@ -27,10 +28,24 @@ export class ChartsComponent {
   faf = faFile;
   data: any;
   options: any;
+
+  // chart
+  cycleType: string = 'DAY';
+  listCycleType: any[] = [
+    {name: 'Ngày', value: 'DAY'},
+    {name: 'Tháng', value: 'MONTH'},
+    {name: 'Năm', value: 'YEAR'},
+  ]
+  rangeDate: Date[] = [];
+  fromDate: string | null = '';
+  toDate: string | null = '';
   dataChart1: any[] = [];
   dataChart2: any[] = [];
 
-  constructor(private productService: ProductService, private orderService: OrderService, private blogService: BlogService) {
+  constructor(private productService: ProductService,
+              private orderService: OrderService,
+              private blogService: BlogService,
+              private datePipe: DatePipe) {
   }
 
   ngOnInit(): void {
@@ -55,8 +70,33 @@ export class ChartsComponent {
       this.totalblog = blogss;
     });
 
+    // set value default rangeDate
+    const today = new Date();
+    const lastWeek = new Date(today);
+    lastWeek.setDate(today.getDate() - 7);
+    this.rangeDate = [lastWeek, today];
+    this.fromDate = this.handleFormatDate(lastWeek);
+    this.toDate = this.handleFormatDate(today);
+
+    // render chart
     this.renderChart1();
     this.renderChart2();
+  }
+
+  changeCycleType() {
+    console.log(this.cycleType)
+  }
+
+  changeRangeDate() {
+    console.log(this.rangeDate)
+    this.fromDate = this.handleFormatDate(this.rangeDate[0])
+    this.toDate = this.handleFormatDate(this.rangeDate[1])
+    console.log(this.fromDate)
+    console.log(this.toDate)
+  }
+
+  handleFormatDate(dateValue: Date) {
+    return this.datePipe.transform(dateValue, 'yyyy-MM-dd')
   }
 
   renderChart1() {
@@ -171,7 +211,7 @@ export class ChartsComponent {
     ]
   }
 
-  findMaxValue (data: Array<object>, ...fields: string[]) {
+  findMaxValue(data: Array<object>, ...fields: string[]) {
     return data.reduce((max, item) => {
       // @ts-ignore
       const itemMax = Math.max(...fields.map((f) => item[f] || 0))
