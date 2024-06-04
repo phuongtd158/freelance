@@ -90,6 +90,7 @@ import {OrdereditComponent} from './components/moderator/orderedit/orderedit.com
 import {httpInterceptorProviders} from "./_helpers/http.interceptor";
 import {DropdownModule} from "primeng/dropdown";
 import {NumberOnlyDirective} from "./share/directive/number-only.directive";
+import {DatePipe} from '@angular/common';
 
 
 @NgModule({
@@ -186,11 +187,11 @@ import {NumberOnlyDirective} from "./share/directive/number-only.directive";
     ProgressSpinnerModule,
     TabMenuModule,
     InputSwitchModule,
-    DropdownModule
+    DropdownModule,
+    CalendarModule
   ],
-  providers: [httpInterceptorProviders],
+  providers: [httpInterceptorProviders, DatePipe],
 
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule { }

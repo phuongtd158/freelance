@@ -10,6 +10,7 @@
   },
   "private": true,
   "dependencies": {
+    "@amcharts/amcharts4": "^4.10.38",
     "@angular-slider/ngx-slider": "^2.0.4",
     "@angular/animations": "^15.0.0",
     "@angular/common": "^15.0.0",
@@ -27,6 +28,7 @@
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.3",
     "chart.js": "^3.0.0",
+    "dayjs": "^1.11.11",
     "jquery": "^3.6.3",
     "ngx-owl-carousel-o": "^15.0.0",
     "ngx-summernote": "^1.0.0",

@@ -120,6 +120,33 @@
 </div>
 
 <div class="row mt-3">
+  <div class="flex mb-2">
+    <div class="flex align-items-center">
+      <i class="pi pi-filter" style="font-size: 2rem"></i>
+    </div>
+
+    <p-dropdown
+      id="dropCycleType"
+      class="ml-3"
+      [options]="listCycleType"
+      [(ngModel)]="cycleType"
+      optionLabel="name"
+      optionValue="value"
+      (onChange)="changeCycleType()"
+    />
+
+    <p-calendar
+      class="ml-3"
+      [(ngModel)]="rangeDate"
+      [showIcon]="true"
+      inputId="icondisplay"
+      selectionMode="range"
+      [required]="true"
+      (onSelect)="changeRangeDate()"
+      [view]="cycleType === 'YEAR' ? 'year' : cycleType === 'MONTH' ? 'month' : 'date'"
+      [dateFormat]="cycleType === 'YEAR' ? 'yy' : cycleType === 'MONTH' ? 'mm/yy' : 'dd/mm/yy'"
+    />
+  </div>
 
   <p-card header="Biểu đồ thống kê doanh thu" class="my-2">
     <div id="chartdiv1"></div>
