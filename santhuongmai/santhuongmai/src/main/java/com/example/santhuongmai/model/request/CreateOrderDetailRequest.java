@@ -35,4 +35,5 @@ public class CreateOrderDetailRequest {
     private int soluong;
 
     private long subTotal;
+    private Long productId;
 }

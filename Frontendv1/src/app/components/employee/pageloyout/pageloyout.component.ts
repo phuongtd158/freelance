@@ -61,7 +61,7 @@ export class PageloyoutComponent implements OnInit{
     }
     toggleSubUser() {
       this.showSubMenuUser = !this.showSubMenuUser;
-      this.showSubMenuProduct = false; 
+      this.showSubMenuProduct = false;
       this.showSubMenuOrder = false;
   }
 

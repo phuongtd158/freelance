@@ -64,7 +64,7 @@ getUser(): any {
 
 isLoggedIn(): boolean {
   // Kiểm tra xem có cookie với key là USER_KEY hay không
-  return !!this.getUser();
+  return !!this.getUser().id;
 }
 // isLoggedIn(): boolean {
 //   const user = this.getUser();

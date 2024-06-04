@@ -38,7 +38,7 @@ export class RoleGuardService implements CanActivate {
     }
     return true;
   }
-  
+
 
   getListrole():Observable<any>{
     return this.http.get(CATEGORY_API,httpOptions);

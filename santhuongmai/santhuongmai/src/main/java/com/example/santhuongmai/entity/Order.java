@@ -37,13 +37,15 @@ public class Order {
 
     private String lastname;
 
-    private String country;
+//    private String country;
 
     private String address;
 
     private String town;
 
     private String state;
+
+    private String ward;
 
     private long postCode;
 
@@ -54,6 +56,7 @@ public class Order {
     private String note;
 
     private long totalPrice;
+    private Long shippingAmount;
     private long sale;
     private Timestamp createAt;
 

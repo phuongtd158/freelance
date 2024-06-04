@@ -24,7 +24,7 @@ public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+    private Long productId;
     private String name;
     private String color;
     private String size;

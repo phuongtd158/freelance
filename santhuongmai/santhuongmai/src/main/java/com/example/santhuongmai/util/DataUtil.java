@@ -206,4 +206,16 @@ public class DataUtil {
         }
         return true;
     }
+
+    public static boolean isNullOrEmpty(final Collection<?> collection) {
+        return collection == null || collection.isEmpty();
+    }
+
+    public static boolean isNullOrEmpty(final Object[] collection) {
+        return collection == null || collection.length == 0;
+    }
+
+    public static boolean isNullOrEmpty(final Map<?, ?> map) {
+        return map == null || map.isEmpty();
+    }
 }

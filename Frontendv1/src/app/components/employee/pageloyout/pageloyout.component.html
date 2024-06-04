@@ -26,7 +26,7 @@
 
         </ul> -->
         <!-- <hr class="sidebar-divider"> -->
-        
+
         <!-- <div class="sidebar-heading" (click)="toggleSubMenuOrder()">
             Quản Lý Đơn Hàng
         </div>
@@ -42,15 +42,15 @@
         </div>
         <ul class="submenu" *ngIf="showSubMenuUser">
             <li><a routerLink="/employee/pagecontact"><fa-icon [icon]="userIcon"></fa-icon><span>Liên hệ</span></a></li>
-            
+
         </ul>
-        
+
 
 
         <hr class="sidebar-divider d-none d-md-block">
 
-    </ul>    
-    
+    </ul>
+
     <div id="content-wrapper" class="d-flex flex-column">
 
         <div id="content">
@@ -153,9 +153,9 @@
 
             <!-- /.container-fluid -->
             <div class="container-fluid">
-                
+
 <div class="card">
-    
+
     <p-tabMenu *ngIf="items && activeItem" [model]="items" [activeItem]="activeItem" (activeItemChange)="onActiveItemChange($event)"></p-tabMenu>
 </div><br>
                 <router-outlet></router-outlet>

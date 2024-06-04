@@ -1,18 +1,18 @@
-import { Component, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
-import { Router } from '@angular/router';
-import {faBars, faHeart, faRightFromBracket, faUser,faAnglesUp} from '@fortawesome/free-solid-svg-icons'
-import { faFacebook ,faInstagram,faYahoo,faYoutube,faTelegram} from '@fortawesome/free-brands-svg-icons';
+import {Component, OnInit, ChangeDetectorRef, AfterContentChecked} from '@angular/core';
+import {Router} from '@angular/router';
+import {faBars, faHeart, faRightFromBracket, faUser, faAnglesUp} from '@fortawesome/free-solid-svg-icons'
+import {faFacebook, faInstagram, faYahoo, faYoutube, faTelegram} from '@fortawesome/free-brands-svg-icons';
 
 import {faShoppingBag} from '@fortawesome/free-solid-svg-icons'
 import {faPhone} from '@fortawesome/free-solid-svg-icons'
-import { MessageService } from 'primeng/api';
-import { AuthService } from 'src/app/_service/auth.service';
-import { CartService } from 'src/app/_service/cart.service';
-import { CategoryService } from 'src/app/_service/category.service';
-import { StorageService } from 'src/app/_service/storage.service';
-import { WishlistService } from 'src/app/_service/wishlist.service';
-import { SettingService } from 'src/app/_service/setting.service';
-import { PolicyService } from 'src/app/_service/policy.service';
+import {MessageService} from 'primeng/api';
+import {AuthService} from 'src/app/_service/auth.service';
+import {CartService} from 'src/app/_service/cart.service';
+import {CategoryService} from 'src/app/_service/category.service';
+import {StorageService} from 'src/app/_service/storage.service';
+import {WishlistService} from 'src/app/_service/wishlist.service';
+import {SettingService} from 'src/app/_service/setting.service';
+import {PolicyService} from 'src/app/_service/policy.service';
 
 
 @Component({
@@ -23,7 +23,7 @@ import { PolicyService } from 'src/app/_service/policy.service';
 
 })
 export class IndexComponent implements OnInit {
- 
+
   listItemInCart: any[] = [];
   totalPrice = 0;
   heart = faHeart;
@@ -32,21 +32,20 @@ export class IndexComponent implements OnInit {
   userIcon = faUser;
   logoutIcon = faRightFromBracket;
   bars = faBars;
-  fb=faFacebook;
-  youtube=faYoutube;
-  tele=faTelegram;
-  ins=faInstagram;
-top=faAnglesUp;
+  fb = faFacebook;
+  youtube = faYoutube;
+  tele = faTelegram;
+  ins = faInstagram;
+  top = faAnglesUp;
   showDepartment = false;
 
 
-
-  loginForm : any = {
-    username : null,
-    password : null
+  loginForm: any = {
+    username: null,
+    password: null
   }
 
-  registerForm : any = {
+  registerForm: any = {
     username: null,
     email: null,
     password: null
@@ -58,44 +57,46 @@ top=faAnglesUp;
   isLoginFailed = false;
   roles: string[] = [];
   errorMessage = '';
-  authModal : boolean = false;
-  listCategoryEnabled : any;
+  authModal: boolean = false;
+  listCategoryEnabled: any;
 
-  setchung:any;
-  policy:any;
-  listpolicy:any;
+  setchung: any;
+  policy: any;
+  listpolicy: any;
 
   keyword: any;
   isAdmin: boolean = false; // Khởi tạo isAdmin với giá trị mặc định là false
 
   constructor(
-    public cartService:CartService,
-    public settingService:SettingService,
-    private policyService:PolicyService,
+    public cartService: CartService,
+    public settingService: SettingService,
+    private policyService: PolicyService,
     public wishlistService: WishlistService,
     private authService: AuthService,
     private storageService: StorageService,
-    private messageService:MessageService,
+    private messageService: MessageService,
     private categoryService: CategoryService,
-    private router: Router){
+    private router: Router) {
 
   }
 
   ngOnInit(): void {
     this.getCategoryEnbled();
     this.isLoggedIn = this.storageService.isLoggedIn();
+    console.log(this.isLoggedIn)
     this.wishlistService.loadWishList();
     this.cartService.loadCart();
     this.getListSetting();
     this.getListPolicyBykieu();
     this.getListPolicyBykieu1();
 
-   
-  // Ví dụ: lấy vai trò từ dữ liệu đã đăng nhập
-  this.roles = this.storageService.getUser().roles;
+
+    // Ví dụ: lấy vai trò từ dữ liệu đã đăng nhập
+    this.roles = this.storageService.getUser()?.roles;
     // Kiểm tra vai trò của người dùng khi component được khởi tạo
     this.checkUserRole();
   }
+
   // Phương thức kiểm tra vai trò của người dùng
   // checkUserRole(): void {
   //   // Kiểm tra xem vai trò của người dùng có phải là admin không
@@ -104,95 +105,99 @@ top=faAnglesUp;
   checkUserRole(): void {
     // Kiểm tra xem người dùng đã đăng nhập chưa
     if (this.isLoggedIn) {
-        // Kiểm tra xem this.roles có tồn tại và không phải là undefined
-        if (this.roles && this.roles.includes) {
-            // Kiểm tra xem vai trò của người dùng có phải là admin không
-            this.isAdmin = this.roles.includes('ROLE_ADMIN'); // Thay 'admin' bằng vai trò admin thực tế trong ứng dụng của bạn
-        } else {
-            console.error("Biến this.roles không tồn tại hoặc không hỗ trợ phương thức includes.");
-        }
+      // Kiểm tra xem this.roles có tồn tại và không phải là undefined
+      if (this.roles && this.roles.includes) {
+        // Kiểm tra xem vai trò của người dùng có phải là admin không
+        this.isAdmin = this.roles.includes('ROLE_ADMIN'); // Thay 'admin' bằng vai trò admin thực tế trong ứng dụng của bạn
+      } else {
+        console.error("Biến this.roles không tồn tại hoặc không hỗ trợ phương thức includes.");
+      }
     } else {
-        console.warn("Người dùng chưa đăng nhập.");
+      console.warn("Người dùng chưa đăng nhập.");
     }
-}
+  }
 
-  showDepartmentClick(){
+  showDepartmentClick() {
     this.showDepartment = !this.showDepartment;
   }
 
-  getCategoryEnbled(){
+  getCategoryEnbled() {
     this.categoryService.getListCategoryEnabled().subscribe({
-      next: res =>{
+      next: res => {
         this.listCategoryEnabled = res;
-      },error: err =>{
+      }, error: err => {
         console.log(err);
       }
     })
   }
-  getListSetting(){
-  
+
+  getListSetting() {
+
     this.settingService.getListSetting().subscribe({
-      next: res =>{
-        this.setchung= res[0];
+      next: res => {
+        this.setchung = res[0];
         // console.log(this.setchung.gmail);
-      },error: err =>{
+      }, error: err => {
         console.log(err);
       }
     })
   }
-  getListPolicyBykieu(){
+
+  getListPolicyBykieu() {
     this.policyService.getListPolicyBykieu(1).subscribe({
-      next: res =>{
-        this.policy= res;
+      next: res => {
+        this.policy = res;
         console.log(this.policy);
-      },error: err =>{
+      }, error: err => {
         console.log(err);
       }
     })
   }
-  getListPolicyBykieu1(){
+
+  getListPolicyBykieu1() {
     this.policyService.getListPolicyBykieu(2).subscribe({
-      next: res =>{
-        this.listpolicy= res;
+      next: res => {
+        this.listpolicy = res;
         console.log(this.policy);
-      },error: err =>{
+      }, error: err => {
         console.log(err);
       }
     })
   }
-  removeFromCart(item:any){
+
+  removeFromCart(item: any) {
     this.cartService.remove(item);
   }
 
-  removeWishList(item: any){
+  removeWishList(item: any) {
     this.wishlistService.remove(item);
   }
 
-  showAuthForm(){
-    if(!this.isLoggedIn){
+  showAuthForm() {
+    if (!this.isLoggedIn) {
       this.authModal = true;
-      this.loginForm = {username: null,password: null};
-      this.registerForm = {username: null,email: null, password: null};
+      this.loginForm = {username: null, password: null};
+      this.registerForm = {username: null, email: null, password: null};
     }
   }
 
-  login():void{
-    const {username,password} = this.loginForm;
-  if (!username || !password) {
-    this.showWarn("Vui lòng nhập tên người dùng và mật khẩu."); 
-    return;
-  }
+  login(): void {
+    const {username, password} = this.loginForm;
+    if (!username || !password) {
+      this.showWarn("Vui lòng nhập tên người dùng và mật khẩu.");
+      return;
+    }
     console.log(this.loginForm);
-    this.authService.login(username,password).subscribe({
-      next: res =>{
+    this.authService.login(username, password).subscribe({
+      next: res => {
         this.storageService.saveUser(res);
         this.isLoggedIn = true;
         this.isLoginFailed = false;
         this.roles = this.storageService.getUser().roles;
         this.showSuccess("Đăng nhập thành công!!");
         this.authModal = false;
-        
-      },error: err =>{
+
+      }, error: err => {
         console.log(err);
         this.isLoggedIn = false;
         this.isLoginFailed = true;
@@ -208,23 +213,23 @@ top=faAnglesUp;
     })
   }
 
-  register():void{
-    const {username,email,password} = this.registerForm;
-    if (!username || !password ||!email) {
-      this.showWarn("Vui lòng nhập đủ thông tin"); 
+  register(): void {
+    const {username, email, password} = this.registerForm;
+    if (!username || !password || !email) {
+      this.showWarn("Vui lòng nhập đủ thông tin");
       return;
     }
     console.log(this.registerForm);
-    this.authService.register(username,email,password).subscribe({
-      next: res =>{
+    this.authService.register(username, email, password).subscribe({
+      next: res => {
         this.isSuccessful = true;
         this.isSignUpFailed = false;
         this.showSuccess("Đăng ký thành công")
         this.authModal = false;
 
-         // Chuyển hướng đến trang xác minh (veri)
-      this.router.navigate(['/email-verification']);
-      },error: err =>{
+        // Chuyển hướng đến trang xác minh (veri)
+        this.router.navigate(['/email-verification']);
+      }, error: err => {
         this.showError(err.message);
         this.errorMessage = err.error.message;
         this.isSignUpFailed = true;
@@ -262,23 +267,23 @@ top=faAnglesUp;
   }
 
 
-
   showSuccess(text: string) {
-    this.messageService.add({severity:'success', summary: 'Success', detail: text});
+    this.messageService.add({severity: 'success', summary: 'Success', detail: text});
   }
+
   showError(text: string) {
-    this.messageService.add({severity:'error', summary: 'Error', detail: text});
+    this.messageService.add({severity: 'error', summary: 'Error', detail: text});
   }
 
   showWarn(text: string) {
-    this.messageService.add({severity:'warn', summary: 'Warn', detail: text});
+    this.messageService.add({severity: 'warn', summary: 'Warn', detail: text});
   }
-  
+
   getBackgroundColor(category: any): string {
     // Trả về màu nền tùy thuộc vào category hoặc id của category
     // Ví dụ: nếu category.id chẵn thì trả về màu xanh lá cây, nếu lẻ thì trả về màu xanh dương
     return category.id % 2 === 0 ? '#red' : '#blue';
-}
- 
+  }
+
 
 }
