@@ -91,6 +91,8 @@ import {httpInterceptorProviders} from "./_helpers/http.interceptor";
 import {DropdownModule} from "primeng/dropdown";
 import {NumberOnlyDirective} from "./share/directive/number-only.directive";
 import {DatePipe} from '@angular/common';
+import {CalendarModule} from "primeng/calendar";
+import {NgxDropzoneModule} from "ngx-dropzone";
 
 
 @NgModule({
@@ -188,10 +190,12 @@ import {DatePipe} from '@angular/common';
     TabMenuModule,
     InputSwitchModule,
     DropdownModule,
-    CalendarModule
+    CalendarModule,
+    NgxDropzoneModule
   ],
   providers: [httpInterceptorProviders, DatePipe],
 
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

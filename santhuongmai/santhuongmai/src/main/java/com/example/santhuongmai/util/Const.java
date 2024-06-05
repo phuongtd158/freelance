@@ -10,5 +10,6 @@ public class Const {
         public final static String RETURNS = "RETURNS";
         public final static String ERROR = "ERROR";
         public final static String ON_DELIVERY = "ON_DELIVERY";
+        public final static String DONE = "DONE";
     }
 }

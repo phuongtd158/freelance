@@ -58,7 +58,7 @@
                                     <div class="quantity">
                                         <div class="pro-qty">
                                             <span class="dec qtybtn" (click)="subtractQuantity(product)">-</span>
-                                            <input type="text" [ngModel]="product.soluong" (change)="updateQuantity(product,$event)" min="1">
+                                            <input numberOnly [minValue]="1" type="text" [ngModel]="product.soluong" (change)="updateQuantity(product,$event)">
                                             <span class="inc qtybtn" (click)="plusQuantity(product)">+</span>
                                         </div>
                                     </div>
@@ -80,7 +80,7 @@
                 <div class="shoping__cart__btns">
                     <a href="javascript:void(0)" routerLink="/" class="primary-btn cart-btn">Tiếp Tục SHOPPING</a>
                 </div>
-                
+
             </div>
             <div class="coupon" *ngFor="let item of listVoucher" style="margin-top: 15px;">
                 <div class="left">
@@ -93,20 +93,20 @@
                     <small>HSD : {{item.hsd | date: 'dd/MM/yyyy HH:mm:ss'}}</small>
                   </div>
                 </div>
-                
+
                 <!-- <div class="right">
                   <div (click)="applyVoucher(item)">Áp dụng</div>
                 </div> -->
                 <div class="right" (click)="toggleApply(item);">
                     <div>{{ getApplyButtonText(item) }}</div>
                 </div>
-                
-                
-                
+
+
+
             </div>
-            
-            
-            
+
+
+
             <div class="col-lg-12">
                 <div class="shoping__checkout">
                     <h5>Hóa Đơn</h5>
@@ -115,7 +115,7 @@
                         <li *ngIf="voucher?.money">Sale <span> - {{ (voucher?.money | currency:'VND') }}</span></li>
                         <li *ngIf="!voucher?.money">Sale <span> 0</span></li>
                         <li>Tổng <span>{{totalFinal | currency:'VND'}}</span></li>
-                    </ul>                    
+                    </ul>
                     <a href="javascript:void(0)" routerLink="/checkout" class="primary-btn" [class.disabled]="cartService.items.length === 0">Xác Nhận Mua Hàng</a>
 
                 </div>

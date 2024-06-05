@@ -144,7 +144,7 @@ activateLast() {
 
   updateProfile(){
     const{firstname,lastname,email,country,state,address,phone} = this.updateForm;
-    this.userService.updateProfile(this.username,firstname,lastname,email,country,state,address,phone).subscribe({
+    this.userService.updateProfile(this.username,firstname,lastname,email,country,state,address,phone, '', '').subscribe({
       next: res =>{
         this.getUser();
 

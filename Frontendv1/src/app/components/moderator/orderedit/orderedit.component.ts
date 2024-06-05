@@ -43,7 +43,7 @@ export class OrdereditComponent implements OnInit {
     this.getListStatus();
   }
   getListStatus(){
-    this.orderService.getListstatus().subscribe({
+    this.orderService.getListstatus(null).subscribe({
       next: res =>{
         this.liststatus = res;
       },error : err=>{
@@ -67,7 +67,7 @@ export class OrdereditComponent implements OnInit {
       this.showForm =true;
       this.productForm.id = data.id;
       this.productForm.status = data.orderstatus.id;
-      
+
   }
   updateProduct(){
     const {id,status} = this.productForm;
@@ -90,7 +90,7 @@ export class OrdereditComponent implements OnInit {
   showError(text: string) {
     this.messageService.add({severity:'error', summary: 'Error', detail: text});
   }
-  
+
   showWarn(text : string) {
     this.messageService.add({severity:'warn', summary: 'Warn', detail: text});
   }

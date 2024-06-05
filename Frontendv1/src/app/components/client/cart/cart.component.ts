@@ -25,7 +25,7 @@ export class CartComponent {
 
             // Nếu đã có voucher được áp dụng, hủy áp dụng voucher đó
             localStorage.removeItem('magg');
-            this.appliedItem = null;      
+            this.appliedItem = null;
         }
         else{
           this.applyVoucher(item)
@@ -39,17 +39,17 @@ export class CartComponent {
     getMaGiamGia(){
       return JSON.parse(localStorage.getItem('magg') as any)
     }
-   
+
 
     // Phương thức này trả về văn bản dựa trên việc item đã được áp dụng hay chưa
     getApplyButtonText(item: any): string {
-      
+
         return this.appliedItem === item ? 'Hủy' : 'Áp dụng';
-        
+
     }
 
-    
-  
+
+
   totalFinal: number = 0;
   //
   listVoucher: any;
@@ -61,7 +61,7 @@ export class CartComponent {
   bars = faBars;
   totalsale = 0;
   showDepartment = false;
-  
+
 
   constructor(
     public cartService: CartService,
@@ -81,7 +81,7 @@ export class CartComponent {
 
   removeFromCart(item: any) {
     this.cartService.remove(item);
-    this.totalDiscount();  
+    this.totalDiscount();
   }
 
   updateQuantity(item: any, event: any) {
@@ -92,14 +92,14 @@ export class CartComponent {
   plusQuantity(item: any) {
     let quantity = Number(item.soluong);
     this.cartService.updateCart(item, (quantity += 1));
-    this.totalDiscount();  
+    this.totalDiscount();
   }
   subtractQuantity(item: any) {
     if (item.quantity > 1) {
       let quantity = Number(item.soluong);
       this.cartService.updateCart(item, (quantity -= 1));
     }
-    this.totalDiscount();  
+    this.totalDiscount();
   }
   getListVoucher() {
     this.voucherService.getListVoucher(this.id).subscribe({
@@ -116,17 +116,17 @@ export class CartComponent {
     this.appliedItem = magg;
     this.cartService.setMaGiamGia(magg);
     // this.getVoucher();
-    this.totalDiscount();   
+    this.totalDiscount();
   }
-  
+
   getVoucher() {
     this.voucher = this.cartService.getMaGiamGia();
     console.log(this.voucher);
   }
-  
+
   totalDiscount() {
     this.getVoucher();
-    if (this.voucher) {      
+    if (this.voucher) {
       this.totalFinal = this.cartService.total - this.voucher.money;
     } else {
       this.totalFinal = this.cartService.total;

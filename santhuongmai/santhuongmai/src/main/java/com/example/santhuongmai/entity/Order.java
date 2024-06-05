@@ -68,17 +68,17 @@ public class Order {
     private int bank;
 //    private long status;
     private String orderCode;
-    @OneToMany(mappedBy = "order",orphanRemoval = true)
-    @Cascade(value = {org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.REMOVE})
-    @JsonBackReference
-    private Set<OrderDetail> orderdetails;
-    public Set<OrderDetail> getOrderdetails() {
-        return orderdetails;
-    }
-
-    public void setOrderdetails(Set<OrderDetail> orderdetails) {
-        this.orderdetails = orderdetails;
-    }
+//    @OneToMany(mappedBy = "order",orphanRemoval = true)
+//    @Cascade(value = {org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.REMOVE})
+//    @JsonBackReference
+//    private Set<OrderDetail> orderdetails;
+//    public Set<OrderDetail> getOrderdetails() {
+//        return orderdetails;
+//    }
+//
+//    public void setOrderdetails(Set<OrderDetail> orderdetails) {
+//        this.orderdetails = orderdetails;
+//    }
 	/*
 	 * @OneToMany(mappedBy="order")
 	 * 
@@ -90,4 +90,6 @@ public class Order {
     private Orderstatus orderstatus;
     private String monthYear;
     private BigDecimal totalRevenue;
+    private String reason;
+    private String urlImg;
 }

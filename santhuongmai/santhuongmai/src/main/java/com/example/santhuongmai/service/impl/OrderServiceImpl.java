@@ -2,11 +2,7 @@ package com.example.santhuongmai.service.impl;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import com.example.santhuongmai.repository.*;
 import com.example.santhuongmai.util.Const;
@@ -36,6 +32,7 @@ import com.example.santhuongmai.util.EmailUtil;
 import javax.mail.MessagingException;
 
 import static com.example.santhuongmai.util.DataUtil.*;
+import static com.example.santhuongmai.util.Const.ORDER_STATUS.*;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -133,7 +130,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Orderstatus> getListstatus() {
+    public List<Orderstatus> getListstatus(String currentStatusCode) {
+        if (WAITING.equals(currentStatusCode)) {
+            return orderstatusRepository.findByListCode(Arrays.asList(WAITING_DELIVERY, CANCELED));
+        } else if (WAITING_DELIVERY.equals(currentStatusCode)) {
+            return orderstatusRepository.findByListCode(Arrays.asList(ON_DELIVERY));
+        } else if (ON_DELIVERY.equals(currentStatusCode)) {
+            return orderstatusRepository.findByListCode(Arrays.asList(DELIVERED));
+        } else if (DELIVERED.equals(currentStatusCode)) {
+            return orderstatusRepository.findByListCode(Arrays.asList(RETURNS));
+        }
         return orderstatusRepository.findAll(Sort.by("id").descending());
     }
 
@@ -170,14 +176,31 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findById(id).orElseThrow(() -> new NotFoundException("Not Found Product With Id: " + id));
 
         Orderstatus orderstatus = orderstatusRepository.findById(request.getStatus()).orElseThrow(() -> new NotFoundException("Not Found Category With Id: " + request.getStatus()));
-        if (orderstatus.getCode().equals(Const.ORDER_STATUS.ON_DELIVERY)) {
-            Set<OrderDetail> orderDetails = order.getOrderdetails();
+
+        // Nếu trạng thái là hoàn thành thì cập nhật số lượng
+        if (orderstatus.getCode().equals(ON_DELIVERY)) {
+            List<OrderDetail> orderDetails = orderDetailRepository.getOrderDetailsByOrderId(order.getId());
             if (!isNullOrEmpty(orderDetails)) {
                 for (OrderDetail orderDetail : orderDetails) {
                     Product product = productRepository.findById(orderDetail.getProductId()).orElse(null);
                     if (product != null) {
                         product.setQuantity(product.getQuantity() - orderDetail.getSoluong());
                         product.setQuantitybuy(product.getQuantitybuy() + orderDetail.getSoluong());
+                        productRepository.save(product);
+                    }
+                }
+            }
+        }
+
+        // Trả hàng thì cộng lại số lượng
+        if (orderstatus.getCode().equals(RETURNS)) {
+            List<OrderDetail> orderDetails = orderDetailRepository.getOrderDetailsByOrderId(order.getId());
+            if (!isNullOrEmpty(orderDetails)) {
+                for (OrderDetail orderDetail : orderDetails) {
+                    Product product = productRepository.findById(orderDetail.getProductId()).orElse(null);
+                    if (product != null) {
+                        product.setQuantity(product.getQuantity() + orderDetail.getSoluong());
+                        product.setQuantitybuy(product.getQuantitybuy() - orderDetail.getSoluong());
                         productRepository.save(product);
                     }
                 }
@@ -211,5 +234,21 @@ public class OrderServiceImpl implements OrderService {
     public List<Order> getListOrder(long id) {
         List<Order> list = orderRepository.getListOrder(id);
         return list;
+    }
+
+    @Override
+    public Order returnOrder(long id, CreateOrderRequest request) {
+        Order order = orderRepository.findById(id).orElseThrow(() -> new NotFoundException("Not Found Product With Id: " + id));
+        order.setReason(request.getReason());
+        order.setUrlImg(request.getUrlImg());
+        Orderstatus orderstatus = orderstatusRepository.findById(request.getStatus()).orElseThrow(() -> new NotFoundException("Not Found Category With Id: " + request.getStatus()));
+        order.setOrderstatus(orderstatus);
+        orderRepository.save(order);
+        return order;
+    }
+
+    @Override
+    public Order getById(long id) {
+        return orderRepository.findById(id).orElseThrow(() -> new NotFoundException("Not Found Order With Id: " + id));
     }
 }

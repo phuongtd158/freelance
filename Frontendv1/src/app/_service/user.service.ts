@@ -16,7 +16,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
   ngOnInit(): void {
-          
+
   }
 
   getUser(username: string):Observable<any>{
@@ -25,12 +25,12 @@ export class UserService {
     return this.http.get(USER_API,{params: params})
   }
 
-  updateProfile(username: string,firstname: string,lastname:string,email:string,country:string,state:string,address: string,phone: string):Observable<any>{
-    return this.http.put(USER_API +'update',{username,firstname,lastname,email,country,state,address,phone},httpOptions);
+  updateProfile(username: string,firstname: string,lastname:string,email:string,country:string,state:string,address: string,phone: string, town: string, ward: string):Observable<any>{
+    return this.http.put(USER_API +'update',{username,firstname,lastname,email,country,state,address,phone, town, ward},httpOptions);
   }
 
 
-  
+
   updateUser(id:number,username: string,firstname: string,lastname:string,email:string,country:string,state:string,address: string,phone: string,roles: number[]):Observable<any>{
     return this.http.put(USER_API +'update/'+ id,{id,username,firstname,lastname,email,country,state,address,phone,roles},httpOptions);
   }

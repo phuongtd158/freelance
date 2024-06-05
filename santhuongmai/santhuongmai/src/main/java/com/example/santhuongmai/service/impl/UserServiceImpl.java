@@ -32,18 +32,18 @@ import com.example.santhuongmai.util.OtpUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.mail.MessagingException;
 
+import javax.mail.MessagingException;
 
 
 @Service
 public class UserServiceImpl implements UserService {
-	private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
-	@Autowired
-	  private OtpUtil otpUtil;
-	  @Autowired
-	  private EmailUtil emailUtil;
+    @Autowired
+    private OtpUtil otpUtil;
+    @Autowired
+    private EmailUtil emailUtil;
     @Autowired
     private UserRepository userRepository;
 
@@ -58,19 +58,21 @@ public class UserServiceImpl implements UserService {
         // TODO Auto-generated method stub
         return userRepository.findAll(Sort.by("id").descending());
     }
+
     @Override
-    public User getUser(long id){
-    	User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("Not Found Blog"));
+    public User getUser(long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("Not Found Blog"));
         return user;
     }
+
     @Override
     public void register(CreateUserRequest request) {
         // TODO Auto-generated method stub
-    	String verificationCode = otpUtil.generateOtp();
+        String verificationCode = otpUtil.generateOtp();
         try {
-          emailUtil.sendOtpEmail(request.getEmail(), verificationCode);
+            emailUtil.sendOtpEmail(request.getEmail(), verificationCode);
         } catch (MessagingException e) {
-          throw new RuntimeException("Unable to send otp please try again");
+            throw new RuntimeException("Unable to send otp please try again");
         }
 
         User user = new User();
@@ -80,59 +82,60 @@ public class UserServiceImpl implements UserService {
         user.setVerificationCode(verificationCode);
         user.setOtpGeneratedTime(LocalDateTime.now());
         Set<String> strRoles = request.getRole();
-          Set<Role> roles = new HashSet<>();
-      
-          if (strRoles == null) {
+        Set<Role> roles = new HashSet<>();
+
+        if (strRoles == null) {
             Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
-          } else {
+        } else {
             strRoles.forEach(role -> {
-              switch (role) {
-              case "admin":
-                Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                roles.add(adminRole);
-      
-                break;
-              case "mod":
-                Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                roles.add(modRole);
-      
-                break;
-              default:
-                Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                roles.add(userRole);
-              }
+                switch (role) {
+                    case "admin":
+                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(adminRole);
+
+                        break;
+                    case "mod":
+                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(modRole);
+
+                        break;
+                    default:
+                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(userRole);
+                }
             });
-          }
-          user.setRoles(roles);
-          userRepository.save(user);
+        }
+        user.setRoles(roles);
+        userRepository.save(user);
     }
 
     public String verifyAccount(String email, String otp) {
-      //System.out.println(otp);
+        //System.out.println(otp);
         User user = userRepository.findByEmail(email)
-            .orElseThrow(() -> new RuntimeException("User not found with this email: " + email));
+                .orElseThrow(() -> new RuntimeException("User not found with this email: " + email));
         if (user.getVerificationCode().equals(otp) && Duration.between(user.getOtpGeneratedTime(),
-            LocalDateTime.now()).getSeconds() < (1 * 60 * 10)) {
-          user.setEnabled(true);
-          userRepository.save(user);
-          return "<form style='text-align: center;'>" +
-       "<div style='color: green; font-size: 36px;'>" +
-       "Xác Thực OTP Thành Công<br>" +
-       "<a href='http://localhost:4200/login' style='text-decoration: none; color: red;'>Đăng Nhập Ngay</a></div>" +
-       "</form>";
+                LocalDateTime.now()).getSeconds() < (1 * 60 * 10)) {
+            user.setEnabled(true);
+            userRepository.save(user);
+            return "<form style='text-align: center;'>" +
+                    "<div style='color: green; font-size: 36px;'>" +
+                    "Xác Thực OTP Thành Công<br>" +
+                    "<a href='http://localhost:4200/login' style='text-decoration: none; color: red;'>Đăng Nhập Ngay</a></div>" +
+                    "</form>";
 
 
-}
+        }
         return "OTP Đã Hết Hạn Sử Dụng";
-      }
+    }
+
     public String regenerateOtp(String email) {
         User user = userRepository.findByEmail(email)
-            .orElseThrow(() -> new RuntimeException("User not found with this email: " + email));
+                .orElseThrow(() -> new RuntimeException("User not found with this email: " + email));
         String otp = otpUtil.generateOtp();
         try {
             emailUtil.sendOtpEmail(email, otp);
@@ -140,32 +143,33 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Unable to send otp please try again", e);
         }
 
-        
-        
+
         user.setVerificationCode(otp);
         user.setOtpGeneratedTime(LocalDateTime.now());
         userRepository.save(user);
         return "Email sent... please verify account within 1 minute";
-      }
+    }
 
     @Override
     public User getUserByUsername(String username) {
-      // TODO Auto-generated method stub
-      User user = userRepository.findByUsername(username).orElseThrow(() -> new NotFoundException("Not Found User"));
-      return user;
+        // TODO Auto-generated method stub
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new NotFoundException("Not Found User"));
+        return user;
     }
 
     @Override
     public User updateUser(UpdateProfileRequest request) {
-      // TODO Auto-generated method stub
-      User user = userRepository.findByUsername(request.getUsername()).orElseThrow(() -> new NotFoundException("Not Found User"));
-      user.setFirstname(request.getFirstname());
-      user.setLastname(request.getLastname());
-      user.setEmail(request.getEmail());
-      user.setCountry(request.getCountry());
-      user.setState(request.getState());
-      user.setAddress(request.getAddress());
-      user.setPhone(request.getPhone());
+        // TODO Auto-generated method stub
+        User user = userRepository.findByUsername(request.getUsername()).orElseThrow(() -> new NotFoundException("Not Found User"));
+        user.setFirstname(request.getFirstname());
+        user.setLastname(request.getLastname());
+        user.setEmail(request.getEmail());
+        user.setCountry(request.getCountry());
+        user.setState(request.getState());
+        user.setAddress(request.getAddress());
+        user.setPhone(request.getPhone());
+        user.setTown(request.getTown());
+        user.setWard(request.getWard());
 //      //
 //      Set<Role> roles = new HashSet<>();
 //      for(Long roleId : request.getRoles()){
@@ -174,9 +178,10 @@ public class UserServiceImpl implements UserService {
 //      }
 //      user.setRoles(roles);
 //      //
-      userRepository.save(user);
-      return user;
+        userRepository.save(user);
+        return user;
     }
+
     @Override
     public void changePassword(ChangePasswordRequest request) {
         // Tìm kiếm người dùng
@@ -187,7 +192,7 @@ public class UserServiceImpl implements UserService {
             throw new BadRequestException("Old Password Not Same");
         }
         // Mã hóa và cập nhật mật khẩu mới
-        user.setPassword(encoder.encode(request.getNewPassword()));        
+        user.setPassword(encoder.encode(request.getNewPassword()));
         // Lưu người dùng đã được cập nhật
         userRepository.save(user);
     }
@@ -213,15 +218,14 @@ public class UserServiceImpl implements UserService {
         user.setAddress(request.getAddress());
         user.setPhone(request.getPhone());
         Set<Role> roles = new HashSet<>();
-      for(Long roleId : request.getRoles()){
-    	  Role role = roleRepository.findById(roleId).orElseThrow(() -> new NotFoundException("Not Found Tag"));
-    	  roles.add(role);
-      }
-      user.setRoles(roles);
+        for (Long roleId : request.getRoles()) {
+            Role role = roleRepository.findById(roleId).orElseThrow(() -> new NotFoundException("Not Found Tag"));
+            roles.add(role);
+        }
+        user.setRoles(roles);
         userRepository.save(user);
         return user;
     }
 
 
-    
 }

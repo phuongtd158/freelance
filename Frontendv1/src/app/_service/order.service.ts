@@ -26,8 +26,12 @@ export class OrderService {
     return this.http.get(ORDER_API, httpOptions);
   }
 
-  getListstatus(): Observable<any> {
-    return this.http.get(ORDER_API + 'status', httpOptions);
+  getListstatus(currentStatusCode: any): Observable<any> {
+    if (currentStatusCode) {
+      return this.http.get(ORDER_API + 'status?currentStatusCode=' + currentStatusCode, httpOptions);
+    } else {
+      return this.http.get(ORDER_API + 'status', httpOptions);
+    }
   }
 
   getListOrderByUser(username: string): Observable<any> {
@@ -89,6 +93,10 @@ export class OrderService {
     return this.http.put(ORDER_API + 'update/' + id, {status}, httpOptions);
   }
 
+  returnOrder(id: number, params: any): Observable<any> {
+    return this.http.post(ORDER_API + 'return/' + id, {...params}, httpOptions);
+  }
+
   updateOrderstatus(): Observable<any> {
     return this.http.put(ORDER_API + 'trangthaihuy', {}, httpOptions);
   }
@@ -100,6 +108,10 @@ export class OrderService {
 
   getListOrdercharts(num: number): Observable<any> {
     return this.http.get(ORDER_API + 'charst/' + num, httpOptions);
+  }
+
+  getOrderById(id: number): Observable<any> {
+    return this.http.get(ORDER_API + '/find-by-id/' + id, httpOptions);
   }
 
 }

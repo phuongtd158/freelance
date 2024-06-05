@@ -82,10 +82,21 @@
         <td>
           <button title="Xem chi tiết đơn hàng" class="w-2rem h-2rem" pButton pRipple icon="pi pi-eye"
                   routerLink="/orderchitiet/{{order.id}}"></button>
-          <button *ngIf="order?.orderstatus?.id === 1" title="Huỷ đơn hàng" class="w-2rem h-2rem ml-1 p-button-danger"
+          <button *ngIf="order?.orderstatus?.code === ORDER_STATUS.WAITING" title="Huỷ đơn hàng"
+                  class="w-2rem h-2rem ml-1 p-button-danger"
                   pButton
                   pRipple icon="pi pi-times"
-                  (click)="showDialogCancelOrder(order)"></button>
+                  (click)="showDialog(order, 'CANCEL')"></button>
+          <button *ngIf="order?.orderstatus?.code === ORDER_STATUS.DELIVERED" title="Xác nhận đã nhận được hàng"
+                  class="w-2rem h-2rem ml-1 p-button-success"
+                  pButton
+                  pRipple icon="pi pi-verified"
+                  (click)="showDialog(order, 'CONFIRM')"></button>
+          <button *ngIf="order?.orderstatus?.code === ORDER_STATUS.DELIVERED" title="Trả hàng"
+                  class="w-2rem h-2rem ml-1 p-button-warning"
+                  pButton
+                  pRipple icon="pi pi-replay"
+                  (click)="showDialogReturn(order)"></button>
         </td>
         <td>
           <button pButton pRipple icon="pi pi-file-excel" class="p-button-rounded p-button-primary mr-2"
@@ -95,16 +106,65 @@
       </tr>
     </ng-template>
   </p-table>
-  <p-dialog header="Xác nhận huỷ đơn hàng" [(visible)]="visibleDialogCancel" [style]="{width :'50vw'}" [modal]="true"
+
+  <p-dialog [header]="'Thông tin trả hàng'"
+            [(visible)]="visibleDialogReturn"
+            [style]="{width :'50vw'}" [modal]="true"
+            [transitionOptions]="'.3s'">
+    <div class="row">
+      <div class="col-12">
+        <input type="text" class="form-control" placeholder="Lý do" [(ngModel)]="returnForm.reason"
+               name="reason">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <ngx-dropzone
+          class="custom-dropzone"
+          ngx-dropzone
+          [accept]="'image/*'"
+          (change)="onUploadImage($event)"
+          [multiple]="true">
+          <ngx-dropzone-label>
+            <div>
+              <h5>Hình ảnh</h5>
+            </div>
+          </ngx-dropzone-label>
+          <ngx-dropzone-image-preview
+            ngProjectAs="ngx-dropzone-preview"
+            *ngFor="let f of fileUploadImage"
+            [file]="f"
+            [removable]="true"
+            (removed)="onRemoveImage(f)">
+          </ngx-dropzone-image-preview>
+        </ngx-dropzone>
+      </div>
+    </div>
+    <div class="flex justify-content-end mt-3">
+      <button label="Xác nhận" icon="pi pi-check" class="mr-2" pButton (click)="handleReturn()"></button>
+      <button label="Huỷ" icon="pi pi-times" class="p-button-danger" pButton
+              (click)="closeDialogReturn()"></button>
+    </div>
+  </p-dialog>
+
+
+  <p-dialog [header]="type === 'CANCEL' ? 'Xác nhận huỷ đơn hàng' : 'Xác nhận đã nhận được đơn hàng'"
+            [(visible)]="visibleDialog"
+            [style]="{width :'50vw'}" [modal]="true"
             [transitionOptions]="'.3s'">
     <div>
       <i class="pi pi pi-exclamation-triangle"></i>
-      <span class="ml-2">Bạn có chắc chắc muốn huỷ đơn hàng <span>{{ order?.orderCode }}</span> không ?</span>
+      <span class="ml-2" *ngIf="type === 'CANCEL'">
+        Bạn có chắc chắc muốn huỷ đơn hàng <span>{{ order?.orderCode }}</span> không ?
+      </span>
+      <span class="ml-2" *ngIf="type === 'CONFIRM'">
+        Bạn có chắc chắc muốn xác nhận đã nhận được đơn hàng <span>{{ order?.orderCode }}</span> không ?
+      </span>
     </div>
     <div class="flex justify-content-end mt-3">
-      <button label="Xác nhận" icon="pi pi-check" class="mr-2" pButton (click)="cancelOrder()"></button>
+      <button label="Xác nhận" icon="pi pi-check" class="mr-2" pButton (click)="handleConfirmOrCancel()"></button>
       <button label="Huỷ" icon="pi pi-times" class="p-button-danger" pButton
-              (click)="closeDialogCancelOrder()"></button>
+              (click)="closeDialog()"></button>
     </div>
   </p-dialog>
 </div>

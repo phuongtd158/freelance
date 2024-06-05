@@ -101,15 +101,15 @@ export class CheckoutComponent implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     // console.log(this.username);
     // Lấy tên người dùng từ dịch vụ lưu trữ
     this.username = this.storageService.getUser().username;
     this.totalDiscount();
-
+    await this.getProvince()
     // Lấy thông tin người dùng từ API và cập nhật orderForm
     this.userService.getUser(this.username).subscribe(
-      (userDetails: any) => {
+      async (userDetails: any) => {
         this.orderForm.firstname = userDetails.firstname;
         this.orderForm.lastname = userDetails.lastname;
         this.orderForm.country = userDetails.country;
@@ -119,7 +119,14 @@ export class CheckoutComponent implements OnInit {
         this.orderForm.postCode = userDetails.postCode;
         this.orderForm.email = userDetails.email;
         this.orderForm.phone = userDetails.phone;
-        // Gọi service để đặt hàng
+        if (userDetails.town) {
+          this.selectedProvince = this.provinces.find((item: any) => item.ProvinceName === userDetails.town)
+          await this.getDistrict()
+          this.selectedDistrict = this.districts.find((item: any) => item.DistrictName === userDetails.state)
+          await this.getWard()
+          this.selectedWard = this.wards.find((item: any) => item.WardName === userDetails.ward)
+          this.setAddress()
+        }
       },
       (error) => {
         console.error('Lỗi khi lấy thông tin người dùng:', error);
@@ -128,32 +135,28 @@ export class CheckoutComponent implements OnInit {
     // Lấy danh sách sản phẩm từ giỏ hàng
     this.cartService.getItems();
     // console.log(this.cartService.getItems())
-    this.getProvince()
   }
 
-  getProvince() {
-    this.shippingService.getProvince().subscribe((res: any) => {
-      this.provinces = res.data;
-    })
+  async getProvince() {
+    const res: any = await this.shippingService.getProvince().toPromise()
+    this.provinces = res.data;
   }
 
-  getDistrict() {
+  async getDistrict() {
     this.resetDistrictAndWard()
     if (this.selectedProvince) {
       this.orderForm.town = this.selectedProvince.ProvinceName
-      this.shippingService.getDistrict(this.selectedProvince.ProvinceID).subscribe((res: any) => {
-        this.districts = res.data;
-      })
+      const res: any = await this.shippingService.getDistrict(this.selectedProvince.ProvinceID).toPromise()
+      this.districts = res.data;
     }
   }
 
-  getWard() {
+  async getWard() {
     this.resetWard()
     if (this.selectedDistrict) {
       this.orderForm.state = this.selectedDistrict.DistrictName
-      this.shippingService.getWard(this.selectedDistrict.DistrictID).subscribe((res: any) => {
-        this.wards = res.data;
-      })
+      const res: any = await this.shippingService.getWard(this.selectedDistrict.DistrictID).toPromise()
+      this.wards = res.data;
     }
   }
 
@@ -174,7 +177,7 @@ export class CheckoutComponent implements OnInit {
   setAddress() {
     if (this.selectedWard) {
       this.orderForm.ward = this.selectedWard.WardName
-      this.orderForm.address = `${this.selectedProvince.ProvinceName}, ${this.selectedDistrict.DistrictName}, ${this.selectedWard.WardName}`
+      this.orderForm.address = `${this.selectedWard.WardName}, ${this.selectedDistrict.DistrictName}, ${this.selectedProvince.ProvinceName}`
 
       this.getShippingFee(this.selectedDistrict.DistrictID)
     } else {

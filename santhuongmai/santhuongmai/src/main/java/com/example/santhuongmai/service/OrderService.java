@@ -11,25 +11,33 @@ import com.example.santhuongmai.entity.Order;
 import com.example.santhuongmai.model.request.CreateOrderRequest;
 
 public interface OrderService {
-    
+
     void placeOrder(CreateOrderRequest request);
 
     List<Order> getList();
-    
+
     List<Order> getOrderByUser(String username);
-    
-//    ResponseEntity<?> checkOrder(String orderCode);
+
+    //    ResponseEntity<?> checkOrder(String orderCode);
     Order checkOrder(String orderCode);
 
     ResponseEntity<?> removeOrder(String code);
-    // update 
+
+    // update
     Order updateOrder(long id, CreateOrderRequest request);
+
     Order updateOrderstatus(long id, CreateOrderRequest request);
-    List<Orderstatus> getListstatus();
-    
+
+    List<Orderstatus> getListstatus(String currentStatusCode);
+
     List<Order> getListOrder(long id);
+
     Long getMaxOrderId();
-    
+
     // thống kê
     List<Order> getListOrdercharts(int number);
+
+    Order returnOrder(long id, CreateOrderRequest request);
+
+    Order getById(long id);
 }

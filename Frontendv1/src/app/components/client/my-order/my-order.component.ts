@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {OrderService} from 'src/app/_service/order.service';
 import {StorageService} from 'src/app/_service/storage.service';
 import {MenuItem, MessageService} from 'primeng/api';
+import {ORDER_STATUS} from "../../../share/constants/constants";
+import {UploadCloudinaryService} from "../../../_service/upload-cloudinary.service";
 
 @Component({
   selector: 'app-my-order',
@@ -13,8 +15,20 @@ export class MyOrderComponent implements OnInit {
 
   listOrder: any;
   username: any;
-  visibleDialogCancel: boolean = false;
+  visibleDialog: boolean = false;
   order!: any;
+  type!: any;
+  ORDER_STATUS = ORDER_STATUS
+
+  returnForm: any = {
+    reason: null,
+    urlImg: ''
+  }
+
+  fileUploadImage: any[] = [];
+  fileUploadVideo: any[] = [];
+  urlImage!: any;
+  urlVideo!: any;
 
   transform(status: number): string {
     switch (status) {
@@ -46,7 +60,7 @@ export class MyOrderComponent implements OnInit {
     }
   }
 
-  constructor(private orderService: OrderService, private storageService: StorageService, private messageService: MessageService) {
+  constructor(private orderService: OrderService, private storageService: StorageService, private messageService: MessageService, private uploadService: UploadCloudinaryService) {
   }
 
   ngOnInit(): void {
@@ -86,29 +100,80 @@ export class MyOrderComponent implements OnInit {
     );
   }
 
-  showDialogCancelOrder(order: any) {
-    this.visibleDialogCancel = true
+  showDialog(order: any, type: 'CANCEL' | 'CONFIRM' | 'RETURNS') {
+    this.visibleDialog = true
     this.order = order
+    this.type = type
   }
 
-  closeDialogCancelOrder() {
-    this.visibleDialogCancel = false
+  visibleDialogReturn: boolean = false;
+
+  showDialogReturn(order: any) {
+    this.order = order
+    this.visibleDialogReturn = true
+  }
+
+  closeDialogReturn() {
+    this.visibleDialogReturn = false
     this.order = null
   }
 
-  cancelOrder() {
-    console.log(this.order)
+  closeDialog() {
+    this.visibleDialog = false
+    this.order = null
+  }
+
+  handleConfirmOrCancel() {
     const id = this.order.id
-    const status = '4'
+    const status = this.type === 'CANCEL' ? '4' : '9'
+    const message = this.type = 'CANCEL' ? 'Huỷ' : 'Xác nhận';
     this.orderService.updateOrder(id, status).subscribe((res) => {
       if (res.id) {
-        this.showSuccess('Huỷ đơn hàng thành công !')
-        this.closeDialogCancelOrder()
+        this.showSuccess(`${message} đơn hàng thành công !`)
+        this.closeDialog()
         this.getListOrder()
       } else {
-        this.showError('Huỷ đơn hàng thất bại !')
+        this.showError(`${message} đơn hàng thất bại !`)
       }
     })
+  }
+
+  async handleReturn() {
+    const formData = new FormData();
+    for (let i = 0; i < this.fileUploadImage.length; i++) {
+      formData.append('files', this.fileUploadImage[i]);
+    }
+    if (this.fileUploadImage.length > 0) {
+      this.urlImage = await this.uploadService.upload(formData).toPromise();
+    }
+    this.returnForm.urlImg = Array.from(this.urlImage).join(";")
+    const params = {
+      urlImg: this.returnForm.urlImg,
+      reason: this.returnForm.reason,
+      status: 10
+    }
+    this.orderService.returnOrder(this.order.id, params).subscribe((res) => {
+      if (res.id) {
+        this.showSuccess(`Yêu cầu trả hàng thành công !`)
+        this.closeDialogReturn()
+        this.getListOrder()
+      } else {
+        this.showError(`Yêu cầu trả hàng thất bại !`)
+      }
+    })
+  }
+
+  onUploadImage($event: any) {
+    this.fileUploadImage = $event.addedFiles;
+  }
+
+  onRemoveImage(f: any) {
+    this.fileUploadImage.splice(this.fileUploadImage.indexOf(f), 1);
+  }
+
+
+  onRemoveVideo(f: any) {
+    this.fileUploadVideo.splice(this.fileUploadVideo.indexOf(f), 1);
   }
 
   showSuccess(text: string) {

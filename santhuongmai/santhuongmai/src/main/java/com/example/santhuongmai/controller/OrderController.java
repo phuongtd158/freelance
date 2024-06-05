@@ -11,8 +11,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -48,31 +50,30 @@ import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/api/order")
-@CrossOrigin(origins = "*",maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class OrderController {
     @Autowired
     private OrderService orderService;
     @Autowired
     private OderdetailService oderdetailService;
-    
-    
 
 
     @GetMapping("/")
-    @Operation(summary="Lấy ra danh sách đặt hàng")
-    public ResponseEntity<List<Order>> getList(){
+    @Operation(summary = "Lấy ra danh sách đặt hàng")
+    public ResponseEntity<List<Order>> getList() {
         List<Order> list = orderService.getList();
 
         return ResponseEntity.ok(list);
     }
-    
+
     @GetMapping("/excel/{id}")
-    @Operation(summary="Lấy ra danh sách đơn hàng kèm chi tiết theo id đơn hàng")
-    public ResponseEntity<List<Order>> getListOrder(@PathVariable long id){
+    @Operation(summary = "Lấy ra danh sách đơn hàng kèm chi tiết theo id đơn hàng")
+    public ResponseEntity<List<Order>> getListOrder(@PathVariable long id) {
         List<Order> list = orderService.getListOrder(id);
         return ResponseEntity.ok(list);
     }
-//    @GetMapping("/excelorder/{id}")
+
+    //    @GetMapping("/excelorder/{id}")
 //	@Operation(summary="Xuất excel chi tiết đơn hàng")
 //    public ModelAndView exportToExcel(@PathVariable long id,HttpServletResponse response) {      
 //        List<Order> orders = orderService.getListOrder(id);
@@ -91,8 +92,8 @@ public class OrderController {
 //        return modelAndView;
 //    }
     @GetMapping("/excelorder/{id}")
-    @Operation(summary="Xuất excel chi tiết đơn hàng")
-    public ModelAndView exportToExcel(@PathVariable long id, HttpServletResponse response) {      
+    @Operation(summary = "Xuất excel chi tiết đơn hàng")
+    public ModelAndView exportToExcel(@PathVariable long id, HttpServletResponse response) {
         List<Order> orders = orderService.getListOrder(id);
         List<OrderDetail> orderDetails = oderdetailService.getOrderDetailsByOrderId(id); // Thay thế orderDetailService bằng tên service của bạn
 
@@ -103,43 +104,47 @@ public class OrderController {
 
 
     @GetMapping("/charst/{number}")
-    @Operation(summary="Thống kê danh sách theo tháng")
-    public ResponseEntity<List<Order>> getListOrdercharts(@PathVariable int number){
-        List<Order> list =orderService.getListOrdercharts(number);
+    @Operation(summary = "Thống kê danh sách theo tháng")
+    public ResponseEntity<List<Order>> getListOrdercharts(@PathVariable int number) {
+        List<Order> list = orderService.getListOrdercharts(number);
         return ResponseEntity.ok(list);
     }
-    
+
     @GetMapping("/status")
-    @Operation(summary="Lấy ra danh sách trạng thái")
-    public ResponseEntity<List<Orderstatus>> getListstatus(){
-        List<Orderstatus> list = orderService.getListstatus();
-
+    @Operation(summary = "Lấy ra danh sách trạng thái")
+    public ResponseEntity<List<Orderstatus>> getListstatus(
+            @RequestParam(value = "currentStatusCode", required = false) String currentStatusCode
+    ) {
+        List<Orderstatus> list = orderService.getListstatus(currentStatusCode);
         return ResponseEntity.ok(list);
     }
+
     @PutMapping("/update/{id}")
-    @Operation(summary="Tìm sản phẩm bằng id và cập nhật trạng thái sản phẩm đó")
-    public ResponseEntity<Order> updateOrder(@PathVariable long id,@RequestBody CreateOrderRequest request){
-    	Order order = orderService.updateOrder(id, request);
+    @Operation(summary = "Tìm sản phẩm bằng id và cập nhật trạng thái sản phẩm đó")
+    public ResponseEntity<Order> updateOrder(@PathVariable long id, @RequestBody CreateOrderRequest request) {
+        Order order = orderService.updateOrder(id, request);
 
         return ResponseEntity.ok(order);
     }
-    
+
     @PutMapping("/trangthaihuy")
-    @Operation(summary="Tìm sản phẩm bằng id và cập nhật trạng thái =4")
-    public ResponseEntity<Order> updateOrderstatus(@RequestBody CreateOrderRequest request){
-    	Long id = orderService.getMaxOrderId();
-    	Order order = orderService.updateOrderstatus(id, request);
+    @Operation(summary = "Tìm sản phẩm bằng id và cập nhật trạng thái =4")
+    public ResponseEntity<Order> updateOrderstatus(@RequestBody CreateOrderRequest request) {
+        Long id = orderService.getMaxOrderId();
+        Order order = orderService.updateOrderstatus(id, request);
 
         return ResponseEntity.ok(order);
     }
+
     @GetMapping("/user")
-    @Operation(summary="Lấy ra danh sách đặt hàng của người dùng bằng username")
-    public ResponseEntity<List<Order>> getListByUser(@RequestParam("username") String username){
+    @Operation(summary = "Lấy ra danh sách đặt hàng của người dùng bằng username")
+    public ResponseEntity<List<Order>> getListByUser(@RequestParam("username") String username) {
         List<Order> list = orderService.getOrderByUser(username);
 
         return ResponseEntity.ok(list);
     }
-//    @GetMapping("/checkOrder")
+
+    //    @GetMapping("/checkOrder")
 //    @Operation(summary="Check đơn hàng")
 //    public ResponseEntity<?> checkOrder(@PathVariable(name = "orderCode") String orderCode) {
 //        try {
@@ -149,7 +154,7 @@ public class OrderController {
 //        }
 //    }
     @GetMapping("/checkOrder/{orderCode}")
-    @Operation(summary="Check đơn hàng")
+    @Operation(summary = "Check đơn hàng")
     public ResponseEntity<Order> checkOrder(@PathVariable String orderCode) {
         Order order = orderService.checkOrder(orderCode);
         return ResponseEntity.ok(order);
@@ -178,7 +183,7 @@ public class OrderController {
             String orderType = "other";
 //            long amount = ((total * 24) * 1000) * 100;
 //            long amount = total* 100;
-            long amount = total*100;
+            long amount = total * 100;
 
             String vnp_TxnRef = Config.getRandomNumber(8);
             String vnp_IpAddr = Config.getIpAddress(httpServletRequest);
@@ -221,7 +226,7 @@ public class OrderController {
                     //Build hash data
                     hashData.append(fieldName);
                     hashData.append('=');
-                    
+
                     hashData.append(URLEncoder.encode(fieldValue, "UTF-8"));
 //                    hashData.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII));
                     //Build query
@@ -231,7 +236,7 @@ public class OrderController {
 
 //                    query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII));
                     query.append('=');
-                  query.append(URLEncoder.encode(fieldValue, "UTF-8"));
+                    query.append(URLEncoder.encode(fieldValue, "UTF-8"));
 //                    query.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII));
                     if (itr.hasNext()) {
                         query.append('&');
@@ -254,27 +259,40 @@ public class OrderController {
             return ResponseEntity.badRequest().body(new HashMap<>());
         }
     }
-    
-    
-  
 
-	/*
-	 * @PostMapping("/create")
-	 * 
-	 * @Operation(summary="Đặt hàng sản phẩm") public ResponseEntity<?>
-	 * placeOrder(@RequestBody CreateOrderRequest request){
-	 * 
-	 * orderService.placeOrder(request);
-	 * 
-	 * return ResponseEntity.ok(new MessageResponse("Order Placed Successfully!"));
-	 * }
-	 */
-    
-	/*
-	 * // @GetMapping("/chitiet/{id}")
-	 * // @Operation(summary="Lấy ra danh sách đơn hàng bằng id của ddơn hàng") //
-	 * public ResponseEntity<List<OrderDetail>>
-	 * getOrderDetailsByOrderId(@PathVariable long id){ // List<OrderDetail> list =
-	 * oderdetailService.getOrderDetailsByOrderId(id); // return
-	 * ResponseEntity.ok(list); // }
-	 */}
+    @PostMapping("/return/{id}")
+    public ResponseEntity<Order> returnOrder(@PathVariable long id, @RequestBody CreateOrderRequest request) {
+        Order order = orderService.returnOrder(id, request);
+        return ResponseEntity.ok(order);
+    }
+
+    @PostMapping("/find-by-id/{id}")
+    public ResponseEntity<Order> findById(@PathVariable long id) {
+        Order order = orderService.getById(id);
+        return ResponseEntity.ok(order);
+    }
+
+
+
+
+    /*
+     * @PostMapping("/create")
+     *
+     * @Operation(summary="Đặt hàng sản phẩm") public ResponseEntity<?>
+     * placeOrder(@RequestBody CreateOrderRequest request){
+     *
+     * orderService.placeOrder(request);
+     *
+     * return ResponseEntity.ok(new MessageResponse("Order Placed Successfully!"));
+     * }
+     */
+
+    /*
+     * // @GetMapping("/chitiet/{id}")
+     * // @Operation(summary="Lấy ra danh sách đơn hàng bằng id của ddơn hàng") //
+     * public ResponseEntity<List<OrderDetail>>
+     * getOrderDetailsByOrderId(@PathVariable long id){ // List<OrderDetail> list =
+     * oderdetailService.getOrderDetailsByOrderId(id); // return
+     * ResponseEntity.ok(list); // }
+     */
+}

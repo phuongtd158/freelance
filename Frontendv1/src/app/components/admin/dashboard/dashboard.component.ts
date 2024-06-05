@@ -57,22 +57,22 @@ export class DashboardComponent implements OnInit{
 
     toggleSubMenuProduct() {
         this.showSubMenuProduct = !this.showSubMenuProduct;
-        this.showSubMenuOrder = false; 
+        this.showSubMenuOrder = false;
         this.showSubMenuUser = false;
-        this.showSubMenublog = false; 
+        this.showSubMenublog = false;
     }
 
     toggleSubMenuOrder() {
         this.showSubMenuOrder = !this.showSubMenuOrder;
         this.showSubMenuProduct = false;
         this.showSubMenuUser = false;
-        this.showSubMenublog = false; 
+        this.showSubMenublog = false;
     }
     toggleSubUser() {
       this.showSubMenuUser = !this.showSubMenuUser;
-      this.showSubMenuProduct = false; 
+      this.showSubMenuProduct = false;
       this.showSubMenuOrder = false;
-      this.showSubMenublog = false; 
+      this.showSubMenublog = false;
     }
     toggleSubMenublog() {
       this.showSubMenublog = !this.showSubMenublog;
@@ -160,7 +160,7 @@ activateLast() {
 
   updateProfile(){
     const{firstname,lastname,email,country,state,address,phone} = this.updateForm;
-    this.userService.updateProfile(this.username,firstname,lastname,email,country,state,address,phone).subscribe({
+    this.userService.updateProfile(this.username,firstname,lastname,email,country,state,address,phone, '', '').subscribe({
       next: res =>{
         this.getUser();
 
@@ -186,6 +186,6 @@ activateLast() {
     this.changePassword =true;
   }
 
-  
+
 
 }

@@ -47,7 +47,11 @@ public class User {
 
     private String country;
 
+    private String town;
+
     private String state;
+
+    private String ward;
 
     private String address;
 
