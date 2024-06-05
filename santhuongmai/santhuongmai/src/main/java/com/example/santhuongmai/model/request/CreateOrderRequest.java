@@ -49,6 +49,6 @@ public class CreateOrderRequest {
 
     private List<CreateOrderDetailRequest> orderDetails;
     private String orderCode;
-    
-
+    private String reason;
+    private String urlImg;
 }
