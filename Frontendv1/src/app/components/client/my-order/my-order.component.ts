@@ -26,9 +26,7 @@ export class MyOrderComponent implements OnInit {
   }
 
   fileUploadImage: any[] = [];
-  fileUploadVideo: any[] = [];
   urlImage!: any;
-  urlVideo!: any;
 
   transform(status: number): string {
     switch (status) {
@@ -139,6 +137,14 @@ export class MyOrderComponent implements OnInit {
   }
 
   async handleReturn() {
+    if (!this.returnForm.reason) {
+      this.showWarn(`Vui lòng nhập lý do hoàn trả !`)
+      return
+    }
+    if (!this.fileUploadImage.length && this.fileUploadImage.length <= 0) {
+      this.showWarn(`Vui lòng chọn hình ảnh !`)
+      return
+    }
     const formData = new FormData();
     for (let i = 0; i < this.fileUploadImage.length; i++) {
       formData.append('files', this.fileUploadImage[i]);
@@ -169,11 +175,6 @@ export class MyOrderComponent implements OnInit {
 
   onRemoveImage(f: any) {
     this.fileUploadImage.splice(this.fileUploadImage.indexOf(f), 1);
-  }
-
-
-  onRemoveVideo(f: any) {
-    this.fileUploadVideo.splice(this.fileUploadVideo.indexOf(f), 1);
   }
 
   showSuccess(text: string) {

@@ -17,10 +17,10 @@ export class ChitietComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
     if (this.id) {
-      this.getOrderDetails(); 
+      this.getOrderDetails();
     }
   }
-  
+
   getOrderDetails() {
     this.orderchitietService.getOrderDetailsByOrderId(this.id).subscribe({
       next: res => {
@@ -34,7 +34,7 @@ export class ChitietComponent implements OnInit {
   }
   confirmNavigation() {
     if (window.confirm('Bạn có chắc muốn quay lại?')) {
-      this.router.navigate(['admin/order']);
+      this.router.navigate(['admin/status-order']);
     }
   }
   //tổng tiền
