@@ -7,6 +7,7 @@ import java.util.*;
 import com.example.santhuongmai.repository.*;
 import com.example.santhuongmai.util.Const;
 import com.example.santhuongmai.util.DataUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,7 @@ import static com.example.santhuongmai.util.DataUtil.*;
 import static com.example.santhuongmai.util.Const.ORDER_STATUS.*;
 
 @Service
+@Slf4j
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
@@ -100,7 +102,7 @@ public class OrderServiceImpl implements OrderService {
             // Gửi thông tin về đơn hàng vào email của khách hàng
             emailUtil.sendOrderConfirmationEmail(request.getEmail(), order);
         } catch (MessagingException e) {
-            throw new RuntimeException("Unable to send otp please try again");
+            log.error(e.getMessage(), e);
         }
     }
 
