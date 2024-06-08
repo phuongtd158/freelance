@@ -36,7 +36,16 @@
             <li><a routerLink="/admin/tag"><fa-icon [icon]="tag"></fa-icon><span>Tag</span></a></li>
             <li><a routerLink="/admin/blog"><fa-icon [icon]="rocket"></fa-icon><span>Blog</span></a></li>
         </ul> -->
-        <hr class="sidebar-divider">
+      <div class="sidebar-heading" (click)="toggleSubMenuOrder()">
+        Quản Lý Đơn Hàng
+      </div>
+      <ul class="submenu" *ngIf="showSubMenuOrder">
+        <li><a routerLink="/employee/order"><fa-icon [icon]="cart"></fa-icon><span>Đơn Hàng</span></a></li>
+        <li><a routerLink="/employee/status-order"><fa-icon [icon]="cart"></fa-icon><span>Xử Lý Đơn Hàng</span></a></li>
+        <!-- <li><a routerLink="/moderator/tag"><fa-icon [icon]="tag"></fa-icon><span>Tag</span></a></li>
+        <li><a routerLink="/moderator/blog"><fa-icon [icon]="rocket"></fa-icon><span>Blog</span></a></li> -->
+      </ul>
+      <hr class="sidebar-divider">
         <div class="sidebar-heading" (click)="toggleSubUser()">
             Quản Lý Liên Hệ
         </div>

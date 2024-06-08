@@ -32,6 +32,8 @@ export class RoleGuardService implements CanActivate {
   //     this.router.navigate(['/admin']);
   //     return false; // Ngăn chặn hiển thị trang hiện tại (ví dụ: /)
   //   }
+    console.log('expectedRole', expectedRole)
+    console.log("Current user roles", this.roles)
     if( this.isloggedIn == false || !this.roles.includes(expectedRole)){
       this.router.navigate(['login']);
       return false;

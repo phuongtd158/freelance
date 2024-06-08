@@ -1,7 +1,8 @@
 import {OrderService} from 'src/app/_service/order.service';
 import {Component, OnInit} from '@angular/core';
 import {ConfirmationService, MessageService} from 'primeng/api';
-import {ORDER_STATUS} from "../../../share/constants/constants";
+import {ORDER_STATUS, REASON_OPTIONS, ROLE} from "../../../share/constants/constants";
+import {StorageService} from "../../../_service/storage.service";
 
 @Component({
   selector: 'app-statusorder',
@@ -46,14 +47,23 @@ export class StatusorderComponent implements OnInit {
   }
 
   ORDER_STATUS = ORDER_STATUS
+  reasonOptions = REASON_OPTIONS
+  routerToOrderDetail: string = '/admin/chitiet'
 
-  constructor(private orderService: OrderService, private messageService: MessageService) {
-
+  constructor(private orderService: OrderService, private messageService: MessageService, private storageService: StorageService) {
   }
 
   ngOnInit(): void {
     this.getListOrder();
     // this.getListStatus();
+    if (this.storageService.isLoggedIn()) {
+      const roles: string[] = this.storageService.getUser().roles;
+      if (roles.includes(ROLE.MODERATOR)) {
+        this.routerToOrderDetail = '/moderator/chitiet'
+      } else if (roles.includes(ROLE.EMPLOYEE)) {
+        this.routerToOrderDetail = '/employee/chitiet'
+      }
+    }
   }
 
   getListStatus(currentStatusCode: string) {

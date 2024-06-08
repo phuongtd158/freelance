@@ -5,12 +5,25 @@
 @import "/src/assets/css/style.css";
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
+
+/*.p-toast {*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*  top: 0;*/
+/*  left: 50%;*/
+/*  transform: translate(-50%, -50%);*/
+/*  position: fixed;*/
+/*}*/
+/*.p-toast-top-right {*/
+/*  top: 65px !important;*/
+/*}*/
 

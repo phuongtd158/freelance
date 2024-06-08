@@ -19,11 +19,11 @@ export class ContactComponent {
     gmail: null,
     content: null
   }
- 
+
 
   // Method to check if input contains '@gmail.com'
   checkForGmail() {
-    return this.updateForm.gmail.includes('@gmail.com');
+    return this.updateForm?.gmail?.includes('@gmail.com');
   }
 
   // NgxSummernote
@@ -51,7 +51,7 @@ export class ContactComponent {
     private messageService:MessageService
   ){}
   getListSetting(){
-  
+
     this.settingService.getListSetting().subscribe({
       next: res =>{
         this.setchung= res[0];
@@ -66,14 +66,14 @@ export class ContactComponent {
   //   this.contactService.createContact(name,gmail,content).subscribe({
   //     next: res =>{
   //       // alert("Cập nhật thông tin thành công")
-  //       this.showSuccess("Gửi Liên Hệ Thành Công");        
+  //       this.showSuccess("Gửi Liên Hệ Thành Công");
   //     },error: err=>{
   //       console.log(err);
   //     }
   //   })
   // }
   createContact() {
-    
+
     const { name, gmail, content } = this.updateForm;
 
     // Kiểm tra xem các trường không được để trống
@@ -105,6 +105,6 @@ export class ContactComponent {
   }
 
   showWarn(text: string) {
-    this.messageService.add({severity:'warn', summary: 'Warn', detail: text});
+    this.messageService.add({severity:'warn', summary: 'Warn', detail: text, });
   }
 }

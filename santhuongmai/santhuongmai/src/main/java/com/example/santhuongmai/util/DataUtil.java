@@ -1,5 +1,7 @@
 package com.example.santhuongmai.util;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.Tuple;
@@ -217,5 +219,17 @@ public class DataUtil {
 
     public static boolean isNullOrEmpty(final Map<?, ?> map) {
         return map == null || map.isEmpty();
+    }
+
+    public static String prettyObject(Object object) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            log.error(e.getMessage(), e);
+            e.printStackTrace();
+        }
+        return "";
     }
 }

@@ -13,27 +13,27 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class OrderChiTietService {
-  constructor(private http: HttpClient) { }  
+  constructor(private http: HttpClient) { }
 
 
   // getOrderDetailsByOrderId(id: number):Observable<any>{
   //   return this.http.get(ORDERCT_API + `chitiet/${id}`,httpOptions);
 
-    
+
   // }
   getOrderDetailsByOrderId(id: number): Observable<any> {
     const url = `${ORDERCT_API}chitiet/${id}`;
     console.log('URL:', url);
     return this.http.get(url, httpOptions);
   }
-  
+
 
   getListOrderCT():Observable<any>{
     return this.http.get(ORDERCT_API,httpOptions);
   }
   // Tải xuống file Excel từ API
-  downloadExcel(): Observable<any> {
-    const url = `${ORDERCT_API}exportexcel`;
+  downloadExcel(id: any): Observable<any> {
+    const url = `${ORDERCT_API}exportexcel/${id}`;
     return this.http.get(url, { ...httpOptions, responseType: 'blob' });
   }
 

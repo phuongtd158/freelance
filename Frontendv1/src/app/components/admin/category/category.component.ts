@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { CategoryService } from 'src/app/_service/category.service';
+import {Component, OnInit} from '@angular/core';
+import {MessageService} from 'primeng/api';
+import {CategoryService} from 'src/app/_service/category.service';
+import {UploadCloudinaryService} from "../../../_service/upload-cloudinary.service";
 
 @Component({
   selector: 'app-category',
@@ -12,126 +13,186 @@ import { CategoryService } from 'src/app/_service/category.service';
 
 export class CategoryComponent implements OnInit {
 
-  listCategory : any;
+  listCategory: any;
 
   displayForm: boolean = false;
 
-  deleteForm : boolean = false;
+  deleteForm: boolean = false;
 
-  onUpdate : boolean = false;
+  onUpdate: boolean = false;
+  onCreate: boolean = false;
+  showDropzone: boolean = true;
 
-  categoryForm : any ={
+  categoryForm: any = {
     id: null,
-    name : null,
+    name: null,
     link: null
   }
 
-  constructor(private messageService : MessageService,private categoryService: CategoryService){}
+  fileUploadImage: any[] = [];
+
+  constructor(private messageService: MessageService, private categoryService: CategoryService, private uploadService: UploadCloudinaryService) {
+  }
 
   ngOnInit(): void {
     this.getListCategory();
   }
 
 
-  getListCategory(){
+  getListCategory() {
     this.categoryService.getListCategory().subscribe({
-      next: res =>{
+      next: res => {
         this.listCategory = res;
         console.log(res);
-      },error: err =>{
+      }, error: err => {
         console.log(err);
       }
     })
   }
 
-  showForm(){
+  showForm() {
     this.onUpdate = false;
-    this.categoryForm ={
-      id : null,
-      name : null,
-      link:null
+    this.onCreate = true
+    this.categoryForm = {
+      id: null,
+      name: null,
+      link: null
     }
+    this.showDropzone = true;
     this.displayForm = true;
   }
 
-  
- onUpdateForm(id: number,name : string,link:string){
-      this.onUpdate = true;
-      this.displayForm =true;
-      this.categoryForm.id = id;
-      this.categoryForm.name = name;
-      this.categoryForm.link = link;
-  }
 
-  onDelete(id:number,name : string,link:string){
-    this.deleteForm = true;
+  onUpdateForm(id: number, name: string, link: string) {
+    this.showDropzone = false
+    this.onUpdate = true;
+    this.onCreate = false;
+    this.displayForm = true;
     this.categoryForm.id = id;
     this.categoryForm.name = name;
     this.categoryForm.link = link;
-  
   }
 
-  createCategory(){
-    const {name,link} = this.categoryForm;
-    this.categoryService.createCategory(name,link).subscribe({
-      next: res =>{
+  onDelete(id: number, name: string, link: string) {
+    this.deleteForm = true;
+    this.onCreate = false
+    this.onUpdate = false
+    this.categoryForm.id = id;
+    this.categoryForm.name = name;
+    this.categoryForm.link = link;
+
+  }
+
+  async uploadImg() {
+    const formData = new FormData();
+    for (let i = 0; i < this.fileUploadImage.length; i++) {
+      formData.append('files', this.fileUploadImage[i]);
+    }
+    const rs: any = await this.uploadService.upload(formData).toPromise();
+    return rs ? rs[0] : ''
+  }
+
+  async createCategory() {
+    const {name} = this.categoryForm;
+    if (!name) {
+      this.showWarn(`Vui lòng nhập tên danh mục !`)
+      return
+    }
+    if (!this.fileUploadImage.length && this.fileUploadImage.length <= 0) {
+      this.showWarn(`Vui lòng chọn hình ảnh !`)
+      return
+    }
+    this.categoryForm.link = await this.uploadImg()
+    this.categoryService.createCategory(name, this.categoryForm.link).subscribe({
+      next: res => {
         this.getListCategory();
         this.showSuccess("Tạo danh mục thành công!");
-        this.displayForm = false;
-      },error: err=>{
+        this.onHide()
+      }, error: err => {
         this.showError(err.message);
       }
     })
   }
 
 
-  updateCategory(){
-    const {id,name,link} = this.categoryForm;
-    this.categoryService.updateCategory(id,name,link).subscribe({
-      next: res =>{
+  async updateCategory() {
+    const {id, name} = this.categoryForm;
+    if (!name) {
+      this.showWarn(`Vui lòng nhập tên danh mục !`)
+      return
+    }
+    if (this.showDropzone && !this.fileUploadImage.length && this.fileUploadImage.length <= 0) {
+      this.showWarn(`Vui lòng chọn hình ảnh !`)
+      return
+    }
+    if (this.showDropzone) {
+      this.categoryForm.link = await this.uploadImg()
+    }
+    this.categoryService.updateCategory(id, name, this.categoryForm.link).subscribe({
+      next: res => {
         this.getListCategory();
         this.showSuccess("Cập nhật danh mục thành công!");
-        this.displayForm = false;
-      },error: err =>{
+        this.onHide()
+      }, error: err => {
         this.showError(err.message);
       }
     })
   }
 
 
-  enableCategory(id : number){
+  enableCategory(id: number) {
     this.categoryService.enableCategory(id).subscribe({
-      next: res =>{
+      next: res => {
         this.getListCategory();
         this.showSuccess("Cập nhật thành công!!");
-      },error: err=>{
+      }, error: err => {
         this.showError(err.message);
       }
     })
   }
 
 
-  deleteCategory(){
+  deleteCategory() {
     const {id} = this.categoryForm;
     this.categoryService.deleteCategory(id).subscribe({
-      next: res =>{
+      next: res => {
         this.getListCategory();
         this.showWarn("Xóa danh mục thành công!!");
         this.deleteForm = false;
-      },error: err=>{
+      }, error: err => {
         this.showError(err.message);
       }
     })
   }
 
-  showSuccess(text: string) {
-    this.messageService.add({severity:'success', summary: 'Success', detail: text});
-  }
-  showError(text: string) {
-    this.messageService.add({severity:'error', summary: 'Error', detail: text});
+  onUploadImage($event: any) {
+    this.fileUploadImage = $event.addedFiles;
   }
 
-  showWarn(text : string) {
-    this.messageService.add({severity:'warn', summary: 'Warn', detail: text});
+  onHide() {
+    this.fileUploadImage = []
+    this.categoryForm.link = null
+    this.categoryForm.id = null
+    this.categoryForm.name = null
+    this.onCreate = false
+    this.onUpdate = false
+    this.showDropzone = false
+    this.displayForm = false
+  }
+
+  onRemoveImage(f: any) {
+    this.fileUploadImage.splice(this.fileUploadImage.indexOf(f), 1);
+  }
+
+  showSuccess(text: string) {
+    this.messageService.add({severity: 'success', summary: 'Success', detail: text});
+  }
+
+  showError(text: string) {
+    this.messageService.add({severity: 'error', summary: 'Error', detail: text});
+  }
+
+  showWarn(text: string) {
+    this.messageService.add({severity: 'warn', summary: 'Warn', detail: text});
   }
 }

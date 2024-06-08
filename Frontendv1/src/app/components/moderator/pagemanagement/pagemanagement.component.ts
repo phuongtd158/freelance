@@ -83,7 +83,6 @@ export class PagemanagementComponent implements OnInit{
     this.username = this.storageService.getUser().username;
     // console.log(this.storageService.getUser())
     this.getUser();
-    console.log(this.getUser);
     this.items = [
       { label: 'Home', icon: 'pi pi-fw pi-home' },
       { label: 'Calendar', icon: 'pi pi-fw pi-calendar' },

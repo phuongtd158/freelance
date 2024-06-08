@@ -96,7 +96,7 @@ const routes: Routes = [
       {path: "pagesize", component: PagesizeComponent},
       {path: "pageroom", component: PageroomComponent},
       {path: "pageorder", component: OrdereditComponent},
-
+      {path: 'chitiet/:id', component: ChitietComponent},
       {path: 'order', component: OrderComponent},
       {path: 'charts', component: ChartsComponent},
       {path: 'sale-product', component: GiamgiaproductComponent},
@@ -120,7 +120,10 @@ const routes: Routes = [
     canActivate: [RoleGuardService],
     data: {expectedRole: "ROLE_EMPLOYEE"},
     children: [
-      {path: "pagecontact", component: PagecontactComponent}
+      {path: "pagecontact", component: PagecontactComponent},
+      {path: 'chitiet/:id', component: ChitietComponent},
+      {path: 'order', component: OrderComponent},
+      {path: 'status-order', component: StatusorderComponent},
     ]
   },
   {

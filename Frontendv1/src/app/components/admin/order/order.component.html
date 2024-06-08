@@ -40,7 +40,7 @@
                 <th style="min-width:10rem">Giao Dịch</th>
                 <th style="min-width:10rem">Chi Tiết</th>
                 <th style="min-width:10rem">Xuất Excel</th>
-                
+
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-order>
@@ -54,13 +54,13 @@
                 <td>{{order.phone}}</td>
                 <td>{{order.email}}</td>
                 <td>{{order.totalPrice | currency:'VND'}}</td>
-                
+
                 <td >{{order.orderstatus.name}}</td>
                 <td>
                     {{ transform1(order.bank) }}
                 </td>
                 <td>
-                    <button pButton pRipple  icon="pi pi-search" routerLink="/admin/chitiet/{{order.id}}"></button>
+                    <button pButton pRipple  icon="pi pi-search" routerLink="{{routerToOrderDetail}}/{{order.id}}"></button>
                 </td>
                 <td>
                     <button pButton pRipple icon="pi pi-file-excel" class="p-button-rounded p-button-primary mr-2" (click)="downloadExcel(order.id)"></button>

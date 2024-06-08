@@ -79,7 +79,8 @@
             pButton pRipple
             icon="pi pi-eye"
             class="p-button-rounded p-button-help mr-2" (click)="showDialogReturn(order)"></button>
-          <button title="Chi tiết đơn hàng" pButton pRipple icon="pi pi-search" routerLink="/admin/chitiet/{{order.id}}"></button>
+          <button title="Chi tiết đơn hàng" pButton pRipple icon="pi pi-search"
+                  routerLink="{{routerToOrderDetail}}/{{order.id}}"></button>
         </td>
       </tr>
     </ng-template>
@@ -91,9 +92,24 @@
   <ng-template pTemplate="content">
     <!-- <img [src]="'assets/showcase/images/demo/product/' + product.image" [alt]="product.image" class="product-image" *ngIf="product.image"> -->
     <div class="field">
-      <label for="reason">Lý do hoàn trả hàng</label>
-      <input disabled="true" type="text" pInputText id="reason" [(ngModel)]="reason" required autofocus/>
-      <!-- <small class="p-error" *ngIf="submitted && !product.name">Name is required.</small> -->
+      <div class="row">
+        <div class="col-lg-12">
+          <!--        <input type="text" class="form-control" placeholder="Lý do" [(ngModel)]="returnForm.reason"-->
+          <!--               name="reason">-->
+          <label for="reason">Lý do hoàn trả hàng</label>
+          <p-dropdown
+            id="reason"
+            [options]="reasonOptions"
+            [(ngModel)]="reason"
+            placeholder="Chọn lý do"
+            name="reason"
+            [showClear]="true"
+            [filter]="true"
+            filterBy="label"
+            [disabled]="true"
+          />
+        </div>
+      </div>
     </div>
     <p>Hình ảnh trả hàng: </p>
     <div class="d-flex">

@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
+import {SERVER_DOMAIN} from "./domain.service";
 
-const PREFIX_ADDRESS_API = 'https://online-gateway.ghn.vn/shiip/public-api/master-data'
-const PREFIX_SHIPPING_API = 'https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order'
+const SHIPPING_API = SERVER_DOMAIN + '/shipping'
 
 
 @Injectable({
@@ -16,22 +16,22 @@ export class ShippingService {
   }
 
   getProvince() {
-    return this.http.get(`${PREFIX_ADDRESS_API}/province`);
+    return this.http.get(`${SHIPPING_API}/province`);
   }
 
   getDistrict(provinceId: any) {
-    return this.http.get(`${PREFIX_ADDRESS_API}/district?province_id=${provinceId}`);
+    return this.http.get(`${SHIPPING_API}/district?provinceId=${provinceId}`);
   }
 
   getWard(districtId: any) {
-    return this.http.get(`${PREFIX_ADDRESS_API}/ward?district_id=${districtId}`);
+    return this.http.get(`${SHIPPING_API}/ward?districtId=${districtId}`);
   }
 
   getService(data: any) {
-    return this.http.post(`${PREFIX_SHIPPING_API}/available-services`, data);
+    return this.http.post(`${SHIPPING_API}/available-services`, data);
   }
 
   getShippingOrder(data: any) {
-    return this.http.post(`${PREFIX_SHIPPING_API}/fee`, data);
+    return this.http.post(`${SHIPPING_API}/fee`, data);
   }
 }

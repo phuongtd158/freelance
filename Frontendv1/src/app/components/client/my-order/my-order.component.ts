@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {OrderService} from 'src/app/_service/order.service';
 import {StorageService} from 'src/app/_service/storage.service';
 import {MenuItem, MessageService} from 'primeng/api';
-import {ORDER_STATUS} from "../../../share/constants/constants";
+import {ORDER_STATUS, REASON_OPTIONS} from "../../../share/constants/constants";
 import {UploadCloudinaryService} from "../../../_service/upload-cloudinary.service";
 
 @Component({
@@ -24,6 +24,7 @@ export class MyOrderComponent implements OnInit {
     reason: null,
     urlImg: ''
   }
+  reasonOptions = REASON_OPTIONS
 
   fileUploadImage: any[] = [];
   urlImage!: any;
@@ -170,7 +171,7 @@ export class MyOrderComponent implements OnInit {
   }
 
   onUploadImage($event: any) {
-    this.fileUploadImage = $event.addedFiles;
+    this.fileUploadImage.push(...$event.addedFiles);
   }
 
   onRemoveImage(f: any) {
