@@ -45,7 +45,7 @@ public class OrderExcelExport extends AbstractXlsxView {
         // Tạo style cho header
         CellStyle headerStyle = workbook.createCellStyle();
         headerStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
-        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
         Font headerFont = workbook.createFont();
         headerFont.setColor(IndexedColors.WHITE.getIndex());
         headerStyle.setFont(headerFont);
@@ -59,7 +59,7 @@ public class OrderExcelExport extends AbstractXlsxView {
         // tiêu đề
         // Tạo một font in đậm
         Font boldFont = workbook.createFont();
-        boldFont.setBold(true);
+        boldFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
 
         // Tạo một style và thiết lập font in đậm
         CellStyle boldStyle = workbook.createCellStyle();
