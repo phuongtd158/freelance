@@ -14,4 +14,12 @@ public class DateUtil {
         DateFormat df = new SimpleDateFormat(pattern);
         return df.format(date);
     }
+
+    public static String date2ddMMyyyyString(Date value) {
+        if (value != null) {
+            SimpleDateFormat ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy");
+            return ddMMyyyy.format(value);
+        }
+        return "";
+    }
 }

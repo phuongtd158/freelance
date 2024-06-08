@@ -5,9 +5,14 @@ import com.example.santhuongmai.dto.sdo.ChartSdo;
 import com.example.santhuongmai.service.ChartService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.IOUtils;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -53,4 +58,15 @@ public class ChartController {
         return ResponseEntity.ok(chartService.getSumProductSell());
     }
 
+    @PostMapping("export")
+    @Operation(summary = "[Xuất excel]")
+    public ResponseEntity<ByteArrayResource> export(@RequestBody ChartSdi request) throws Exception {
+        ByteArrayResource resource = new ByteArrayResource(IOUtils.toByteArray(chartService.export(request)));
+        String fileName = "excel_chart";
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .contentLength(resource.contentLength())
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=" + fileName + ".xlsx")
+                .body(resource);
+    }
 }

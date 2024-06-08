@@ -38,10 +38,21 @@ public class ChartRepoCustomImpl implements ChartRepoCustom {
                 "                               SELECT date_add(date, interval 1 " + sdi.getCycleType() + ")\n" +
                 "                               FROM dates\n" +
                 "                               WHERE date < DATE :toDate)\n" +
-                "SELECT date_format(date, :formatField) as field, coalesce(sum(o.total_price), 0) as value\n" +
-                "FROM dates d\n" +
-                "         left join orders o on d.date = date_format(o.create_at, :formatDate) and o.status = 9\n" +
-                "group by d.date";
+                "select date_format(revenue.date, :formatField) as field,\n" +
+                "       revenue.value                           as value,\n" +
+                "       product.value                           as amount\n" +
+                "from (SELECT d.date,\n" +
+                "             coalesce(sum(o.total_price), 0) as value\n" +
+                "      FROM dates d\n" +
+                "               left join orders o on d.date = date_format(o.create_at, :formatDate) and o.status = 9\n" +
+                "      group by d.date) revenue\n" +
+                "         inner join\n" +
+                "     (SELECT d.date,\n" +
+                "             coalesce(sum(od.soluong), 0) as value\n" +
+                "      FROM dates d\n" +
+                "               left join orders o on d.date = date_format(o.create_at, :formatDate) and o.status = 9\n" +
+                "               left join order_detail od on o.id = od.order_id\n" +
+                "      group by d.date) product on product.date = revenue.date";
 
         Query query = em.createNativeQuery(sqlQuery, Tuple.class);
         query.setParameter("fromDate", sdi.getFromDate());
@@ -55,38 +66,7 @@ public class ChartRepoCustomImpl implements ChartRepoCustom {
 
     @Override
     public List<ChartSdo> searchProduct(ChartSdi sdi) {
-        String formatDate;
-        String formatField;
-        if (sdi.getCycleType().equalsIgnoreCase("YEAR")) {
-            formatDate = "%Y-01-01";
-            formatField = "%Y";
-        } else if (sdi.getCycleType().equalsIgnoreCase("MONTH")) {
-            formatDate = "%Y-%m-01";
-            formatField = "%m-%Y";
-        } else {
-            formatDate = "%Y-%m-%d";
-            formatField = "%d-%m";
-        }
-
-        String sqlQuery = "WITH RECURSIVE dates(date) AS (SELECT DATE :fromDate\n" +
-                "                               UNION ALL\n" +
-                "                               SELECT date_add(date, interval 1 " + sdi.getCycleType() + ")\n" +
-                "                               FROM dates\n" +
-                "                               WHERE date < DATE :toDate)\n" +
-                "SELECT date_format(date, :formatField) as field, coalesce(sum(od.soluong), 0) as value\n" +
-                "FROM dates d\n" +
-                "         left join orders o on d.date = date_format(o.create_at, :formatDate) and o.status = 9\n" +
-                "         left join order_detail od on o.id = od.order_id\n" +
-                "group by d.date";
-
-        Query query = em.createNativeQuery(sqlQuery, Tuple.class);
-        query.setParameter("fromDate", sdi.getFromDate());
-        query.setParameter("toDate", sdi.getToDate());
-        query.setParameter("formatDate", formatDate);
-        query.setParameter("formatField", formatField);
-
-        List<Tuple> results = query.getResultList();
-        return DataUtil.convertFromQueryResult(results, ChartSdo.class);
+        return null;
     }
 
     @Override
@@ -106,7 +86,7 @@ public class ChartRepoCustomImpl implements ChartRepoCustom {
     @Override
     public Integer getSumOrderDone() {
         return DataUtil.safeToInt(
-                em.createNativeQuery("select count(1) from orders where status = 9").getResultList().get(0)
+                em.createNativeQuery("select count(1) from orders").getResultList().get(0)
         );
     }
 
