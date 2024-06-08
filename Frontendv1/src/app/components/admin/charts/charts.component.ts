@@ -161,7 +161,7 @@ export class ChartsComponent {
       series1.dataFields.valueY = 'amount'
       series1.dataFields.categoryX = 'field'
       series1.name = 'Số lượng'
-      series1.columns.template.tooltipText = 'Số lượng: [bold]{valueY}[/]'
+      series1.tooltipText = 'Số lượng: [bold]{valueY}[/]'
       series1.columns.template.fill = am4core.color('#4285f4').lighten(0.5)
       series1.strokeWidth = 0
       series1.columns.template.width = am4core.percent(75)
