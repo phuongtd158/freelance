@@ -146,15 +146,12 @@
       [view]="cycleType === 'YEAR' ? 'year' : cycleType === 'MONTH' ? 'month' : 'date'"
       [dateFormat]="cycleType === 'YEAR' ? 'yy' : cycleType === 'MONTH' ? 'mm/yy' : 'dd/mm/yy'"
     />
+
+    <button pButton pRipple label="Xuất Excel" icon="pi pi-plus" class="p-button-success ml-3" (click)="export()"></button>
   </div>
 
-  <p-card header="Biểu đồ thống kê doanh thu" class="my-2">
+  <p-card header="Biểu đồ thống kê số lượng và doanh thu" class="my-2">
     <div id="chartdiv1"></div>
   </p-card>
-
-  <p-card header="Biểu đồ thống kê sản phẩm" class="my-2">
-    <div id="chartdiv2"></div>
-  </p-card>
-
 </div>
 

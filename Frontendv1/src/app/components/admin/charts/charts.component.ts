@@ -128,7 +128,6 @@ export class ChartsComponent {
 
   onRenderAllChart() {
     this.renderChart1();
-    this.renderChart2();
   }
 
   renderChart1() {
@@ -143,6 +142,7 @@ export class ChartsComponent {
       chart.language.locale['_decimalSeparator'] = ','
       chart.language.locale['_thousandSeparator'] = '.'
       chart.cursor = new am4charts.XYCursor()
+      chart.legend = new am4charts.Legend()
 
       const categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis())
       categoryAxis.dataFields.category = 'field'
@@ -153,83 +153,61 @@ export class ChartsComponent {
       categoryAxis.renderer.labels.template.paddingLeft = 0
       categoryAxis.renderer.labels.template.paddingRight = 0
 
-      const max = this.findMaxValue(res, 'value')
       const valueAxis1 = chart.yAxes.push(new am4charts.ValueAxis())
       valueAxis1.title.text = 'Đơn vị (VNĐ)'
       valueAxis1.min = 0
-      valueAxis1.max = max + max * 0.1
+      valueAxis1.maxPrecision = 0
 
       const series1 = chart.series.push(new am4charts.ColumnSeries())
-      series1.dataFields.valueY = 'value'
+      series1.dataFields.valueY = 'amount'
       series1.dataFields.categoryX = 'field'
-      series1.name = 'Doanh thu'
-      series1.tooltipText = "Doanh thu: [bold]{valueY.formatNumber('#,###.##')}[/]"
-      series1.columns.template.fill = am4core.color('#1cc88a').lighten(0.5)
+      series1.name = 'Số lượng'
+      series1.columns.template.tooltipText = 'Số lượng: [bold]{valueY}[/]'
+      series1.columns.template.fill = am4core.color('#4285f4').lighten(0.5)
       series1.strokeWidth = 0
       series1.columns.template.width = am4core.percent(75)
       series1.yAxis = valueAxis1
 
-      // const labelBullet1 = series1.bullets.push(new am4charts.LabelBullet())
-      // labelBullet1.label.verticalCenter = 'bottom'
-      // labelBullet1.label.dy = -5
-      // labelBullet1.label.text = "{valueY.formatNumber('#,###.#')}"
-      // labelBullet1.label.truncate = false
-      // labelBullet1.label.hideOversized = false
+      const valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis())
+      valueAxis2.title.text = 'Đơn vị (Cái)'
+      valueAxis2.min = 0
+      valueAxis2.maxPrecision = 0
+      valueAxis2.renderer.opposite = true
+      // @ts-ignore
+      valueAxis2.syncWithAxis = chart.yAxes.getIndex(0)
+
+      const series2 = chart.series.push(new am4charts.ColumnSeries())
+      series2.dataFields.valueY = 'value'
+      series2.dataFields.categoryX = 'field'
+      series2.name = 'Doanh thu'
+      series2.tooltipText = "Doanh thu: [bold]{valueY.formatNumber('#,###.##')}[/]"
+      series2.columns.template.fill = am4core.color('#1cc88a').lighten(0.5)
+      series2.strokeWidth = 0
+      series2.columns.template.width = am4core.percent(75)
+      series2.yAxis = valueAxis2
     });
   }
 
-  renderChart2() {
+  export() {
     const data = {
       cycleType: this.cycleType,
       fromDate: this.fromDate,
       toDate: this.toDate
     }
-    this.chartService.searchProduct(data).subscribe(res => {
-      const chart = am4core.create('chartdiv2', am4charts.XYChart)
-      chart.data = res
-      chart.language.locale['_decimalSeparator'] = ','
-      chart.language.locale['_thousandSeparator'] = '.'
-      chart.cursor = new am4charts.XYCursor()
 
-      const categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis())
-      categoryAxis.dataFields.category = 'field'
-      categoryAxis.renderer.grid.template.disabled = true
-      categoryAxis.renderer.minGridDistance = 10
-      categoryAxis.renderer.cellStartLocation = 0.15
-      categoryAxis.renderer.cellEndLocation = 0.85
-      categoryAxis.renderer.labels.template.paddingLeft = 0
-      categoryAxis.renderer.labels.template.paddingRight = 0
-
-      const max = this.findMaxValue(res, 'value')
-      const valueAxis1 = chart.yAxes.push(new am4charts.ValueAxis())
-      valueAxis1.title.text = 'Đơn vị (cái)'
-      valueAxis1.min = 0
-      valueAxis1.max = max + max * 0.1
-
-      const series1 = chart.series.push(new am4charts.ColumnSeries())
-      series1.dataFields.valueY = 'value'
-      series1.dataFields.categoryX = 'field'
-      series1.name = 'Sản phẩm'
-      series1.tooltipText = "Sản phẩm: [bold]{valueY.formatNumber('#,###.##')}[/]"
-      series1.columns.template.fill = am4core.color('#4e73df').lighten(0.5)
-      series1.strokeWidth = 0
-      series1.columns.template.width = am4core.percent(75)
-      series1.yAxis = valueAxis1
-
-      // const labelBullet1 = series1.bullets.push(new am4charts.LabelBullet())
-      // labelBullet1.label.verticalCenter = 'bottom'
-      // labelBullet1.label.dy = -5
-      // labelBullet1.label.text = "{valueY.formatNumber('#,###.#')}"
-      // labelBullet1.label.truncate = false
-      // labelBullet1.label.hideOversized = false
-    });
-  }
-
-  findMaxValue(data: Array<object>, ...fields: string[]) {
-    return data.reduce((max, item) => {
-      // @ts-ignore
-      const itemMax = Math.max(...fields.map((f) => item[f] || 0))
-      return Math.max(max, itemMax)
-    }, 0)
+    // @ts-ignore
+    this.chartService.export(data).subscribe(
+      (response: Blob) => {
+        const url = window.URL.createObjectURL(new Blob([response]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'products.xlsx';
+        link.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error => {
+        console.error('Error Export Excel:', error);
+      }
+    );
   }
 }
