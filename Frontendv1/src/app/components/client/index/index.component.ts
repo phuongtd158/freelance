@@ -196,7 +196,7 @@ export class IndexComponent implements OnInit {
         this.roles = this.storageService.getUser().roles;
         this.showSuccess("Đăng nhập thành công!!");
         this.authModal = false;
-
+        location.reload()
       }, error: err => {
         console.log(err);
         this.isLoggedIn = false;
