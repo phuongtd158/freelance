@@ -71,8 +71,8 @@ public class UserServiceImpl implements UserService {
         String verificationCode = otpUtil.generateOtp();
         try {
             emailUtil.sendOtpEmail(request.getEmail(), verificationCode);
-        } catch (MessagingException e) {
-            throw new RuntimeException("Unable to send otp please try again");
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
         }
 
         User user = new User();
@@ -139,8 +139,8 @@ public class UserServiceImpl implements UserService {
         String otp = otpUtil.generateOtp();
         try {
             emailUtil.sendOtpEmail(email, otp);
-        } catch (MessagingException e) {
-            throw new RuntimeException("Unable to send otp please try again", e);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
         }
 
 

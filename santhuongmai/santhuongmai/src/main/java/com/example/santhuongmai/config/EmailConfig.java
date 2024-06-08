@@ -10,25 +10,35 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 @Configuration
 public class EmailConfig {
-	@Value("${spring.mail.host}")
-	  private String mailHost;
-	  @Value("${spring.mail.port}")
-	  private String mailPort;
-	  @Value("${spring.mail.username}")
-	  private String mailUsername;
-	  @Value("${spring.mail.password}")
-	  private String mailPassword;
-	  @Bean
-	  public JavaMailSender getJavaMailSender() {
-		    JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
-		    javaMailSender.setHost(mailHost);
-		    javaMailSender.setPort(Integer.parseInt(mailPort));
-		    javaMailSender.setUsername(mailUsername);
-		    javaMailSender.setPassword(mailPassword);
+    @Value("${spring.mail.host}")
+    private String mailHost;
+    @Value("${spring.mail.port}")
+    private int  mailPort;
+    @Value("${spring.mail.username}")
+    private String mailUsername;
+    @Value("${spring.mail.password}")
+    private String mailPassword;
 
-		    Properties props = javaMailSender.getJavaMailProperties();
-		    props.put("mail.smtp.starttls.enable", "true");
-		    return javaMailSender;
-		  }
-	 
+    @Bean
+    public JavaMailSender getJavaMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost(mailHost);
+        mailSender.setPort(mailPort);
+
+        mailSender.setUsername(mailUsername);
+        mailSender.setPassword(mailPassword);
+        mailSender.setDefaultEncoding("UTF-8");
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.starttls.required", "true");  // Bật yêu cầu STARTTLS
+        props.put("mail.smtp.ssl.enable", "false");  // Tắt SSL
+        props.put("mail.debug", "true");
+
+        mailSender.setJavaMailProperties(props);
+        return mailSender;
+    }
+
 }
