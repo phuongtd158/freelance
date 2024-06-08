@@ -86,12 +86,12 @@
                   class="w-2rem h-2rem ml-1 p-button-danger"
                   pButton
                   pRipple icon="pi pi-times"
-                  (click)="showDialog(order, 'CANCEL')"></button>
+                  (click)="showDialog(order, 'CONFIRM')"></button>
           <button *ngIf="order?.orderstatus?.code === ORDER_STATUS.DELIVERED" title="Xác nhận đã nhận được hàng"
                   class="w-2rem h-2rem ml-1 p-button-success"
                   pButton
                   pRipple icon="pi pi-verified"
-                  (click)="showDialog(order, 'CONFIRM')"></button>
+                  (click)="showDialog(order, 'RETURNS')"></button>
           <button *ngIf="order?.orderstatus?.code === ORDER_STATUS.DELIVERED" title="Trả hàng"
                   class="w-2rem h-2rem ml-1 p-button-warning"
                   pButton
@@ -162,7 +162,6 @@
             [style]="{width :'50vw'}" [modal]="true"
             [transitionOptions]="'.3s'">
     <div>
-      <i class="pi pi pi-exclamation-triangle"></i>
       <span class="ml-2" *ngIf="type === 'CANCEL'">
         Bạn có chắc chắc muốn huỷ đơn hàng <span>{{ order?.orderCode }}</span> không ?
       </span>
