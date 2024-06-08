@@ -73,7 +73,6 @@ export class ChartsComponent {
     const sevenDaysAgo = new Date(today);
     sevenDaysAgo.setDate(today.getDate() - 7);
     this.rangeDate = [sevenDaysAgo, today];
-    this.rangeDate = [sevenDaysAgo, today];
     this.fromDate = this.handleFormatDate(sevenDaysAgo);
     this.toDate = this.handleFormatDate(today);
 
@@ -201,7 +200,7 @@ export class ChartsComponent {
         const url = window.URL.createObjectURL(new Blob([response]));
         const link = document.createElement('a');
         link.href = url;
-        link.download = 'products.xlsx';
+        link.download = 'Statistical.xlsx';
         link.click();
         window.URL.revokeObjectURL(url);
       },
