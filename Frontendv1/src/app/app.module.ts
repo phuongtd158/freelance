@@ -93,6 +93,7 @@ import {NumberOnlyDirective} from "./share/directive/number-only.directive";
 import {DatePipe} from '@angular/common';
 import {CalendarModule} from "primeng/calendar";
 import {NgxDropzoneModule} from "ngx-dropzone";
+import {MessageService} from "primeng/api";
 
 
 @NgModule({
@@ -193,7 +194,7 @@ import {NgxDropzoneModule} from "ngx-dropzone";
     CalendarModule,
     NgxDropzoneModule
   ],
-  providers: [httpInterceptorProviders, DatePipe],
+  providers: [httpInterceptorProviders, DatePipe, MessageService],
 
   bootstrap: [AppComponent]
 })
