@@ -44,10 +44,10 @@ public class OrderDetailController {
         return ResponseEntity.ok(list);
     }
 
-	@GetMapping("/exportexcel")
+	@GetMapping("/exportexcel/{id}")
 	@Operation(summary="Xuất excel chi tiết đơn hàng")
-    public ModelAndView exportToExcel(HttpServletResponse response) {      
-        List<OrderDetail> orderDetails = oderdetailService.getList();
+    public ModelAndView exportToExcel(@PathVariable Long id, HttpServletResponse response) {
+        List<OrderDetail> orderDetails = oderdetailService.getOrderDetailsByOrderId(id);
         ModelAndView modelAndView = new ModelAndView(new OrderDetailExcelExport(), "orderDetails", orderDetails);
         return modelAndView;
     }
