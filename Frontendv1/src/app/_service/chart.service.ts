@@ -40,4 +40,8 @@ export class ChartService {
   getSumProductSell(): Observable<any> {
     return this.http.get(CHART_API + 'get-sum-product-sell', httpOptions);
   }
+
+  export(data: any): Observable<any> {
+    return this.http.post(CHART_API + 'export', data, {...httpOptions, responseType: 'blob'});
+  }
 }
