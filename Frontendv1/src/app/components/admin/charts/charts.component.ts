@@ -1,6 +1,4 @@
 import {Component} from '@angular/core';
-import {ProductService} from 'src/app/_service/product.service';
-import {OrderService} from 'src/app/_service/order.service';
 import {BlogService} from 'src/app/_service/blog.service';
 import {ChartService} from 'src/app/_service/chart.service';
 import {faCalculator, faDollarSign, faComment, faClipboard, faFile} from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +6,7 @@ import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themesAnimated from '@amcharts/amcharts4/themes/animated';
 import {DatePipe} from "@angular/common";
+import {MessageCustomService} from "../../../_service/message-custom.service";
 
 am4core.useTheme(am4themesAnimated)
 
@@ -43,7 +42,8 @@ export class ChartsComponent {
 
   constructor(private blogService: BlogService,
               private chartService: ChartService,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private messageService: MessageCustomService) {
   }
 
   ngOnInit(): void {
@@ -72,7 +72,6 @@ export class ChartsComponent {
     const today = new Date();
     const sevenDaysAgo = new Date(today);
     sevenDaysAgo.setDate(today.getDate() - 7);
-    this.rangeDate = [sevenDaysAgo, today];
     this.rangeDate = [sevenDaysAgo, today];
     this.fromDate = this.handleFormatDate(sevenDaysAgo);
     this.toDate = this.handleFormatDate(today);
@@ -118,6 +117,29 @@ export class ChartsComponent {
     this.toDate = this.handleFormatDate(this.rangeDate[1]);
 
     if (this.fromDate && this.toDate) {
+      if (this.cycleType === 'DAY') {
+        const timeDiff = this.rangeDate[1].getTime() - this.rangeDate[0].getTime();
+        const diffDays = timeDiff / (1000 * 3600 * 24);
+        if (diffDays > 14) {
+          this.messageService.showWarn('Chỉ được chọn trong khoảng thời gian 15 ngày!')
+          return
+        }
+      } else if (this.cycleType === 'MONTH') {
+        const yearsDifference = this.rangeDate[1].getFullYear() - this.rangeDate[0].getFullYear();
+        const monthsDifference = this.rangeDate[1].getMonth() - this.rangeDate[0].getMonth();
+        const totalMonthsDifference = yearsDifference * 12 + monthsDifference;
+        if (totalMonthsDifference > 6) {
+          this.messageService.showWarn('Chỉ được chọn trong khoảng thời gian 7 tháng!')
+          return;
+        }
+      } else {
+        const yearsDifference = this.rangeDate[1].getFullYear() - this.rangeDate[0].getFullYear();
+        if (yearsDifference > 6) {
+          this.messageService.showWarn('Chỉ được chọn trong khoảng thời gian 7 năm!')
+          return;
+        }
+      }
+
       this.onRenderAllChart()
     }
   }
@@ -162,7 +184,7 @@ export class ChartsComponent {
       series1.dataFields.valueY = 'amount'
       series1.dataFields.categoryX = 'field'
       series1.name = 'Số lượng'
-      series1.columns.template.tooltipText = 'Số lượng: [bold]{valueY}[/]'
+      series1.tooltipText = 'Số lượng: [bold]{valueY}[/]'
       series1.columns.template.fill = am4core.color('#4285f4').lighten(0.5)
       series1.strokeWidth = 0
       series1.columns.template.width = am4core.percent(75)
@@ -201,7 +223,7 @@ export class ChartsComponent {
         const url = window.URL.createObjectURL(new Blob([response]));
         const link = document.createElement('a');
         link.href = url;
-        link.download = 'products.xlsx';
+        link.download = 'Statistical.xlsx';
         link.click();
         window.URL.revokeObjectURL(url);
       },

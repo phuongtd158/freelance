@@ -66,7 +66,7 @@ public class ChartServiceImpl implements ChartService {
             }
 
             Map<String, Object> beans = new HashMap<>();
-            beans.put("createDate", DateUtil.date2ddMMyyyyString(new Date()));
+            beans.put("createTime", DateUtil.date2ddMMyyyyString(new Date()));
             beans.put("cycleTypeName", sdi.getCycleType().equalsIgnoreCase("YEAR") ? "Năm" :
                     sdi.getCycleType().equalsIgnoreCase("MONTH") ? "Tháng" : "Ngày");
             beans.put("lstData", results);

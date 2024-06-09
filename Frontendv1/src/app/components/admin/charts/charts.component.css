@@ -13,6 +13,6 @@
   padding: 50px; /* Khoảng cách nội dung */
 }
 
-#chartdiv1, #chartdiv2 {
+#chartdiv1 {
   height: 28rem;
 }
