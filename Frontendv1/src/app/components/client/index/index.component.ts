@@ -258,6 +258,7 @@ export class IndexComponent implements OnInit {
         this.isLoggedIn = false;
         // Hiển thị thông báo đăng xuất thành công
         console.log(this.isLoggedIn);
+        location.reload()
       },
       error: err => {
         // Xử lý lỗi nếu có

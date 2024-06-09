@@ -279,13 +279,20 @@ public class OrderServiceImpl implements OrderService {
         return list;
     }
 
+    // Hàm xử lý trả hàng
     @Override
     public Order returnOrder(long id, CreateOrderRequest request) {
+        // Tìm kiếm order theo ID
         Order order = orderRepository.findById(id).orElseThrow(() -> new NotFoundException("Not Found Product With Id: " + id));
+        // Set thông tin Lý do trả hàng và Hình ảnh
         order.setReason(request.getReason());
         order.setUrlImg(request.getUrlImg());
+
+        // Tìm kiếm OrderStatus theo ID
         Orderstatus orderstatus = orderstatusRepository.findById(request.getStatus()).orElseThrow(() -> new NotFoundException("Not Found Category With Id: " + request.getStatus()));
         order.setOrderstatus(orderstatus);
+
+        // Lưu thông tin Order vào database
         orderRepository.save(order);
         return order;
     }
