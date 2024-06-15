@@ -1,23 +1,23 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   faBars,
+  faEye,
   faHeart,
   faPhone,
   faRetweet,
   faShoppingBag,
   faStar,
-  faStarHalf,
-  faEye
+  faStarHalf
 } from '@fortawesome/free-solid-svg-icons';
-import {CartService} from 'src/app/_service/cart.service';
-import {ProductService} from 'src/app/_service/product.service';
-import {WishlistService} from 'src/app/_service/wishlist.service';
+import { CartService } from 'src/app/_service/cart.service';
+import { ProductService } from 'src/app/_service/product.service';
+import { WishlistService } from 'src/app/_service/wishlist.service';
 
-import {ProductcolorService} from 'src/app/_service/productcolor.service';
-import {ProductroomService} from 'src/app/_service/productroom.service';
-import {ProductsizeService} from 'src/app/_service/productsize.service';
-import {MessageCustomService} from "../../../_service/message-custom.service";
+import { ProductcolorService } from 'src/app/_service/productcolor.service';
+import { ProductroomService } from 'src/app/_service/productroom.service';
+import { ProductsizeService } from 'src/app/_service/productsize.service';
+import { MessageCustomService } from "../../../_service/message-custom.service";
 
 @Component({
   selector: 'app-product-detail',
@@ -205,14 +205,7 @@ export class ProductDetailComponent implements OnInit {
     }
   }
 
-  // plusQuantity(){
-  //   this.quantity += 1;
-  // }
-  // subtractQuantity(){
-  //   if(this.quantity > 1){
-  //     this.quantity -= 1;
-  //   }
-  // }
+
   changeColor(colorName: any): void {
     this.selectedColor = colorName;
     this.colorsave = colorName;

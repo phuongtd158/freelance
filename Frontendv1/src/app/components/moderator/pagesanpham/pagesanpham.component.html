@@ -7,7 +7,7 @@
             <button pButton pRipple label="Xuất Excel" icon="pi pi-plus" class="p-button-success mr-2" (click)="downloadExcel()"></button>
 
         </ng-template>
-        
+
     </p-toolbar>
 
     <p-table #dt [value]="listProduct" [rows]="5" [paginator]="true" [globalFilterFields]="['name','category.name']" [tableStyle]="{'min-width': '75rem'}" [rowHover]="true" dataKey="id" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -37,7 +37,7 @@
                     <p-sortIcon field="category"></p-sortIcon>
                 </th>
                 <th style="min-width:10rem">Tuỳ Chỉnh</th>
-                
+
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-product>
@@ -99,6 +99,7 @@
     <label for="size">Size</label>
     <p-multiSelect [options]="listProductsize" [(ngModel)]="selectedProductsizes" optionLabel="name" optionValue="id"></p-multiSelect>
 </div>
+
 
 <div class="field" *ngIf="productForm.categoryId === '3'|| productForm.categoryId === '5'|| productForm.categoryId === '7'">
     <label for="name">Màu sắc</label>

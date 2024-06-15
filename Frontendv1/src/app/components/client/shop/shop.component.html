@@ -1,6 +1,7 @@
 <p-toast>
 </p-toast>
 
+<div class="container">
 <section class="breadcrumb-section set-bg" [ngStyle]="{backgroundImage:'url(assets/image/breadcrumb.jpg'}">
     <div class="container">
         <div class="row">
@@ -8,7 +9,7 @@
                 <div class="breadcrumb__text">
                     <h2>Danh Mục</h2>
                     <div class="breadcrumb__option">
-                        <a routerLink="/">Home</a>
+                        <a routerLink="/">Trang chủ</a>
                         <span>Danh Mục</span>
                     </div>
                 </div>
@@ -16,6 +17,7 @@
         </div>
     </div>
 </section>
+</div>
 
 <section class="product spad">
     <div class="container">
@@ -30,8 +32,8 @@
                         </ul>
                     </div>
                     <div class="sidebar__item">
-                        <h4>Giá</h4>
-                        <p-slider [(ngModel)]="rangeValues" [range]="true" [min]="0" [max]="1000000" [style]="{'background':'#dd2222'}" (onChange)="getListProductByPriceRange()"></p-slider>
+                        <h4>Tìm Kiếm Theo Giá</h4>
+                        <p-slider [(ngModel)]="rangeValues" [range]="true" [min]="1000000" [max]="100000000" [style]="{'background':'#dd2222'}" (onChange)="getListProductByPriceRange()"></p-slider>
                         <div class="price-input mt-3">
                             {{rangeValues[0] | currency:'VND'}} - {{rangeValues[1] | currency:'VND'}}
                         </div>
@@ -39,20 +41,20 @@
                     <div class="sidebar__item">
                         <div class="latest-product__text">
                             <h4>Sản Phẩm Mới</h4>
-                            <div class="latest-product__slider">
-                                <div class="latest-prdouct__slider__item">
+                            <div class="latest-product__slider" >
+                                <div class="latest-prdouct__slider__item" >
                                     <a href="#" class="latest-product__item" *ngFor="let product of listProductNewest">
                                         <div class="latest-product__item__pic">
-                                            <img src="{{'data:image/jpg;base64,' + product.images[0].data}}" alt="">
+                                            <img src="{{'data:image/jpg;base64,' + product.images[0].data}}" alt="" >
                                         </div>
                                         <div class="latest-product__item__text">
                                             <h6><b><a href="javascript:void(0)">{{ product.name.length > 25 ? product.name.slice(0, 25) + '...' : product.name }}</a></b></h6>
                                             <div style="display: inline-block;">
-                                                <h5 class="red-text" style="display: inline-block; margin-right: 10px;">{{ product.price | currency:'VND'}}</h5> 
+                                                <h5 class="red-text" style="display: inline-block; margin-right: 10px;">{{ product.price | currency:'VND'}}</h5>
                                                 <p style="display: inline-block;">Đã bán {{ product.quantitybuy }}</p>
                                             </div>
                                         </div>
-                                        
+
                                     </a>
                                 </div>
                             </div>
@@ -61,14 +63,14 @@
                 </div>
             </div>
             <div class="col-lg-9 col-md-7">
-               
+
 
                 <div class="row">
                     <p-dataView [value]="listProduct" [paginator]="true" [rows]="9">
                         <ng-template let-product pTemplate="listItem">
                             <div class="col-lg-4 col-md-5 col-sm-6 px-2">
                                 <div class="featured__item">
-                                    <div class="featured__item__pic set-bg" [ngStyle]="{'background-image': 'url(data:image/jpeg;base64,'+ product.images[0].data+')'}">
+                                    <div class="featured__item__pic set-bg" [ngStyle]="{'background-image': 'url(data:image/jpeg;base64,'+ product.images[0].data+')'}" routerLink="/product/{{product.id}}">
                                         <ul class="featured__item__pic__hover">
                                             <li>
                                                 <a href="javascript:void(0)" (click)="addToWishList(product)">
@@ -90,7 +92,7 @@
                                     <div class="featured__item__text">
                                         <h6><b><a href="javascript:void(0)">{{ product.name.length > 25 ? product.name.slice(0, 25) + '...' : product.name }}</a></b></h6>
                                         <div style="display: inline-block;">
-                                            <h5 class="red-text" style="display: inline-block; margin-right: 10px;">{{ product.price | currency:'VND'}}</h5> 
+                                            <h5 class="red-text" style="display: inline-block; margin-right: 10px;">{{ product.price | currency:'VND'}}</h5>
                                             <p style="display: inline-block;">Đã bán {{ product.quantitybuy }}</p>
                                         </div>
                                     </div>

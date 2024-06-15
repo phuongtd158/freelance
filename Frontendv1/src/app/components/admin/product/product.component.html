@@ -7,7 +7,7 @@
             <button pButton pRipple label="Xuất Excel" icon="pi pi-plus" class="p-button-success mr-2" (click)="downloadExcel()"></button>
 
         </ng-template>
-        
+
     </p-toolbar>
 
     <p-table #dt [value]="listProduct" [rows]="5" [paginator]="true" [globalFilterFields]="['name','category.name']" [tableStyle]="{'min-width': '75rem'}" [rowHover]="true" dataKey="id" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -37,7 +37,7 @@
                     <p-sortIcon field="category"></p-sortIcon>
                 </th>
                 <th style="min-width:10rem">Tuỳ Chỉnh</th>
-                
+
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-product>
@@ -89,20 +89,17 @@
             </div>
         </div>
 <!-- // -->
-        <div class="field" *ngIf="productForm.categoryId === '1'|| productForm.categoryId === '2' || productForm.categoryId === '3'|| productForm.categoryId === '4'|| productForm.categoryId === '5'||productForm.categoryId === '6'|| productForm.categoryId === '7'|| productForm.categoryId === '12'|| productForm.categoryId === '13' || productForm.categoryId === '14'|| productForm.categoryId === '16'|| productForm.categoryId === '20'">
+        <div class="field" *ngIf="productForm.categoryId === '1'|| productForm.categoryId === '2' || productForm.categoryId === '3'|| productForm.categoryId === '4'|| productForm.categoryId === '5'||productForm.categoryId === '6'|| productForm.categoryId === '7'">
             <label for="name">Màu sắc</label>
             <p-multiSelect [options]="listProductcolor" [(ngModel)]="selectedProductcolors" optionLabel="name" optionValue="id"></p-multiSelect>
         </div>
+
         <div class="field" *ngIf="productForm.categoryId === '1'">
             <label for="size">Size</label>
             <p-multiSelect [options]="listProductsize" [(ngModel)]="selectedProductsizes" optionLabel="name" optionValue="id"></p-multiSelect>
         </div>
 
-        <!-- <div class="field" *ngIf="productForm.categoryId === '3'|| productForm.categoryId === '5'|| productForm.categoryId === '7'">
-            <label for="name">Màu sắc</label>
-            <p-multiSelect [options]="listProductcolor" [(ngModel)]="selectedProductcolors" optionLabel="name" optionValue="id"></p-multiSelect>
-        </div> -->
-        <div class="field" *ngIf="productForm.categoryId === '2'|| productForm.categoryId === '3'">
+        <div class="field" *ngIf="productForm.categoryId === '2'|| productForm.categoryId === '3'|| productForm.categoryId === '1'">
             <label for="name">Dung Lượng</label>
             <p-multiSelect [options]="listProductroom" [(ngModel)]="selectedProductrooms" optionLabel="name" optionValue="id"></p-multiSelect>
         </div>
@@ -151,42 +148,8 @@
                 </div>
             </div>
 
-            <!-- //
-            // -->
-
-            <!-- <div class="field" *ngIf="productForm.categoryId === '1' || productForm.categoryId === '2'|| productForm.categoryId === '12'|| productForm.categoryId === '13'">
-                <label for="size">Size</label>
-                <input type="text" pInputText id="size" [(ngModel)]="productForm.size" />
-            </div>
-            <div class="field" *ngIf="productForm.categoryId === '1' || productForm.categoryId === '2'|| productForm.categoryId === '12'|| productForm.categoryId === '13'">
-                <label for="color">Màu sắc</label>
-                <input type="text" pInputText id="color" [(ngModel)]="productForm.color" />
-            </div>
-            
-            <div class="field" *ngIf="productForm.categoryId === '3'|| productForm.categoryId === '7'">
-                <label for="version">Phiên bản</label>
-                <input type="text" pInputText id="version" [(ngModel)]="productForm.version" />
-            </div>
-            <div class="field" *ngIf="productForm.categoryId === '3'|| productForm.categoryId === '7'">
-                <label for="color">Màu sắc</label>
-                <input type="text" pInputText id="color" [(ngModel)]="productForm.color" />
-            </div>
 
 
-            <div class="field" *ngIf="productForm.categoryId === '4'|| productForm.categoryId === '5'">
-                <label for="color">Màu sắc</label>
-                <input type="text" pInputText id="color" [(ngModel)]="productForm.color" />
-            </div> -->
-
-            
-            <!-- <div class="field">
-                <label for="name">Tag</label>
-                <p-multiSelect [options]="listTag" [(ngModel)]="selectedTags" optionLabel="name" optionValue="id"></p-multiSelect>
-               
-            </div> -->
-            
-            <!-- // -->
-            
         </div>
 
     </ng-template>

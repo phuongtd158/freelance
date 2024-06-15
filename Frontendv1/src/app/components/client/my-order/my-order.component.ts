@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {OrderService} from 'src/app/_service/order.service';
-import {StorageService} from 'src/app/_service/storage.service';
-import {MenuItem, MessageService} from 'primeng/api';
-import {ORDER_STATUS, REASON_OPTIONS} from "../../../share/constants/constants";
-import {UploadCloudinaryService} from "../../../_service/upload-cloudinary.service";
+import { Component, OnInit } from '@angular/core';
+import { MessageService } from 'primeng/api';
+import { OrderService } from 'src/app/_service/order.service';
+import { StorageService } from 'src/app/_service/storage.service';
+import { UploadCloudinaryService } from "../../../_service/upload-cloudinary.service";
+import { ORDER_STATUS, REASON_OPTIONS } from "../../../share/constants/constants";
 
 @Component({
   selector: 'app-my-order',

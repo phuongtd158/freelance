@@ -3,11 +3,11 @@
 <p-card>
     <p-toolbar styleClass="mb-4 gap-2">
         <ng-template pTemplate="left">
-            <button pButton pRipple label="Thêm Dung Lượng" icon="pi pi-plus" class="p-button-warning mr-2" (click)="showForm()" ></button>
+            <button pButton pRipple label="Thêm kích thước" icon="pi pi-plus" class="p-button-warning mr-2" (click)="showForm()" ></button>
         </ng-template>
     </p-toolbar>
 
-    <p-dialog header="size" [(visible)]="displayForm" [style]="{width: '30vw'}" [modal]="true" [transitionOptions]="'.2s'">
+    <p-dialog header="Thêm kích thước" [(visible)]="displayForm" [style]="{width: '30vw'}" [modal]="true" [transitionOptions]="'.2s'">
         <form action="">
             <div class="p-field">
                 <label for="username">Tên: </label>
@@ -25,7 +25,7 @@
     <p-table [value]="listProductsize" [rows]="5" [paginator]="true">
         <ng-template pTemplate="header">
             <tr>
-                <th>Dung Lượng</th>
+                <th>Kích thước màn hình</th>
                 <th>Tuỳ Chỉnh</th>
             </tr>
         </ng-template>

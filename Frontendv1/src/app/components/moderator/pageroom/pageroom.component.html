@@ -7,7 +7,7 @@
         </ng-template>
     </p-toolbar>
 
-    <p-dialog header="room" [(visible)]="displayForm" [style]="{width: '30vw'}" [modal]="true" [transitionOptions]="'.2s'">
+    <p-dialog header="Thêm dung lượng" [(visible)]="displayForm" [style]="{width: '30vw'}" [modal]="true" [transitionOptions]="'.2s'">
         <form action="">
             <div class="p-field">
                 <label for="username">Tên: </label>
@@ -30,9 +30,9 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-tag>
-            <tr> 
+            <tr>
                 <td>{{tag.name}}</td>
-                
+
                 <td>
                     <!-- <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-primary"></button> -->
                     <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-primary" (click)="onUpdateForm(tag.id,tag.name)"></button>

@@ -13,15 +13,7 @@
                 <input type="password" pPassword class="w-full" [(ngModel)]="loginForm.password" name="password">
             </div>
 
-            <!-- //
 
-            // -->
-
-
-
-            <!-- //
-
-            // -->
 
             <div class="p-field mt-3">
                 <button type="submit" pButton (click)="login()">Đăng nhập</button>
@@ -50,7 +42,6 @@
 </p-dialog>
 
 
-
 <header class="header">
 
     <div class="header__top">
@@ -59,7 +50,7 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="header__top__left">
                         <ul>
-                            <li routerLink="/admin">Kênh người bán/Quản lý</li>
+                            <li routerLink="/admin">Kênh người bán</li>
                             <li  *ngIf="setchung && setchung.gmail"><i class="fa fa-envelope"></i> {{setchung.gmail}}</li>
 
 
@@ -89,7 +80,7 @@
                                 <li><a href="javascript:void(0)" routerLink="/policy">Chính Sách</a></li>
                                 <li><a href="javascript:void(0)" routerLink="/product">Sản Phẩm</a></li>
                                 <li><a href="javascript:void(0)" routerLink="/cart">Giỏ Hàng</a></li>
-                                <li><a href="javascript:void(0)" routerLink="/checkorder">Tra cứu đơn hàng</a></li>
+                                <li><a href="javascript:void(0)" routerLink="/checkorder">Tra Cứu Đơn Hàng</a></li>
 
                             </ul>
                         </li>
@@ -162,10 +153,10 @@
                             <p-overlayPanel  #profile >
                                 <div>
                                      <!-- Hiển thị mục "ADMIN" nếu là admin -->
-                                    <a class="dropdown-item" *ngIf="isAdmin" href="javascript:void(0)" routerLink="/admin/charts">
+                                    <!--<a class="dropdown-item" *ngIf="isAdmin" href="javascript:void(0)" routerLink="/admin/charts">
                                         <fa-icon [icon]="userIcon"></fa-icon>
                                         Trang Quản Trị
-                                    </a>
+                                    </a>-->
                                     <a class="dropdown-item" href="javascript:void(0)" routerLink="/user">
                                         <fa-icon [icon]="userIcon"></fa-icon>
                                         Người Dùng
@@ -199,28 +190,7 @@
 
 
         <div class="row">
-            <!-- <div class="col-lg-3">
-                <div class="hero__categories">
-                    <div class="hero__categories__all" (click)="showDepartmentClick()">
-                        <fa-icon [icon]="bars"></fa-icon>
-                        <span>All Danh Mục</span>
-                    </div>
-                    <ul *ngIf="showDepartment">
-                        <li><a href="javascript:void(0)" *ngFor="let category of listCategoryEnabled" routerLink="category/{{category.id}}">{{category.name}}</a></li>
-                    </ul>
-                </div>
-            </div> -->
-            <!-- <div class="col-lg-3">
-                <div class="hero__categories">
-                    <div class="hero__categories__all" (click)="showDepartmentClick()">
-                        <fa-icon [icon]="bars"></fa-icon>
-                        <span>All Danh Mục</span>
-                    </div>
-                    <ul *ngIf="showDepartment" style="max-height: 431px; overflow-y: auto;">
-                        <li><a href="javascript:void(0)" *ngFor="let category of listCategoryEnabled" routerLink="category/{{category.id}}">{{category.name}}</a></li>
-                    </ul>
-                </div>
-            </div> -->
+
             <div class="col-lg-3">
                 <div class="hero__categories">
                     <div class="hero__categories__all" (click)="showDepartmentClick()">
@@ -240,7 +210,7 @@
                     <div class="hero__search__form">
                         <form action="#">
 
-                            <input type="text" placeholder="Tìm sản phẩm, thương hiệu, tên shop,..." [(ngModel)]="keyword" name="keyword">
+                            <input type="text" placeholder="Nhập vào tìm kiếm sản phẩm, ví dụ: iPhone 15 promax" [(ngModel)]="keyword" name="keyword">
                             <button class="site-btn" routerLink="/search/{{keyword}}">SEARCH</button>
                         </form>
                     </div>
@@ -266,7 +236,7 @@
 
 
 
-
+<!--Phần Footer-->
 <footer class="footer spad">
     <div class="container">
         <div class="row">
@@ -284,7 +254,8 @@
             </div>
             <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
                 <div class="footer__widget">
-                    <h6>Hỗ Trợ</h6>
+                    <h6>Chính sách & quy định chung:</h6>
+
                     <ul *ngFor="let chi of policy">
                         <li routerLink="/policy/{{chi.id}}"><a href="javascript:void(0)">{{chi.title}}</a></li>
                     </ul>
@@ -292,6 +263,36 @@
                     <ul *ngFor="let duoi of listpolicy">
                         <li routerLink="/policy/{{duoi.id}}" ><a href="javascript:void(0)">{{duoi.title}}</a></li>
                     </ul>
+                    <h6>Chính sách vận chuyển, thanh toán</h6>
+                    <ul *ngFor="let duoi of listpolicy">
+                        <li routerLink="/policy/{{duoi.id}}" ><a href="javascript:void(0)">{{duoi.title}}</a></li>
+                    </ul>
+                    <h6>Chính sách bảo hành, đổi, trả hàng</h6>
+                    <ul *ngFor="let duoi of listpolicy">
+                        <li routerLink="/policy/{{duoi.id}}" ><a href="javascript:void(0)">{{duoi.title}}</a></li>
+                    </ul>
+                    <h6>Quyền riêng tư của Apple</h6>
+                    <ul *ngFor="let duoi of listpolicy">
+                        <li routerLink="/policy/{{duoi.id}}" ><a href="javascript:void(0)">{{duoi.title}}</a></li>
+                    </ul>
+                    <h6>Chính sách bảo mật thông tin</h6>
+                    <ul *ngFor="let duoi of listpolicy">
+                        <li routerLink="/policy/{{duoi.id}}" ><a href="javascript:void(0)">{{duoi.title}}</a></li>
+                    </ul>
+                    <h6>Khách hàng thân thiết</h6>
+                    <ul *ngFor="let duoi of listpolicy">
+                        <li routerLink="/policy/{{duoi.id}}" ><a href="javascript:void(0)">{{duoi.title}}</a></li>
+                    </ul>
+                    <h6>Chăm sóc khách hàng</h6>
+                    <ul *ngFor="let duoi of listpolicy">
+                        <li routerLink="/policy/{{duoi.id}}" ><a href="javascript:void(0)">{{duoi.title}}</a></li>
+                    </ul>
+                    <h6>FAQ hỏi đáp</h6>
+                    <ul *ngFor="let duoi of listpolicy">
+                        <li routerLink="/policy/{{duoi.id}}" ><a href="javascript:void(0)">{{duoi.title}}</a></li>
+                    </ul>
+
+
                 </div>
             </div>
             <div class="col-lg-4 col-md-12">
@@ -321,9 +322,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="footer__copyright">
-                        <div class="footer__copyright__text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        <div class="footer__copyright__text"><p>
   Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://www.facebook.com/aquarius.loveyourself" target="_blank">Nguyễn Văn Giàu</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
+  </p></div>
                         <div class="footer__copyright__payment"><img src="assets/image/payment-item.png" alt=""></div>
                     </div>
                 </div>

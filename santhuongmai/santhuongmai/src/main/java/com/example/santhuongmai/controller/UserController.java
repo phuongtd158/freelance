@@ -15,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.santhuongmai.entity.Blog;
 import com.example.santhuongmai.entity.User;
 import com.example.santhuongmai.model.request.ChangePasswordRequest;
-import com.example.santhuongmai.model.request.CreateBlogRequest;
 import com.example.santhuongmai.model.request.CreateUserRequest;
 import com.example.santhuongmai.model.request.UpdateProfileRequest;
 import com.example.santhuongmai.model.response.MessageResponse;

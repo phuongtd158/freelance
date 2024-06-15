@@ -29,7 +29,7 @@
 .product-item {
     text-align: center;
     padding: 10px;
-    
+
     border-radius: 5px;
 }
 
@@ -46,8 +46,8 @@
 .featured__item {
     border: 1px solid #dee2e6; /* Màu và độ dày viền có thể điều chỉnh */
     margin-bottom: 20px; /* Khoảng cách giữa các sản phẩm */
-    
-    
+
+
      padding: 20px; /*Khoảng cách nội dung bên trong sản phẩm */
 }
 
@@ -109,7 +109,7 @@
 .category-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(calc(12% ), 1fr)); /* Số lượng cột và độ rộng của mỗi cột */
-   
+
 }
 
 .hot-label {
@@ -119,7 +119,7 @@
     background-color: #fa0707;
     color: white; /* Màu chữ */
     padding: 5px 10px; /* Khoảng cách đệm bên trong */
-    border-radius: 5px; /* Độ cong viền */    
+    border-radius: 5px; /* Độ cong viền */
     font-size: 12px; /* Cỡ chữ */
     z-index: 1;
 }

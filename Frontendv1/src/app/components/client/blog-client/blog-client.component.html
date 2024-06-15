@@ -1,19 +1,20 @@
+<div class="container">
 <section class="breadcrumb-section set-bg" [ngStyle]="{backgroundImage:'url(assets/image/breadcrumb.jpg'}">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="breadcrumb__text">
-                    <h2>Blog</h2>
+                    <h2>Tin tức - Khuyến mãi</h2>
                     <div class="breadcrumb__option">
-                        <a routerLink="/">Blog</a>
-                        <span>Blog</span>
+                        <a routerLink="/">Trang chủ</a>
+                        <span>Tin tức - Khuyến mãi</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
+</div>
 
 <section class="blog spad">
     <div class="container">
@@ -22,7 +23,7 @@
                 <div class="blog__sidebar">
                     <div class="blog__sidebar__search">
                         <form action="#">
-                            <input type="text" placeholder="Search...">
+                            <input type="text" placeholder="Tìm kiếm...">
                             <button type="submit"><span class="icon_search"></span></button>
                         </form>
                     </div>
@@ -33,7 +34,7 @@
                         </ul>
                     </div>
                     <div class="blog__sidebar__item">
-                        <h4>Bài mới</h4>
+                        <h4>Bài viết mới</h4>
                         <div class="blog__sidebar__recent">
                             <a href="javascript:void(0)" routerLink="/blog/{{blog.id}}" class="blog__sidebar__recent__item" *ngFor="let blog of listBlogNewest">
                                 <div class="blog__sidebar__recent__item__pic">
@@ -52,9 +53,9 @@
             <div class="col-lg-8 col-md-7">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6" *ngFor="let blog of listBlog">
-                        <div class="blog__item">
-                            <div class="blog__item__pic">
-                                <img src="{{'data:image/jpg;base64,' + blog.image.data}}" alt="" >
+                        <div class="blog__item" >
+                            <div class="blog__item__pic ">
+                                <img src="{{'data:image/jpg;base64,' + blog.image.data}}" alt="" routerLink="/blog/{{blog.id}}">
                             </div>
                             <div class="blog__item__text">
                                 <ul>

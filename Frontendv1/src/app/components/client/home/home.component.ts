@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {faBars, faHeart, faPhone, faRetweet, faShoppingBag, faEye} from '@fortawesome/free-solid-svg-icons';
-import {MessageService} from 'primeng/api';
-import {CartService} from 'src/app/_service/cart.service';
-import {ProductService} from 'src/app/_service/product.service';
-import {WishlistService} from 'src/app/_service/wishlist.service';
-import {CategoryService} from 'src/app/_service/category.service';
-import {BlogService} from 'src/app/_service/blog.service';
+import { Component, OnInit } from '@angular/core';
+import { faEye, faHeart, faRetweet, faShoppingBag } from '@fortawesome/free-solid-svg-icons';
+import { MessageService } from 'primeng/api';
+import { BlogService } from 'src/app/_service/blog.service';
+import { CartService } from 'src/app/_service/cart.service';
+import { CategoryService } from 'src/app/_service/category.service';
+import { ProductService } from 'src/app/_service/product.service';
+import { WishlistService } from 'src/app/_service/wishlist.service';
 
 @Component({
   selector: 'app-home',
@@ -153,23 +153,7 @@ export class HomeComponent implements OnInit {
     })
   }
 
-// addToCart(item: any){
-//   this.cartService.getItems();
-//   this.showSuccess("Thêm giỏ hàng thành công!")
-//   this.cartService.addToCart(item,1);
-// }
-// addToCart(item: any) {
-//   // Kiểm tra số lượng sản phẩm
-//   if (item.quantity <= 0) {
-//     // Hiển thị thông báo sản phẩm đã hết hàng
-//     this.showError("Sản phẩm đã hết hàng!");
-//   } else {
-//     // Nếu số lượng sản phẩm còn lớn hơn 0, thêm vào giỏ hàng
-//     this.cartService.getItems();
-//     this.showSuccess("Thêm giỏ hàng thành công!");
-//     this.cartService.addToCart(item, 1);
-//   }
-// }
+
   addToCart(event: any, product: any) {
     event.preventDefault()
     event.stopPropagation()

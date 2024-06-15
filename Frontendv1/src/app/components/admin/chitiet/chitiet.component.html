@@ -15,7 +15,7 @@
            [showCurrentPageReport]="true">
     <ng-template pTemplate="caption">
       <div class="flex align-items-center justify-content-between">
-        <h5 class="m-0">Chi Tiết Đơn Hàng</h5>
+        <h5 class="m-0">Chi tiết đơn hàng</h5>
         <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
@@ -37,7 +37,7 @@
         <th pSortableColumn="country">Size
           <p-sortIcon field="country"></p-sortIcon>
         </th>
-        <th pSortableColumn="country">Room
+        <th pSortableColumn="country">Dung lượng
           <p-sortIcon field="country"></p-sortIcon>
         </th>
         <th pSortableColumn="country">Giá

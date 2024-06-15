@@ -2,7 +2,7 @@
 <p-card class="card">
     <p-toolbar styleClass="mb-4 gap-2">
         <ng-template pTemplate="left">
-            <button pButton pRipple label="Thêm Blog" icon="pi pi-plus" class="p-button-warning mr-2" (click)="showNew()" ></button>
+            <button pButton pRipple label="Thêm bài viết" icon="pi pi-plus" class="p-button-warning mr-2" (click)="showNew()" ></button>
         </ng-template>
     </p-toolbar>
 
@@ -28,7 +28,7 @@
                 <th pSortableColumn="price"  style="min-width:15rem">Mô tả <p-sortIcon field="price"></p-sortIcon></th>
                 <th pSortableColumn="category" style="min-width:15rem">Nội dung <p-sortIcon field="category"></p-sortIcon></th>
                 <th style="min-width:10rem">Tuỳ Chỉnh</th>
-                
+
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-blog>
@@ -44,8 +44,8 @@
                 <td>{{truncateContent(blog.content, 50) }}</td>
 
 
-                
-                
+
+
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-primary mr-2" (click)="showUpdate(blog)" ></button>
                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"  (click)="showDelete(blog.id,blog.title)"></button>
@@ -82,20 +82,7 @@
             <label for="description">Mô tả</label>
             <textarea id="description" pInputTextarea [(ngModel)]="blogForm.description" required rows="2" cols="20"></textarea>
         </div>
-        <!-- <div class="field">
-            <label for="description">Description</label>
-            <textarea id="description" pInputTextarea [(ngModel)]="blogForm.description" required rows="2" cols="20"></textarea>
-            <div [ngxSummernote]="config"></div>
-        </div> -->
-        <!-- <div class="field">
-            <label for="description">Mô tả</label>
-            <div [ngxSummernote]="config" [(ngModel)]="blogForm.description"></div>
-        </div> -->
-        
-        <!-- <div class="field">
-            <label for="content">Content</label>
-            <textarea id="content" pInputTextarea [(ngModel)]="blogForm.content" required rows="4" cols="20"></textarea>
-        </div> -->
+
         <div class="field">
             <label for="content">Nội Dung</label>
             <div [ngxSummernote]="config" [(ngModel)]="blogForm.content"></div>

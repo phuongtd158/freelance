@@ -1,12 +1,12 @@
-import {Component} from '@angular/core';
-import {BlogService} from 'src/app/_service/blog.service';
-import {ChartService} from 'src/app/_service/chart.service';
-import {faCalculator, faDollarSign, faComment, faClipboard, faFile} from '@fortawesome/free-solid-svg-icons';
-import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
+import * as am4core from '@amcharts/amcharts4/core';
 import am4themesAnimated from '@amcharts/amcharts4/themes/animated';
-import {DatePipe} from "@angular/common";
-import {MessageCustomService} from "../../../_service/message-custom.service";
+import { DatePipe } from "@angular/common";
+import { Component } from '@angular/core';
+import { faCalculator, faClipboard, faComment, faDollarSign, faFile } from '@fortawesome/free-solid-svg-icons';
+import { BlogService } from 'src/app/_service/blog.service';
+import { ChartService } from 'src/app/_service/chart.service';
+import { MessageCustomService } from "../../../_service/message-custom.service";
 
 am4core.useTheme(am4themesAnimated)
 
@@ -176,7 +176,7 @@ export class ChartsComponent {
       categoryAxis.renderer.labels.template.paddingRight = 0
 
       const valueAxis1 = chart.yAxes.push(new am4charts.ValueAxis())
-      valueAxis1.title.text = 'Đơn vị (VNĐ)'
+      valueAxis1.title.text = 'Đơn vị (Cái)'
       valueAxis1.min = 0
       valueAxis1.maxPrecision = 0
 
@@ -191,7 +191,7 @@ export class ChartsComponent {
       series1.yAxis = valueAxis1
 
       const valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis())
-      valueAxis2.title.text = 'Đơn vị (Cái)'
+      valueAxis2.title.text = 'Đơn vị (VNĐ)'
       valueAxis2.min = 0
       valueAxis2.maxPrecision = 0
       valueAxis2.renderer.opposite = true

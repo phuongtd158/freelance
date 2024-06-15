@@ -1,6 +1,6 @@
 <p-toast></p-toast>
 <p-card class="card">
-    
+
 
     <p-table #dt [value]="listBlog" [rows]="5" [paginator]="true" [globalFilterFields]="['username','id']" [tableStyle]="{'min-width': '75rem'}"
         [rowHover]="true" dataKey="id"
@@ -16,7 +16,7 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                
+
                 <th pSortableColumn="id">ID
                     <p-sortIcon field="id"></p-sortIcon>
                 </th>
@@ -26,24 +26,24 @@
                 <th>Trạng Thái</th>
                 <th>Quyền</th>
                 <th style="min-width:10rem">Tuỳ Chỉnh</th>
-                
+
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-blog >
             <tr>
-                
+
                 <td>{{blog.id}}</td>
-                <td>{{blog.username}}</td>   
+                <td>{{blog.username}}</td>
                 <td>
                     <p-inputSwitch [(ngModel)]="blog.enabled" [disabled]="true"></p-inputSwitch>
-                </td>                  
+                </td>
                 <td>
                     <ng-container *ngFor="let role of blog.roles">
                       {{ role.name }}
                       <br>
                     </ng-container>
                   </td>
-                  
+
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-primary mr-2" (click)="showUpdate(blog)" ></button>
                 </td>
@@ -84,10 +84,7 @@
             <label for="email">Email</label>
             <textarea id="email" pInputTextarea [(ngModel)]="blogForm.email" required rows="2" cols="20"></textarea>
         </div>
-        <div class="field">
-            <label for="country">Quốc Gia</label>
-            <textarea id="country" pInputTextarea [(ngModel)]="blogForm.country" required rows="2" cols="20"></textarea>
-        </div>
+
         <div class="field">
             <label for="state">Quận/Huyện</label>
             <textarea id="state" pInputTextarea [(ngModel)]="blogForm.state" required rows="2" cols="20"></textarea>
@@ -100,7 +97,7 @@
             <label for="phone">SĐT</label>
             <textarea id="phone" pInputTextarea [(ngModel)]="blogForm.phone" required rows="2" cols="20"></textarea>
         </div>
-        
+
 
     </ng-template>
 

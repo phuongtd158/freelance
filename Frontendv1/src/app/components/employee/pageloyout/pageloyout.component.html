@@ -5,7 +5,7 @@
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
         <a class="sidebar-brand d-flex align-items-center justify-content-center" routerLink="/admin">
-            <img src="assets/image/logo.png" alt="">
+            <img src="assets/image/logoxin1.png" alt="">
         </a>
         <hr class="sidebar-divider my-0">
         <li class="nav-item active">
@@ -15,35 +15,12 @@
         </li>
         <hr class="sidebar-divider">
 
-        <!-- <div class="sidebar-heading" (click)="toggleSubMenuProduct()">
-            Quản Lý Sản Phẩm
-        </div>
-        <ul class="submenu" *ngIf="showSubMenuProduct">
-            <li><a routerLink="/moderator/pagesanpham"><fa-icon [icon]="receipt"></fa-icon><span>Sản Phẩm</span></a></li>
-            <li><a routerLink="/moderator/pagecolor"><fa-icon [icon]="receipt"></fa-icon><span>Màu</span></a></li>
-            <li><a routerLink="/moderator/pagesize"><fa-icon [icon]="receipt"></fa-icon><span>Size</span></a></li>
-            <li><a routerLink="/moderator/pageroom"><fa-icon [icon]="receipt"></fa-icon><span>Room</span></a></li>
-
-        </ul> -->
-        <!-- <hr class="sidebar-divider"> -->
-
-        <!-- <div class="sidebar-heading" (click)="toggleSubMenuOrder()">
-            Quản Lý Đơn Hàng
-        </div>
-        <ul class="submenu" *ngIf="showSubMenuOrder">
-            <li><a routerLink="/admin/order"><fa-icon [icon]="cart"></fa-icon><span>Đơn Hàng</span></a></li>
-            <li><a routerLink="/admin/status-order"><fa-icon [icon]="cart"></fa-icon><span>Xử Lý Đơn Hàng</span></a></li>
-            <li><a routerLink="/admin/tag"><fa-icon [icon]="tag"></fa-icon><span>Tag</span></a></li>
-            <li><a routerLink="/admin/blog"><fa-icon [icon]="rocket"></fa-icon><span>Blog</span></a></li>
-        </ul> -->
       <div class="sidebar-heading" (click)="toggleSubMenuOrder()">
         Quản Lý Đơn Hàng
       </div>
       <ul class="submenu" *ngIf="showSubMenuOrder">
         <li><a routerLink="/employee/order"><fa-icon [icon]="cart"></fa-icon><span>Đơn Hàng</span></a></li>
         <li><a routerLink="/employee/status-order"><fa-icon [icon]="cart"></fa-icon><span>Xử Lý Đơn Hàng</span></a></li>
-        <!-- <li><a routerLink="/moderator/tag"><fa-icon [icon]="tag"></fa-icon><span>Tag</span></a></li>
-        <li><a routerLink="/moderator/blog"><fa-icon [icon]="rocket"></fa-icon><span>Blog</span></a></li> -->
       </ul>
       <hr class="sidebar-divider">
         <div class="sidebar-heading" (click)="toggleSubUser()">
@@ -51,10 +28,7 @@
         </div>
         <ul class="submenu" *ngIf="showSubMenuUser">
             <li><a routerLink="/employee/pagecontact"><fa-icon [icon]="userIcon"></fa-icon><span>Liên hệ</span></a></li>
-
         </ul>
-
-
 
         <hr class="sidebar-divider d-none d-md-block">
 

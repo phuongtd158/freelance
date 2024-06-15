@@ -1,12 +1,13 @@
+<div class="container">
 <section class="breadcrumb-section set-bg" [ngStyle]="{backgroundImage:'url(assets/image/breadcrumb.jpg'}">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="breadcrumb__text">
-                    <h2>Blog</h2>
+                    <h2>Chính sách</h2>
                     <div class="breadcrumb__option">
                         <a routerLink="/">Trang Chủ</a>
-                        <a routerLink="/blog">Blog</a>
+                        <a routerLink="/policy">Chính sách</a>
                         <span *ngIf="blog != null">{{blog.title}}</span>
                     </div>
                 </div>
@@ -14,6 +15,8 @@
         </div>
     </div>
 </section>
+</div>
+
 
 
 <section class="blog-details spad">
@@ -23,13 +26,13 @@
                 <div class="blog__sidebar">
                     <div class="blog__sidebar__search">
                         <form action="#">
-                            <input type="text" placeholder="Search...">
+                            <input type="text" placeholder="Tìm kiếm...">
                             <button type="submit"><span class="icon_search"></span></button>
                         </form>
                     </div>
-                   
+
                     <div class="blog__sidebar__item">
-                        <h4>Recent News</h4>
+                        <h4>Tin tức khác</h4>
                         <div class="blog__sidebar__recent">
                             <a href="javascript:void(0)" class="blog__sidebar__recent__item" *ngFor="let blog of listBlogNewest">
                                 <div class="blog__sidebar__recent__item__pic">
@@ -47,7 +50,7 @@
             <div class="col-lg-8 col-md-7 order-md-1 order-1">
                 <div class="blog__details__text">
                     <!-- <img src="{{'data:image/jpg;base64,' + blog.image.data}}" alt="" width="250" height="150"> -->
-                    
+
                     <h3>{{blog.title}}</h3>
                     <p>{{blog.description}}</p>
 
@@ -56,7 +59,7 @@
                     <p [innerHTML]="blog.content"></p>
 
                 </div>
-               
+
             </div>
         </div>
     </div>
@@ -69,7 +72,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title related-blog-title">
-                    <h2>Có thể bạn sẽ thích !</h2>
+                    <h2>Xem thêm Tin tức!</h2>
                 </div>
             </div>
         </div>

@@ -42,7 +42,7 @@ export class ShopComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
     this.id = this.route.snapshot.params['id'];
     this.getListProductByCategory();
     this.getListCategoryEnabled();
@@ -56,7 +56,7 @@ export class ShopComponent implements OnInit {
         this.listProduct = res;
       },error: err =>{
         console.log(err);
-      } 
+      }
     })
   }
 
@@ -91,30 +91,9 @@ export class ShopComponent implements OnInit {
     })
   }
 
-  // addToCart(item: any){
-  //   this.cartService.getItems();
-  //   this.cartService.addToCart(item,1);
-  // }
-  
-  // addToWishList(item: any){
-  //   if(!this.wishlistService.productInWishList(item)){
-  //     this.wishlistService.addToWishList(item);
-  //   }
-  // }
-  // addToCart(item: any) {
-  //   // Kiểm tra số lượng sản phẩm
-  //   if (item.quantity <= 0) {
-  //     // Hiển thị thông báo sản phẩm đã hết hàng
-  //     this.showError("Sản phẩm đã hết hàng!");
-  //   } else {
-  //     // Nếu số lượng sản phẩm còn lớn hơn 0, thêm vào giỏ hàng
-  //     this.cartService.getItems();
-  //     this.showSuccess("Thêm giỏ hàng thành công!");
-  //     this.cartService.addToCart(item, 1);
-  //   }
-  // }
+
   addToCart(product: any) {
-  
+
 
 
     // Kiểm tra số lượng sản phẩm có sẵn

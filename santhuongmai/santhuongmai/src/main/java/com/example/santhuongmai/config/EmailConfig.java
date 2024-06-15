@@ -36,6 +36,7 @@ public class EmailConfig {
         props.put("mail.smtp.starttls.required", "true");  // Bật yêu cầu STARTTLS
         props.put("mail.smtp.ssl.enable", "false");  // Tắt SSL
         props.put("mail.debug", "true");
+        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 
         mailSender.setJavaMailProperties(props);
         return mailSender;

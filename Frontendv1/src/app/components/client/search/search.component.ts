@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router,ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faHeart, faRetweet, faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 import { MessageService } from 'primeng/api';
 import { CartService } from 'src/app/_service/cart.service';
@@ -77,16 +77,6 @@ export class SearchComponent implements OnInit {
   }
 
 
-  // addToCart(item: any){
-  //   this.cartService.getItems();
-  //   this.cartService.addToCart(item,1);
-  // }
-  
-  // addToWishList(item: any){
-  //   if(!this.wishlistService.productInWishList(item)){
-  //     this.wishlistService.addToWishList(item);
-  //   }
-  // }
   addToCart(product: any) {
     // Kiểm tra số lượng sản phẩm có sẵn
     if (product.quantity <= 0) {
@@ -97,7 +87,7 @@ export class SearchComponent implements OnInit {
       this.showSuccess("Thêm giỏ hàng thành công!");
     }
     console.log(product)
-  } 
+  }
   addToWishList(item: any){
     if(!this.wishlistService.productInWishList(item)){
       this.showSuccess("Thêm yêu thích thành công!")
@@ -110,7 +100,7 @@ export class SearchComponent implements OnInit {
   showError(text: string) {
     this.messageService.add({severity:'error', summary: 'Error', detail: text});
   }
-  
+
   showWarn(text: string) {
     this.messageService.add({severity:'warn', summary: 'Cảnh Báo', detail: text});
   }
