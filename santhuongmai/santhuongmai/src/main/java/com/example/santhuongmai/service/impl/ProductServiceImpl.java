@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.example.santhuongmai.dto.sdi.FilterProductSdi;
+import com.example.santhuongmai.dto.sdo.ProductFilterSdo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -234,8 +236,10 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(product);
     }
 
-   
+    @Override
+    public List<ProductFilterSdo> filter(FilterProductSdi request) {
+        return productRepository.filter(request);
+    }
 
 
-    
 }

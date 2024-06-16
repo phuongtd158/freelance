@@ -3,6 +3,8 @@ package com.example.santhuongmai.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.santhuongmai.dto.sdi.FilterProductSdi;
+import com.example.santhuongmai.dto.sdo.ProductFilterSdo;
 import com.example.santhuongmai.entity.Product;
 import com.example.santhuongmai.entity.User;
 import com.example.santhuongmai.model.request.CreateProductRequest;
@@ -34,5 +36,7 @@ public interface ProductService {
     void deleteProduct(long id);
     
     void updateProductQuantity(long id, int quantity ,int quantitybuy);
+
+    List<ProductFilterSdo> filter(FilterProductSdi request);
    
 }

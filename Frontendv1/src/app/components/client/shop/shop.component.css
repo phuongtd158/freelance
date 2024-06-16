@@ -15,3 +15,15 @@
 :host ::ng-deep .p-dataview.p-dataview-list .p-dataview-content > .p-grid > div{
     border: none;
 }
+
+::ng-deep .p-dropdown {
+  width: 100% !important;
+}
+.dropdown-container {
+  max-width: 100%; /* Đảm bảo dropdown không vượt quá chiều rộng của .col-lg-4 */
+}
+
+.dropdown-content {
+  max-width: 100%; /* Giới hạn chiều rộng của dropdown content */
+  overflow: auto; /* Bật thanh cuộn nếu nội dung quá dài */
+}

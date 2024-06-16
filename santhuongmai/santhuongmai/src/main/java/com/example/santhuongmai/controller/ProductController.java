@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.santhuongmai.dto.sdi.FilterProductSdi;
+import com.example.santhuongmai.dto.sdo.ProductFilterSdo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -145,6 +147,12 @@ public class ProductController {
         List<Product> products = productService.getList();
         ModelAndView modelAndView = new ModelAndView(new ProductExcelExport(), "products", products);
         return modelAndView;
+    }
+
+    @PostMapping("/filter")
+    @Operation(summary="Lọc sản phẩm")
+    public ResponseEntity<List<ProductFilterSdo>> filter(@RequestBody FilterProductSdi request){
+        return ResponseEntity.ok(productService.filter(request));
     }
 
 }
