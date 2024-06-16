@@ -35,27 +35,39 @@ public class ChartController {
         return ResponseEntity.ok(chartService.searchProduct(request));
     }
 
-    @GetMapping("/get-sum-quantity-product")
+    @PostMapping("/search-product-detail")
+    @Operation(summary="Tim kiem du lieu san pham chi tiet")
+    public ResponseEntity<List<ChartSdo>> searchProductDetail(@RequestBody ChartSdi request){
+        return ResponseEntity.ok(chartService.searchProductDetail(request));
+    }
+
+    @PostMapping("/search-product-v2")
+    @Operation(summary="Tim kiem du lieu san pham v2")
+    public ResponseEntity<List<ChartSdo>> searchProductV2(@RequestBody ChartSdi request){
+        return ResponseEntity.ok(chartService.searchProductV2(request));
+    }
+
+    @PostMapping("/search-product-v2-detail")
+    @Operation(summary="Tim kiem du lieu san pham v2 chi tiet")
+    public ResponseEntity<List<ChartSdo>> searchProductV2Detail(@RequestBody ChartSdi request){
+        return ResponseEntity.ok(chartService.searchProductV2Detail(request));
+    }
+
+    @PostMapping("/get-sum-quantity-product")
     @Operation(summary="Lay tong san pham trong kho")
-    public ResponseEntity<Integer> getSumQuantityProduct(){
-        return ResponseEntity.ok(chartService.getSumQuantityProduct());
+    public ResponseEntity<Integer> getSumQuantityProduct(@RequestBody ChartSdi request){
+        return ResponseEntity.ok(chartService.getSumQuantityProduct(request));
     }
-    @GetMapping("/get-sum-revenue")
+    @PostMapping("/get-sum-revenue")
     @Operation(summary="Lay tong doanh thu")
-    public ResponseEntity<BigDecimal> getSumRevenue(){
-        return ResponseEntity.ok(chartService.getSumRevenue());
+    public ResponseEntity<BigDecimal> getSumRevenue(@RequestBody ChartSdi request){
+        return ResponseEntity.ok(chartService.getSumRevenue(request));
     }
 
-    @GetMapping("/get-sum-order-done")
+    @PostMapping("/get-sum-order-done")
     @Operation(summary="Lay tong don hang hoan thanh")
-    public ResponseEntity<Integer> getSumOrderDone(){
-        return ResponseEntity.ok(chartService.getSumOrderDone());
-    }
-
-    @GetMapping("/get-sum-product-sell")
-    @Operation(summary="Lay tong san pham da ban")
-    public ResponseEntity<Integer> getSumProductSell(){
-        return ResponseEntity.ok(chartService.getSumProductSell());
+    public ResponseEntity<Integer> getSumOrderDone(@RequestBody ChartSdi request){
+        return ResponseEntity.ok(chartService.getSumOrderDone(request));
     }
 
     @PostMapping("export")

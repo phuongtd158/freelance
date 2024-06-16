@@ -25,20 +25,28 @@ export class ChartService {
     return this.http.post(CHART_API + 'search-product', data, httpOptions);
   }
 
-  getSumQuantityProduct(): Observable<any> {
-    return this.http.get(CHART_API + 'get-sum-quantity-product', httpOptions);
+  searchProductDetail(data: any): Observable<any> {
+    return this.http.post(CHART_API + 'search-product-detail', data, httpOptions);
   }
 
-  getSumRevenue(): Observable<any> {
-    return this.http.get(CHART_API + 'get-sum-revenue', httpOptions);
+  searchProductV2(data: any): Observable<any> {
+    return this.http.post(CHART_API + 'search-product-v2', data, httpOptions);
   }
 
-  getSumOrderDone(): Observable<any> {
-    return this.http.get(CHART_API + 'get-sum-order-done', httpOptions);
+  searchProductV2Detail(data: any): Observable<any> {
+    return this.http.post(CHART_API + 'search-product-v2-detail', data, httpOptions);
   }
 
-  getSumProductSell(): Observable<any> {
-    return this.http.get(CHART_API + 'get-sum-product-sell', httpOptions);
+  getSumQuantityProduct(data: any): Observable<any> {
+    return this.http.post(CHART_API + 'get-sum-quantity-product', data, httpOptions);
+  }
+
+  getSumRevenue(data: any): Observable<any> {
+    return this.http.post(CHART_API + 'get-sum-revenue', data, httpOptions);
+  }
+
+  getSumOrderDone(data: any): Observable<any> {
+    return this.http.post(CHART_API + 'get-sum-order-done', data, httpOptions);
   }
 
   export(data: any): Observable<any> {

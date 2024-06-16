@@ -4,8 +4,8 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
   <h1 class="h3 mb-0 text-gray-800">Thống Kê</h1>
-<!--  <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i-->
-<!--    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
+  <!--  <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i-->
+  <!--    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
 </div>
 
 <!-- Content Row -->
@@ -97,24 +97,24 @@
     </div>
   </div>
 
-  <!-- Earnings (Monthly) Card Example -->
-  <div class="col mb-4">
-    <div class="card border-left-success shadow h-100 py-2">
-      <div class="card-body">
-        <div class="row no-gutters align-items-center">
-          <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-              Tổng Sản Phẩm Đã Bán
-            </div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ totalProductquantity }}</div>
-          </div>
-          <div class="col-auto">
-            <fa-icon [icon]="faf"></fa-icon>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!--  &lt;!&ndash; Earnings (Monthly) Card Example &ndash;&gt;-->
+  <!--  <div class="col mb-4">-->
+  <!--    <div class="card border-left-success shadow h-100 py-2">-->
+  <!--      <div class="card-body">-->
+  <!--        <div class="row no-gutters align-items-center">-->
+  <!--          <div class="col mr-2">-->
+  <!--            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">-->
+  <!--              Tổng Sản Phẩm Đã Bán-->
+  <!--            </div>-->
+  <!--            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ totalProductquantity }}</div>-->
+  <!--          </div>-->
+  <!--          <div class="col-auto">-->
+  <!--            <fa-icon [icon]="faf"></fa-icon>-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </div>-->
 
 
 </div>
@@ -147,11 +147,78 @@
       [dateFormat]="cycleType === 'YEAR' ? 'yy' : cycleType === 'MONTH' ? 'mm/yy' : 'dd/mm/yy'"
     />
 
-    <button pButton pRipple label="Xuất Excel" icon="pi pi-plus" class="p-button-success ml-3" (click)="export()"></button>
+    <button pButton pRipple label="Xuất Excel" icon="pi pi-plus" class="p-button-success ml-3"
+            (click)="export()"></button>
   </div>
 
-  <p-card header="Biểu đồ thống kê số lượng và doanh thu" class="my-2">
+  <p-card header="Biểu đồ thống kê doanh thu" class="my-2">
     <div id="chartdiv1"></div>
   </p-card>
+
+  <p-card header="Biểu đồ thống kê số lượng" class="my-2">
+    <div id="chartdiv2"></div>
+  </p-card>
+
+  <p-card header="Biểu đồ thống kê sản phẩm" class="my-2">
+    <div class="overflow-x-auto overflow-y-hidden">
+      <div id="chartdiv3"></div>
+    </div>
+  </p-card>
 </div>
+
+<p-dialog
+  header="Chi tiết thông tin"
+  [modal]="true"
+  [(visible)]="visible1"
+  [style]="{ width: '50rem' }"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [maximizable]="false">
+  <p-table
+    [value]="dataDetail1"
+    [paginator]="true"
+    [rows]="10"
+    [tableStyle]="{ 'min-width': '40rem' }"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Tên sản phẩm</th>
+        <th>Số lượng</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-detail>
+      <tr>
+        <td>{{ detail.field }}</td>
+        <td>{{ detail.value }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-dialog>
+
+<p-dialog
+  header="Chi tiết thông tin"
+  [modal]="true"
+  [(visible)]="visible2"
+  [style]="{ width: '50rem' }"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [maximizable]="false">
+  <p-table
+    [value]="dataDetail2"
+    [paginator]="true"
+    [rows]="10"
+    [tableStyle]="{ 'min-width': '40rem' }"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Thời gian</th>
+        <th>Số lượng</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-detail>
+      <tr>
+        <td>{{ detail.field }}</td>
+        <td>{{ detail.value }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-dialog>
 
