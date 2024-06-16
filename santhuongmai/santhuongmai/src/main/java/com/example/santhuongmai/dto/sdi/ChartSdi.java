@@ -7,4 +7,5 @@ public class ChartSdi {
     private String cycleType;
     private String fromDate;
     private String toDate;
+    private Long productId;
 }
