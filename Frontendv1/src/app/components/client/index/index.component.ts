@@ -13,6 +13,7 @@ import {StorageService} from 'src/app/_service/storage.service';
 import {WishlistService} from 'src/app/_service/wishlist.service';
 import {SettingService} from 'src/app/_service/setting.service';
 import {PolicyService} from 'src/app/_service/policy.service';
+import {ROLE} from "../../../share/constants/constants";
 
 
 @Component({
@@ -66,6 +67,8 @@ export class IndexComponent implements OnInit {
 
   keyword: any;
   isAdmin: boolean = false; // Khởi tạo isAdmin với giá trị mặc định là false
+  redirectLink: string = ''
+  redirectText: string = ''
 
   constructor(
     public cartService: CartService,
@@ -93,6 +96,16 @@ export class IndexComponent implements OnInit {
 
     // Ví dụ: lấy vai trò từ dữ liệu đã đăng nhập
     this.roles = this.storageService.getUser()?.roles;
+    if (this.roles?.includes(ROLE.MODERATOR)) {
+      this.redirectLink = '/moderator'
+      this.redirectText = 'Kênh người bán'
+    } else if (this.roles?.includes(ROLE.EMPLOYEE)) {
+      this.redirectLink = '/employee'
+      this.redirectText = 'Kênh nhân viên'
+    } else if (this.roles?.includes(ROLE.ADMIN)) {
+      this.redirectLink = '/admin'
+      this.redirectText = 'Kênh quản trị'
+    }
     // Kiểm tra vai trò của người dùng khi component được khởi tạo
     this.checkUserRole();
   }
@@ -100,7 +113,7 @@ export class IndexComponent implements OnInit {
   // Phương thức kiểm tra vai trò của người dùng
   // checkUserRole(): void {
   //   // Kiểm tra xem vai trò của người dùng có phải là admin không
-  //   this.isAdmin = this.roles.includes('ROLE_ADMIN'); // Thay 'admin' bằng vai trò admin thực tế trong ứng dụng của bạn
+  //   this.isAdmin = this.roles?.includes('ROLE_ADMIN'); // Thay 'admin' bằng vai trò admin thực tế trong ứng dụng của bạn
   // }
   checkUserRole(): void {
     // Kiểm tra xem người dùng đã đăng nhập chưa

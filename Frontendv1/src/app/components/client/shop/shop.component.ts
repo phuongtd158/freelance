@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { faHeart, faRetweet, faShoppingBag } from '@fortawesome/free-solid-svg-icons';
-import { MessageService } from 'primeng/api';
-import { CartService } from 'src/app/_service/cart.service';
-import { CategoryService } from 'src/app/_service/category.service';
-import { ProductService } from 'src/app/_service/product.service';
-import { WishlistService } from 'src/app/_service/wishlist.service';
-
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {faHeart, faRetweet, faShoppingBag} from '@fortawesome/free-solid-svg-icons';
+import {MessageService} from 'primeng/api';
+import {CartService} from 'src/app/_service/cart.service';
+import {CategoryService} from 'src/app/_service/category.service';
+import {ProductService} from 'src/app/_service/product.service';
+import {WishlistService} from 'src/app/_service/wishlist.service';
+import {ProductroomService} from "../../../_service/productroom.service";
 
 
 @Component({
@@ -23,69 +23,114 @@ export class ShopComponent implements OnInit {
   retweet = faRetweet;
 
   id: number = 0;
-  listProduct : any;
-  listCategory : any;
-  listProductNewest : any[] = [];
+  listProduct: any;
+  listCategory: any;
+  listProductNewest: any[] = [];
 
-  rangeValues = [0,100];
+  rangeValues = [0, 100];
+
+  capacityOptions = [];
+  priceOptions = [
+    {label: 'Dưới 10 triệu', value: 'LESS_THAN_10'},
+    {label: 'Từ 10 - 15 triệu', value: 'FROM_10_TO_15'},
+    {label: 'Từ 15 - 20 triệu', value: 'FROM_15_TO_20'},
+    {label: 'Trên 20 triệu', value: 'OVER_THAN_20'},
+  ]
+  orderPriceOptions = [
+    {label: 'Tăng dần', value: 'ASC'},
+    {label: 'Giảm dần', value: 'DESC'},
+  ]
+
+  selectedCapacity: any = null;
+  selectedPrice: any = null;
+  selectedOrderPrice: any = null;
+
 
   constructor(
-    private categoryService:CategoryService,
+    private categoryService: CategoryService,
     private productService: ProductService,
     private router: Router,
+    private productRoomService: ProductroomService,
     private route: ActivatedRoute,
-    public cartService:CartService,
-    private messageService:MessageService,
-    public wishlistService:WishlistService){
+    public cartService: CartService,
+    private messageService: MessageService,
+    public wishlistService: WishlistService) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 
   }
 
   ngOnInit(): void {
-
     this.id = this.route.snapshot.params['id'];
+    this.getProductRoom()
     this.getListProductByCategory();
     this.getListCategoryEnabled();
     this.getNewestProduct();
   }
 
+  getProductRoom() {
+    this.productRoomService.getList().subscribe({
+      next: (res) => {
+        this.capacityOptions = res
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
+  }
 
-  getListProductByCategory(){
+  handleFilter() {
+    const dataFilterOptions = {
+      categoryId: this.id,
+      capacity: this.selectedCapacity?.id,
+      price: this.selectedPrice?.value,
+      orderPrice: this.selectedOrderPrice?.value
+    }
+    this.productService.filter(dataFilterOptions).subscribe({
+      next: (res) => {
+        this.listProduct = res
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
+  }
+
+  getListProductByCategory() {
     this.productService.getListByCategory(this.id).subscribe({
-      next: res =>{
+      next: res => {
         this.listProduct = res;
-      },error: err =>{
+      }, error: err => {
         console.log(err);
       }
     })
   }
 
-  getListCategoryEnabled(){
+  getListCategoryEnabled() {
     this.categoryService.getListCategoryEnabled().subscribe({
-      next: res =>{
+      next: res => {
         this.listCategory = res;
-      },error: err=>{
+      }, error: err => {
         console.log(err);
       }
     })
   }
 
-  getNewestProduct(){
+  getNewestProduct() {
     this.productService.getListProductNewest(4).subscribe({
-      next:res =>{
+      next: res => {
         this.listProductNewest = res;
-      },error: err =>{
+      }, error: err => {
         console.log(err);
       }
     })
   }
 
-  getListProductByPriceRange(){
-    this.productService.getListByPriceRange(this.id,this.rangeValues[0],this.rangeValues[1]).subscribe({
-      next: res =>{
+  getListProductByPriceRange() {
+    this.productService.getListByPriceRange(this.id, this.rangeValues[0], this.rangeValues[1]).subscribe({
+      next: res => {
         this.listProduct = res;
         console.log(this.listProduct);
-      },error: err =>{
+      }, error: err => {
         console.log(err);
       }
     })
@@ -93,7 +138,6 @@ export class ShopComponent implements OnInit {
 
 
   addToCart(product: any) {
-
 
 
     // Kiểm tra số lượng sản phẩm có sẵn
@@ -108,21 +152,24 @@ export class ShopComponent implements OnInit {
       this.showSuccess("Thêm giỏ hàng thành công!");
     }
   }
-  addToWishList(item: any){
-    if(!this.wishlistService.productInWishList(item)){
+
+  addToWishList(item: any) {
+    if (!this.wishlistService.productInWishList(item)) {
       this.showSuccess("Thêm yêu thích thành công!")
       this.wishlistService.addToWishList(item);
     }
   }
+
   showSuccess(text: string) {
-    this.messageService.add({severity:'success', summary: 'Success', detail: text});
+    this.messageService.add({severity: 'success', summary: 'Success', detail: text});
   }
+
   showError(text: string) {
-    this.messageService.add({severity:'error', summary: 'Error', detail: text});
+    this.messageService.add({severity: 'error', summary: 'Error', detail: text});
   }
 
   showWarn(text: string) {
-    this.messageService.add({severity:'warn', summary: 'Warn', detail: text});
+    this.messageService.add({severity: 'warn', summary: 'Warn', detail: text});
   }
 
 }

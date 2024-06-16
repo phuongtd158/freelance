@@ -2,6 +2,7 @@ package com.example.santhuongmai.repository;
 
 import java.util.List;
 
+import com.example.santhuongmai.repository.custom.ProductRepositoryCustom;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.example.santhuongmai.entity.Product;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product,Long> {
+public interface ProductRepository extends JpaRepository<Product,Long>, ProductRepositoryCustom {
 
     @Query(value = "Select * from Product order by id desc limit :number",nativeQuery = true)
     List<Product> getListNewest(int number);
@@ -32,7 +33,6 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     
     @Query(value ="Select * from Product where user_id = :id",nativeQuery = true)
     List<Product> getListProductByUser(long id);
-    
-    
+
 
 }

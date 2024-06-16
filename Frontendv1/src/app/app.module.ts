@@ -94,6 +94,7 @@ import {DatePipe} from '@angular/common';
 import {CalendarModule} from "primeng/calendar";
 import {NgxDropzoneModule} from "ngx-dropzone";
 import {MessageService} from "primeng/api";
+import { BubbleComponent } from './components/common/bubble/bubble.component';
 
 
 @NgModule({
@@ -152,7 +153,8 @@ import {MessageService} from "primeng/api";
     PagecontactComponent,
     PageloyoutComponent,
     OrdereditComponent,
-    NumberOnlyDirective
+    NumberOnlyDirective,
+    BubbleComponent
   ],
   exports: [
     NumberOnlyDirective

@@ -50,10 +50,8 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="header__top__left">
                         <ul>
-                            <li routerLink="/admin">Kênh người bán</li>
+                            <li class="cursor-pointer" [routerLink]="redirectLink" *ngIf="isLoggedIn">{{ redirectText }}</li>
                             <li  *ngIf="setchung && setchung.gmail"><i class="fa fa-envelope"></i> {{setchung.gmail}}</li>
-
-
                         </ul>
                     </div>
                 </div>
