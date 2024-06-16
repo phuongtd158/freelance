@@ -33,7 +33,7 @@
     const chatOptions = document.getElementById('chat-options');
     const chatButton = document.getElementById('chat-button');
 
-    if (!chatButton?.contains(event.target) && !chatOptions?.contains(event.target)) {
+    if (chatButton && chatOptions && !chatButton?.contains(event.target) && !chatOptions?.contains(event.target)) {
       chatOptions.style.display = 'none';
     }
   });
