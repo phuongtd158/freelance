@@ -108,8 +108,8 @@ export class ChartsComponent {
       if (this.cycleType === 'DAY') {
         const timeDiff = this.rangeDate[1].getTime() - this.rangeDate[0].getTime();
         const diffDays = timeDiff / (1000 * 3600 * 24);
-        if (diffDays > 14) {
-          this.messageService.showWarn('Chỉ được chọn trong khoảng thời gian 15 ngày!')
+        if (diffDays > 29) {
+          this.messageService.showWarn('Chỉ được chọn trong khoảng thời gian 30 ngày!')
           return
         }
       } else if (this.cycleType === 'MONTH') {
