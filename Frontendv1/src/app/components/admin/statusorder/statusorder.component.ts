@@ -49,6 +49,7 @@ export class StatusorderComponent implements OnInit {
   ORDER_STATUS = ORDER_STATUS
   reasonOptions = REASON_OPTIONS
   routerToOrderDetail: string = '/admin/chitiet'
+  visibleDialogConfirm: boolean = false
 
   constructor(private orderService: OrderService, private messageService: MessageService, private storageService: StorageService) {
   }
@@ -103,6 +104,29 @@ export class StatusorderComponent implements OnInit {
     this.reason = order.reason
     this.imgUrl = String(order.urlImg)?.split(';')
     this.showFormReturn = true
+  }
+
+  showDialogConfirm(order: any) {
+    this.order = order
+    this.visibleDialogConfirm = true
+  }
+
+  closeDialogConfirm() {
+    this.order = null
+    this.visibleDialogConfirm = false
+  }
+
+  handleConfirm() {
+    const id = this.order.id
+    this.orderService.updateOrder(id, '9').subscribe((res) => {
+      if (res.id) {
+        this.showSuccess(`Xác nhận đơn hàng thành công !`)
+        this.closeDialogConfirm()
+        this.getListOrder()
+      } else {
+        this.showError(`Xác nhận đơn hàng thất bại !`)
+      }
+    })
   }
 
   closeDialogReturn() {

@@ -73,6 +73,11 @@
             pButton pRipple
             icon="pi pi-pencil"
             class="p-button-rounded p-button-primary mr-2" (click)="openUpdate(order)"></button>
+          <button *ngIf="order?.orderstatus?.code === ORDER_STATUS.DELIVERED" title="Xác nhận đã nhận được hàng"
+                  class="p-button-rounded p-button-success mr-2"
+                  pButton
+                  pRipple icon="pi pi-verified"
+                  (click)="showDialogConfirm(order)"></button>
           <button
             title="Xem chi tiết thông tin trả hàng"
             *ngIf="[ORDER_STATUS.WAITING_CONFIRM_RETURNS, ORDER_STATUS.RETURNS, ORDER_STATUS.REJECT_RETURNS].includes(order.orderstatus.code)"
@@ -160,6 +165,22 @@
     <button type="submit" pButton *ngIf="onUpdate" (click)="updateProduct()">Cập nhật</button>
     <button pButton type="button" class="p-button-danger ml-3" (click)="showForm=false">Đóng</button>
   </ng-template>
+</p-dialog>
+
+<p-dialog [header]="'Xác nhận đã nhận được đơn hàng'"
+          [(visible)]="visibleDialogConfirm"
+          [style]="{width :'50vw'}" [modal]="true"
+          [transitionOptions]="'.3s'">
+  <div>
+    <span class="ml-2">
+        Bạn có chắc chắc muốn xác nhận đã nhận được đơn hàng <span>{{ order?.orderCode }}</span> không ?
+      </span>
+  </div>
+  <div class="flex justify-content-end mt-3">
+    <button label="Xác nhận" icon="pi pi-check" class="mr-2" pButton (click)="handleConfirm()"></button>
+    <button label="Huỷ" icon="pi pi-times" class="p-button-danger" pButton
+            (click)="closeDialogConfirm()"></button>
+  </div>
 </p-dialog>
 
 

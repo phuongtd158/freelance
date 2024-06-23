@@ -7,6 +7,7 @@ import { StorageService } from 'src/app/_service/storage.service';
 import { ProductcolorService } from 'src/app/_service/productcolor.service';
 import { ProductroomService } from 'src/app/_service/productroom.service';
 import { ProductsizeService } from 'src/app/_service/productsize.service';
+import {ROLE} from "../../../share/constants/constants";
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -47,6 +48,7 @@ export class ProductComponent implements OnInit {
     description : null,
     mota : null,
     price: null,
+    importPrice: null,
     quantity: null,
     categoryId: null,
     imageIds: [],
@@ -71,6 +73,8 @@ export class ProductComponent implements OnInit {
     ],
     fontNames: ['Helvetica', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Roboto', 'Times']
   };
+  roles: string[] = []
+  ROLE_CONST = ROLE
 
   constructor(private messageService: MessageService,
     private storageService: StorageService,
@@ -86,6 +90,8 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     this.username = this.storageService.getUser().username;
     this.id = this.storageService.getUser().id;
+    this.roles = this.storageService.getUser().roles;
+
     this.getListProduct();
     this.getListCategoryEnabled();
     this.getListImage();
@@ -124,7 +130,7 @@ export class ProductComponent implements OnInit {
     this.productForm.id = data.id;
     this.productForm.name = data.name;
     this.productForm.description = data.description;
-      
+
     this.productForm.mota = data.mota;
     this.productForm.price = data.price;
     this.productForm.quantity = data.quantity;
@@ -190,7 +196,7 @@ export class ProductComponent implements OnInit {
       }
     })
   }
-  
+
   getListCategoryEnabled(){
     this.categoryService.getListCategoryEnabled().subscribe({
       next: res =>{
@@ -238,10 +244,10 @@ export class ProductComponent implements OnInit {
     let data = this.listImageChoosen;
     data.forEach((res: any)=>{
       this.productForm.imageIds.push(res.id);
-    }) 
-    const {name,description,price,quantity,categoryId,mota,imageIds,productcolors,productsizes,productrooms} = this.productForm;
+    })
+    const {name,description,price, importPrice,quantity,categoryId,mota,imageIds,productcolors,productsizes,productrooms} = this.productForm;
     console.log(this.productForm);
-    this.productService.createProduct(name,description,price,quantity,categoryId,mota,imageIds,productcolors,productsizes,productrooms,this.username).subscribe({
+    this.productService.createProduct(name,description,price,importPrice,quantity,categoryId,mota,imageIds,productcolors,productsizes,productrooms,this.username).subscribe({
       next: res =>{
         this.getListProduct();
         this.showForm = false;
@@ -252,7 +258,7 @@ export class ProductComponent implements OnInit {
     })
   }
 
-  updateProduct(){    
+  updateProduct(){
     this.productForm.productcolors = this.selectedProductcolors;
     this.productForm.productsizes = this.selectedProductsizes;
     this.productForm.productrooms = this.selectedProductrooms;
@@ -260,9 +266,9 @@ export class ProductComponent implements OnInit {
     data.forEach((res: any)=>{
       this.productForm.imageIds.push(res.id);
     })
-    const {id,name,description,price,quantity,categoryId,mota,imageIds,productcolors,productsizes,productrooms} = this.productForm;
+    const {id,name,description,price,importPrice,quantity,categoryId,mota,imageIds,productcolors,productsizes,productrooms} = this.productForm;
     console.log(this.productForm);
-    this.productService.updateProduct(id,name,description,price,quantity,categoryId,mota,imageIds,productcolors,productsizes,productrooms).subscribe({
+    this.productService.updateProduct(id,name,description,price,importPrice,quantity,categoryId,mota,imageIds,productcolors,productsizes,productrooms).subscribe({
       next: res =>{
         this.getListProduct();
         this.showForm = false;

@@ -107,7 +107,6 @@ activateLast() {
       next: res =>{
         this.storageService.clean();
         this.router.navigate(['/']);
-        location.reload()
       }
     })
   }

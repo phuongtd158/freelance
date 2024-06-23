@@ -61,11 +61,12 @@ export class ProductService {
     return this.http.get(PRODUCT_API + id, httpOptions);
   }
 
-  createProduct(name: string, description: string, price: string, quantity: number, categoryId: number, mota: string, imageIds: Array<string>, productcolors: number[], productsizes: number[], productrooms: number[], username: string): Observable<any> {
+  createProduct(name: string, description: string, price: string, importPrice: any, quantity: number, categoryId: number, mota: string, imageIds: Array<string>, productcolors: number[], productsizes: number[], productrooms: number[], username: string): Observable<any> {
     return this.http.post(PRODUCT_API + 'create', {
       name,
       description,
       price,
+      importPrice,
       quantity,
       categoryId,
       mota,
@@ -77,11 +78,12 @@ export class ProductService {
     }, httpOptions);
   }
 
-  updateProduct(id: number, name: string, description: string, price: string, quantity: number, categoryId: number, mota: string, imageIds: Array<string>, productcolors: number[], productsizes: number[], productrooms: number[]): Observable<any> {
+  updateProduct(id: number, name: string, description: string, price: string,importPrice: any, quantity: number, categoryId: number, mota: string, imageIds: Array<string>, productcolors: number[], productsizes: number[], productrooms: number[]): Observable<any> {
     return this.http.put(PRODUCT_API + 'update/' + id, {
       name,
       description,
       price,
+      importPrice,
       quantity,
       categoryId,
       mota,

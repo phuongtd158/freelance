@@ -124,6 +124,7 @@ const routes: Routes = [
       {path: 'chitiet/:id', component: ChitietComponent},
       {path: 'order', component: OrderComponent},
       {path: 'status-order', component: StatusorderComponent},
+      {path: 'product', component: ProductComponent}
     ]
   },
   {

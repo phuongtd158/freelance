@@ -22,6 +22,12 @@
         <li><a routerLink="/employee/order"><fa-icon [icon]="cart"></fa-icon><span>Đơn Hàng</span></a></li>
         <li><a routerLink="/employee/status-order"><fa-icon [icon]="cart"></fa-icon><span>Xử Lý Đơn Hàng</span></a></li>
       </ul>
+      <div class="sidebar-heading" (click)="toggleSubMenuProduct()">
+        Quản lý sản phẩm
+      </div>
+      <ul class="submenu" *ngIf="showSubMenuProduct">
+        <li><a routerLink="/employee/product"><fa-icon [icon]="cart"></fa-icon><span>Quản lý sản phẩm</span></a></li>
+      </ul>
       <hr class="sidebar-divider">
         <div class="sidebar-heading" (click)="toggleSubUser()">
             Quản Lý Liên Hệ

@@ -3,7 +3,7 @@
 <div class="card">
     <p-toolbar styleClass="mb-4 gap-2">
         <ng-template pTemplate="left">
-            <button pButton pRipple label="Thêm sản phẩm" icon="pi pi-plus" class="p-button-warning mr-2" (click)="openNew()"></button>
+            <button *ngIf="roles.includes(ROLE_CONST.MODERATOR)" pButton pRipple label="Thêm sản phẩm" icon="pi pi-plus" class="p-button-warning mr-2" (click)="openNew()"></button>
             <button pButton pRipple label="Xuất Excel" icon="pi pi-plus" class="p-button-success mr-2" (click)="downloadExcel()"></button>
 
         </ng-template>
@@ -30,13 +30,16 @@
                     <p-sortIcon field="name"></p-sortIcon>
                 </th>
                 <th>Ảnh</th>
-                <th pSortableColumn="price">Giá
+              <th *ngIf="roles.includes(ROLE_CONST.MODERATOR)" pSortableColumn="importPrice">Giá nhập
+                <p-sortIcon field="importPrice"></p-sortIcon>
+              </th>
+                <th pSortableColumn="price">Giá bán
                     <p-sortIcon field="price"></p-sortIcon>
                 </th>
                 <th pSortableColumn="category" style="min-width:10rem">Loại
                     <p-sortIcon field="category"></p-sortIcon>
                 </th>
-                <th style="min-width:10rem">Tuỳ Chỉnh</th>
+                <th *ngIf="roles.includes(ROLE_CONST.MODERATOR)" style="min-width:10rem">Tuỳ Chỉnh</th>
 
             </tr>
         </ng-template>
@@ -47,9 +50,10 @@
                 </td>
                 <td>{{product.name}}</td>
                 <td><img src="{{'data:image/jpg;base64,' +product.images[0].data}}" [alt]="product.name" width="100" class="shadow-4" /></td>
+                <td *ngIf="roles.includes(ROLE_CONST.MODERATOR)">{{product.importPrice | currency:'VND'}}</td>
                 <td>{{product.price | currency:'VND'}}</td>
                 <td>{{product.category.name}}</td>
-                <td>
+                <td *ngIf="roles.includes(ROLE_CONST.MODERATOR)">
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-primary mr-2" (click)="openUpdate(product)"></button>
                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="onDelete(product.id,product.name)"></button>
                 </td>
@@ -117,8 +121,12 @@
 
 
         <div class="formgrid grid">
+          <div class="field col">
+            <label for="price">Giá nhập</label>
+            <p-inputNumber id="importPrice" [(ngModel)]="productForm.importPrice" mode="currency" currency="VND" locale="en-US"></p-inputNumber>
+          </div>
             <div class="field col">
-                <label for="price">Giá</label>
+                <label for="price">Giá bán</label>
                 <p-inputNumber id="price" [(ngModel)]="productForm.price" mode="currency" currency="VND" locale="en-US"></p-inputNumber>
             </div>
             <div class="field col">
