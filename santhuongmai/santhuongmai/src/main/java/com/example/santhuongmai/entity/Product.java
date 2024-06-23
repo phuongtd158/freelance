@@ -39,6 +39,7 @@ public class Product {
     private String mota;
 
     private long price;
+    private Long importPrice;
     private long pricesale;
 
     private int quantity;

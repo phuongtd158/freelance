@@ -73,7 +73,8 @@ public class ProductServiceImpl implements ProductService {
         product.setDescription(request.getDescription());
         product.setMota(request.getMota());
         product.setPrice(request.getPrice());     
-        product.setPricesale(0);   
+        product.setImportPrice(request.getImportPrice());
+        product.setPricesale(0);
         product.setCreateAt(new Timestamp(System.currentTimeMillis()));
         product.setQuantity(request.getQuantity());        
         Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow(()-> new NotFoundException("Not Found Category With Id: " + request.getCategoryId()));
@@ -138,6 +139,7 @@ public class ProductServiceImpl implements ProductService {
         product.setDescription(request.getDescription());
         product.setMota(request.getMota());
         product.setPrice(request.getPrice());
+        product.setImportPrice(request.getImportPrice());
         product.setQuantity(request.getQuantity());
         Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow(()-> new NotFoundException("Not Found Category With Id: " + request.getCategoryId()));
         product.setCategory(category);

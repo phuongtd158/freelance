@@ -44,7 +44,9 @@ public class CreateProductRequest {
     @Schema(description = "Giá sản phẩm",example = "12")
     @Size(min=0,message="Giá tiền sản phẩm lớn hơn 0")
     private long price;
-    
+
+    private long importPrice;
+
     @NotNull(message = "Giá tiền rỗng")
     @NotEmpty(message = "Giá tiền rỗng")
     @Schema(description = "Giá sản phẩm",example = "12")
