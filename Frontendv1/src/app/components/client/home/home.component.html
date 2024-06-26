@@ -168,7 +168,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-4 col-md-4 col-sm-6" *ngFor="let blog of listBlogNewest">
+      <div class="col-lg-4 col-md-4 col-sm-6 mb-4" *ngFor="let blog of listBlogNewest">
         <div class="blog__item">
           <div class="blog__item__pic">
             <img src="{{'data:image/jpg;base64,' + blog.image.data}}" alt="" routerLink="/blog/{{blog.id}}">
