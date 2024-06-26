@@ -38,6 +38,12 @@ body {
 	font-smoothing: antialiased;
 }
 
+.content-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 h1,
 h2,
 h3,
@@ -857,7 +863,7 @@ ol {
 
 .featured__item__pic {
 	height: 270px;
-	
+
 	position: relative;
 	overflow: hidden;
 	background-position: center center;
@@ -3156,7 +3162,7 @@ ol {
 		display: none;
 	}
 	.header__menu {
-		display: none;
+		display: block;
 	}
 	.header__cart {
 		text-align: center;
@@ -3415,7 +3421,7 @@ ol {
 		display: none;
 	}
 	.header__menu {
-		display: none;
+		display: block;
 	}
 	.header__cart {
 		text-align: center;
