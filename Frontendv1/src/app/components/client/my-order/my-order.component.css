@@ -189,3 +189,9 @@
     transform: rotate(360deg);
   }
 }
+@media screen and (max-width: 500px) {
+  .my-order__header {
+    flex-direction: column;
+    gap: 5px
+  }
+}

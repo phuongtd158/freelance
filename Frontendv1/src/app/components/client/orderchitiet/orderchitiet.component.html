@@ -21,7 +21,7 @@
     <p-table #dt [value]="listOrderCT" [rows]="7" [paginator]="true" [globalFilterFields]="['firstname','lastname','address']" [tableStyle]="{'min-width': '75rem'}" [rowHover]="true" dataKey="id" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
-            <div class="flex align-items-center justify-content-between">
+            <div class="my-order__header flex align-items-center justify-content-between">
                 <h5 class="m-0">Chi Tiết Đơn Hàng</h5>
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>

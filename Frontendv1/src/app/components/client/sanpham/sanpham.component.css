@@ -3,7 +3,7 @@
 .product-item {
     text-align: center;
     padding: 10px;
-    
+
     border-radius: 5px;
 }
 
@@ -34,4 +34,11 @@
 .featured__item__pic:hover {
     transform: scale(1.1); /* Phóng to hình ảnh khi rê chuột vào */
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2); /* Thêm đổ bóng để tạo hiệu ứng mềm mại */
+}
+.product-name {
+  display: block;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

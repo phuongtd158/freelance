@@ -10,3 +10,9 @@
     cursor: pointer;
     transition: opacity 0.2s;
   }
+@media screen and (max-width: 768px) {
+  .spad {
+    padding-top: unset;
+    padding-bottom: unset;
+  }
+}

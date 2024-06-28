@@ -1,3 +1,28 @@
 ::ng-deep .p-dropdown {
   width: 100% !important;
 }
+
+.ellipsis {
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 992px) {
+  .ellipsis {
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .ellipsis {
+    width: 200px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .ellipsis {
+    width: 150px;
+  }
+}
