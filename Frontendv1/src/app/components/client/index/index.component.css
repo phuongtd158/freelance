@@ -32,24 +32,24 @@
 /* CSS cho danh sách các danh mục */
 /* CSS cho từng dòng (mỗi mục) trong danh sách */
 
-  
+
   /* CSS cho ô danh mục khi di chuột vào */
   /* CSS cho từng thẻ <li> trong danh sách */
 /* CSS cho từng thẻ <li> trong danh sách danh mục */
 .hero__categories ul li {
     padding: 0px;
   }
-  
+
   /* CSS cho mỗi thẻ <li> trong danh sách danh mục khi di chuột vào */
   .hero__categories ul li:hover {
     background-color: #4a90e2
 
     ; /* Màu nền khi di chuột vào */
   }
-  
-  
-  
-  
+
+
+
+
   .header {
     position: fixed;
     top: 0;
@@ -58,11 +58,11 @@
     background-color: #fff; /* Màu nền cho thanh menu */
     z-index: 1000; /* Đảm bảo thanh menu hiển thị trên tất cả các phần khác */
   }
-  
+
   /* Thêm các quy tắc CSS khác tùy thuộc vào yêu cầu thiết kế của bạn */
- 
-  
-  
+
+
+
 
 
   .custom-scrollbar::-webkit-scrollbar {

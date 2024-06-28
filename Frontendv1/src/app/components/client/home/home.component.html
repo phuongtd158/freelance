@@ -23,7 +23,7 @@
     <div class="category-carousel">
       <div class="category-content">
         <div class="carousel-wrapper">
-          <ul class="category-list">
+          <ul class="category-list"> <!-- Không cần dùng Flexbox ở đây -->
             <li class="category-item" *ngFor="let category of listCategoryEnabled; let i = index"
                 [style.display]="i < 20 ? 'block' : 'none'">
               <a class="category-link" routerLink="/category/{{category.id}}">
@@ -32,14 +32,11 @@
               </a>
             </li>
           </ul>
-
-
         </div>
       </div>
     </div>
   </div>
 </div>
-
 
 <!-- Lastest Section Begin -->
 <section class="featured spad">
@@ -52,16 +49,13 @@
       </div>
     </div>
     <div class="row featured__filter">
-      <div class="col-lg-3 col-md-3 col-sm-3 col-6" *ngFor="let product of listProductNewest">
+      <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" *ngFor="let product of listProductNewest">
         <div class="featured__item" routerLink="/product/{{product.id}}">
           <div class="top-0 left-0 z-30 absolute flex flex-col ml-[-3px] mt-2" aria-hidden="true">
-            <div class="mb-1 last:mb-0 relative bg-contain bg-no-repeat"
-                 style="background-image: url(&quot;https://down-vn.img.susercontent.com/file/76c36bd87ff2eb5887d9ad3516111869&quot;); width: 46px; height: 18px;"></div>
+            <div class="mb-1 last:mb-0 relative bg-contain bg-no-repeat promo-icon"
+                 style="background-image: url(&quot;https://down-vn.img.susercontent.com/file/76c36bd87ff2eb5887d9ad3516111869&quot;);"></div>
           </div>
-
-          <!-- <div class="hot-label">-{{product.pricesale}}%</div> -->
-          <div *ngIf="product.pricesale > 0" class="hot-label">-{{product.pricesale}}%</div>
-
+          <div *ngIf="product.pricesale > 0" class="hot-label">-{{ product.pricesale }}%</div>
           <div class="featured__item__pic set-bg"
                [ngStyle]="{'background-image': 'url(data:image/jpeg;base64,'+ product.images[0].data+')'}">
             <ul class="featured__item__pic__hover">
@@ -84,12 +78,12 @@
           </div>
           <div class="featured__item__text">
             <h6><b><a
-              href="javascript:void(0)">{{ product.name.length > 20 ? product.name.slice(0, 20) + '...' : product.name }}</a></b>
+              href="javascript:void(0)">{{ product.name.length > 18 ? product.name.slice(0, 18) + '...' : product.name }}</a></b>
             </h6>
             <div style="display: inline-block;">
               <h5 class="red-text"
-                  style="display: inline-block; margin-right: 10px;">{{ product.price | currency:'VND'}}</h5>
-              <p style="display: inline-block;">Đã bán {{ product.quantitybuy }}</p>
+                  style="display: inline-block; margin-right: 10px;">{{ product.price | currency:'VND' }}</h5>
+              <p style="">Đã bán {{ product.quantitybuy }}</p>
             </div>
           </div>
         </div>
@@ -111,14 +105,14 @@
       </div>
     </div>
     <div class="row featured__filter">
-      <div class="col-lg-3 col-md-3 col-sm-3 col-6" *ngFor="let product of listProductPrice">
+      <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" *ngFor="let product of listProductPrice">
 
         <div class="featured__item" routerLink="/product/{{product.id}}">
           <div class="top-0 left-0 z-30 absolute flex flex-col ml-[-3px] mt-2" aria-hidden="true">
-            <div class="mb-1 last:mb-0 relative bg-contain bg-no-repeat"
-                 style="background-image: url(&quot;https://down-vn.img.susercontent.com/file/76c36bd87ff2eb5887d9ad3516111869&quot;); width: 46px; height: 18px;"></div>
+            <div class="mb-1 last:mb-0 relative bg-contain bg-no-repeat promo-icon"
+                 style="background-image: url(&quot;https://down-vn.img.susercontent.com/file/76c36bd87ff2eb5887d9ad3516111869&quot;);"></div>
           </div>
-          <div *ngIf="product.pricesale > 0" class="hot-label">-{{product.pricesale}}%</div>
+          <div *ngIf="product.pricesale > 0" class="hot-label">-{{ product.pricesale }}%</div>
 
           <div class="featured__item__pic set-bg"
                [ngStyle]="{'background-image': 'url(data:image/jpeg;base64,'+ product.images[0].data+')'}">
@@ -143,12 +137,12 @@
           </div>
           <div class="featured__item__text">
             <h6><b><a
-              href="javascript:void(0)">{{ product.name.length > 20 ? product.name.slice(0, 20) + '...' : product.name }}</a></b>
+              href="javascript:void(0)">{{ product.name.length > 18 ? product.name.slice(0, 18) + '...' : product.name }}</a></b>
             </h6>
             <div style="display: inline-block;">
               <h5 class="red-text"
-                  style="display: inline-block; margin-right: 10px;">{{ product.price | currency:'VND'}}</h5>
-              <p style="display: inline-block;">Đã bán {{ product.quantitybuy }}</p>
+                  style="display: inline-block; margin-right: 10px;">{{ product.price | currency:'VND' }}</h5>
+              <p style="">Đã bán {{ product.quantitybuy }}</p>
             </div>
           </div>
 
@@ -168,17 +162,17 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-4 col-md-4 col-sm-6" *ngFor="let blog of listBlogNewest">
+      <div class="col-lg-4 col-md-4 col-sm-6 mb-4" *ngFor="let blog of listBlogNewest">
         <div class="blog__item">
           <div class="blog__item__pic">
             <img src="{{'data:image/jpg;base64,' + blog.image.data}}" alt="" routerLink="/blog/{{blog.id}}">
           </div>
           <div class="blog__item__text" routerLink="/blog/{{blog.id}}">
             <ul>
-              <li><i class="fa fa-calendar-o"></i>{{blog.createAt | date: 'dd/MM/yyyy HH:mm:ss'}}</li>
+              <li><i class="fa fa-calendar-o"></i>{{ blog.createAt | date: 'dd/MM/yyyy HH:mm:ss' }}</li>
               <!-- <li><i class="fa fa-comment-o"></i> 5</li> -->
             </ul>
-            <h5><a routerLink="/blog/{{blog.id}}">{{blog.title}}</a></h5>
+            <h5><a routerLink="/blog/{{blog.id}}">{{ blog.title }}</a></h5>
             <!-- <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p> -->
           </div>
         </div>

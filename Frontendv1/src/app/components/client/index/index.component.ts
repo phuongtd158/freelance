@@ -1,9 +1,8 @@
 import {Component, OnInit, ChangeDetectorRef, AfterContentChecked} from '@angular/core';
 import {Router} from '@angular/router';
-import {faBars, faHeart, faRightFromBracket, faUser, faAnglesUp} from '@fortawesome/free-solid-svg-icons'
+import {faBars, faHeart, faRightFromBracket, faUser, faAnglesUp, faShoppingBag} from '@fortawesome/free-solid-svg-icons'
 import {faFacebook, faInstagram, faYahoo, faYoutube, faTelegram} from '@fortawesome/free-brands-svg-icons';
 
-import {faShoppingBag} from '@fortawesome/free-solid-svg-icons'
 import {faPhone} from '@fortawesome/free-solid-svg-icons'
 import {MessageService} from 'primeng/api';
 import {AuthService} from 'src/app/_service/auth.service';

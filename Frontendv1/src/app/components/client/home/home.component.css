@@ -58,12 +58,6 @@
     overflow: hidden;
 }
 
-.category-list {
-    /* Styles for the list of categories */
-    display: flex;
-    transition: transform 0.3s ease;
-}
-
 .category-item {
     /* Styles for each category item */
     flex: 0 0 10%; /* Adjust as needed for the number of categories to be displayed */
@@ -106,12 +100,6 @@
 .arrow-next {
     right: 0;
 }
-.category-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(calc(12% ), 1fr)); /* Số lượng cột và độ rộng của mỗi cột */
-
-}
-
 .hot-label {
     position: absolute; /* Vị trí tuyệt đối để đặt nhãn lên sản phẩm */
     top: 10px; /* Khoảng cách từ trên xuống */
@@ -141,16 +129,99 @@
     transform: scale(1.1); /* Phóng to hình ảnh khi rê chuột vào */
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2); /* Thêm đổ bóng để tạo hiệu ứng mềm mại */
 }
-@media only screen and (max-width: 767px) {
-    /* Điều chỉnh kiểu hiển thị của danh sách danh mục trên thiết bị di động */
-    .category-list {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-
-    .category-item {
-        width: 48%; /* Thiết lập chiều rộng của mỗi danh mục để hiển thị hai danh mục mỗi hàng */
-        margin-bottom: 20px; /* Khoảng cách giữa các danh mục */
-    }
+.category-thumbnail img {
+  max-width: 100%;  /* Đảm bảo ảnh không vượt quá kích thước của khung chứa */
+  max-height: 150px; /* Giới hạn chiều cao của ảnh */
+  display: block;    /* Loại bỏ khoảng trắng dưới ảnh */
+  margin: 0 auto;    /* Căn ảnh giữa khung chứa */
 }
+.category-list {
+  display: flex;
+  justify-content: space-between; /* Phân bố đều các items trên toàn bộ hàng */
+  align-items: center; /* Căn giữa các items theo chiều dọc */
+  flex-wrap: wrap; /* Cho phép items bao quanh nếu không đủ không gian */
+}
+.category-list {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr); /* Hiển thị 8 items trên một hàng cho màn hình lg trở lên */
+  gap: 10px; /* Khoảng cách giữa các cột và hàng */
+}
+
+/* Đối với màn hình có chiều rộng từ 992px đến 1199px */
+@media only screen and (max-width: 1199px) and (min-width: 992px) {
+  .category-list {
+    grid-template-columns: repeat(4, 1fr); /* Hiển thị 4 items trên một hàng cho màn hình md */
+  }
+}
+
+/* Đối với màn hình có chiều rộng từ 768px đến 991px */
+@media only screen and (max-width: 991px) and (min-width: 768px) {
+  .category-list {
+    grid-template-columns: repeat(4, 1fr); /* Vẫn hiển thị 4 items trên một hàng cho phần còn lại của màn hình md */
+  }
+}
+
+/* Đối với màn hình có chiều rộng từ 576px đến 767px */
+@media only screen and (max-width: 767px) and (min-width: 576px) {
+  .category-list {
+    grid-template-columns: repeat(4, 1fr); /* Hiển thị 2 items trên một hàng cho màn hình sm */
+  }
+}
+
+/* Đối với màn hình nhỏ hơn 576px */
+@media only screen and (max-width: 575px) {
+  .category-list {
+    grid-template-columns: repeat(2, 1fr); /* Vẫn hiển thị 2 items trên một hàng cho phần còn lại của màn hình sm */
+  }
+}
+
+.category-item {
+  height: 200px; /* Cố định chiều cao tổng thể */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Phân bổ không gian đều */
+  align-items: center;
+  text-align: center; /* Căn giữa văn bản */
+  padding: 10px 0; /* Thêm padding trên và dưới */
+}
+
+.category-thumbnail {
+  height: 120px; /* Giảm chiều cao hình ảnh */
+  width: auto; /* Tự động điều chỉnh chiều rộng theo tỷ lệ */
+  background-size: contain; /* Đảm bảo hình ảnh vừa vặn */
+  background-repeat: no-repeat;
+  background-position: center; /* Căn hình ảnh ở giữa */
+}
+
+.category-text {
+  max-height: 40px; /* Tăng chiều cao tối đa cho văn bản */
+  padding: 5px 10px; /* Thêm padding quanh văn bản */
+  overflow: hidden; /* Ngăn chặn văn bản tràn ra ngoài */
+  white-space: normal; /* Cho phép văn bản xuống dòng */
+  text-overflow: ellipsis; /* Thêm dấu ba chấm nếu văn bản quá dài */
+}
+.promo-icon {
+  width: 46px;
+  height: 18px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Tăng kích thước trên màn hình nhỏ hơn 768px */
+@media (max-width: 767px) {
+  .promo-icon {
+    width: 60px;  /* Tăng kích thước width */
+    height: 24px;  /* Tăng kích thước height */
+  }
+}
+
+/* Tăng kích thước trên màn hình nhỏ hơn 576px */
+@media (max-width: 575px) {
+  .promo-icon {
+    width: 75px;  /* Tăng kích thước width hơn nữa */
+    height: 30px;  /* Tăng kích thước height hơn nữa */
+  }
+}
+
+

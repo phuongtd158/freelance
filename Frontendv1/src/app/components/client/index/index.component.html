@@ -1,332 +1,325 @@
 <p-toast>
 </p-toast>
 
-<p-dialog [(visible)]="authModal" [style]="{width: '30vw'}" [baseZIndex]="10000" [modal]="true" [dismissableMask]="true">
-    <p-tabView>
-        <p-tabPanel header="Đăng nhập">
-            <div class="p-field">
-                <label for="username">Tên đăng nhập: </label>
-                <input type="text" pInputText class="w-full" [(ngModel)]="loginForm.username" name="username">
-            </div>
-            <div class="p-field">
-                <label for="password">Mật khẩu: </label>
-                <input type="password" pPassword class="w-full" [(ngModel)]="loginForm.password" name="password">
-            </div>
+<p-dialog [(visible)]="authModal" [style]="{width: '30vw'}" [baseZIndex]="10000" [modal]="true"
+          [dismissableMask]="true">
+  <p-tabView>
+    <p-tabPanel header="Đăng nhập">
+      <div class="p-field">
+        <label for="username">Tên đăng nhập: </label>
+        <input type="text" pInputText class="w-full" [(ngModel)]="loginForm.username" name="username">
+      </div>
+      <div class="p-field">
+        <label for="password">Mật khẩu: </label>
+        <input type="password" pPassword class="w-full" [(ngModel)]="loginForm.password" name="password">
+      </div>
 
 
-
-            <div class="p-field mt-3">
-                <button type="submit" pButton (click)="login()">Đăng nhập</button>
-            </div>
-        </p-tabPanel>
-        <p-tabPanel header="Đăng ký">
-            <form action="">
-                <div class="p-field">
-                    <label for="username">Tên đăng nhập: </label>
-                    <input type="text" pInputText class="w-full" [(ngModel)]="registerForm.username" name="username">
-                </div>
-                <div class="p-field">
-                    <label for="email">Email: </label>
-                    <input type="email" pInputText class="w-full" [(ngModel)]="registerForm.email" name="email">
-                </div>
-                <div class="p-field">
-                    <label for="password">Mật khẩu: </label>
-                    <input type="password" pPassword class="w-full" [(ngModel)]="registerForm.password" name="password">
-                </div>
-                <div class="p-field mt-3">
-                    <button type="submit" pButton (click)="register()">Đăng ký</button>
-                </div>
-            </form>
-        </p-tabPanel>
-    </p-tabView>
+      <div class="p-field mt-3">
+        <button type="submit" pButton (click)="login()">Đăng nhập</button>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="Đăng ký">
+      <form action="">
+        <div class="p-field">
+          <label for="username">Tên đăng nhập: </label>
+          <input type="text" pInputText class="w-full" [(ngModel)]="registerForm.username" name="username">
+        </div>
+        <div class="p-field">
+          <label for="email">Email: </label>
+          <input type="email" pInputText class="w-full" [(ngModel)]="registerForm.email" name="email">
+        </div>
+        <div class="p-field">
+          <label for="password">Mật khẩu: </label>
+          <input type="password" pPassword class="w-full" [(ngModel)]="registerForm.password" name="password">
+        </div>
+        <div class="p-field mt-3">
+          <button type="submit" pButton (click)="register()">Đăng ký</button>
+        </div>
+      </form>
+    </p-tabPanel>
+  </p-tabView>
 </p-dialog>
 
 
 <header class="header">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="navbar-brand" style="width: 40%;">
+        <a *ngIf="setchung && setchung.logo" href="javascript:void(0)" routerLink="/"><img src="{{setchung.logo}}"
+                                                                                           alt=""></a>
+      </div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <div class="header__top">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-md-6">
-                    <div class="header__top__left">
-                        <ul>
-                            <li class="cursor-pointer" [routerLink]="redirectLink" *ngIf="isLoggedIn">{{ redirectText }}</li>
-                            <li  *ngIf="setchung && setchung.gmail"><i class="fa fa-envelope"></i> {{setchung.gmail}}</li>
-                        </ul>
-                    </div>
+      <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+        <nav class="header__menu">
+          <ul class="content-center">
+            <li><a href="javascript:void(0)" routerLink="/">Trang Chủ</a></li>
+            <li><a href="javascript:void(0)">Trang</a>
+              <ul class="header__menu__dropdown">
+                <li><a href="javascript:void(0)" routerLink="/about">Giới Thiệu</a></li>
+
+                <li><a href="javascript:void(0)" routerLink="/policy">Chính Sách</a></li>
+                <li><a href="javascript:void(0)" routerLink="/product">Sản Phẩm</a></li>
+                <li><a href="javascript:void(0)" routerLink="/cart">Giỏ Hàng</a></li>
+                <li><a href="javascript:void(0)" routerLink="/checkorder">Tra Cứu Đơn Hàng</a></li>
+
+              </ul>
+            </li>
+            <li><a href="javascript:void(0)" routerLink="/blog">Tin Tức</a></li>
+            <li><a href="javascript:void(0)" routerLink="/contact">Liên Hệ</a></li>
+          </ul>
+        </nav>
+        <div class="header__cart">
+          <ul>
+            <li>
+              <a href="javascript:void(0)" (click)="wishlist.toggle($event)">
+                <fa-icon [icon]="heart"></fa-icon>
+                <span>{{ wishlistService.items.length }}</span></a>
+            </li>
+            <p-overlayPanel #wishlist>
+              <ng-template pTemplate>
+                <div class="listItemInCart">
+                  <ul>
+                    <li *ngFor="let product of wishlistService.items" class="cart-box">
+                      <div class="cart-box-image p-2">
+                        <a href="javascript:void(0)" class="block"><img
+                          src="{{'data:image/jpg;base64,' + product.images[0].data}}" alt="" width="80px"></a>
+                      </div>
+                      <div class="cart-box-text">
+                        <a href="javascript:void(0)">{{ product.name }}</a>
+                      </div>
+                      <button pButton pRipple type="button" icon="pi pi-times"
+                              class="p-button-rounded p-button-danger p-button-text"
+                              (click)="removeWishList(product)"></button>
+                    </li>
+                  </ul>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="header__logo">
-                    <a *ngIf="setchung && setchung.logo" href="javascript:void(0)" routerLink="/"><img src="{{setchung.logo}}" alt=""></a>
+              </ng-template>
+            </p-overlayPanel>
+            <li>
+              <a href="javascript:void(0)" (click)="cart.toggle($event)">
+                <fa-icon [icon]="bag"></fa-icon>
+                <span>{{ cartService.items.length }}</span></a>
+            </li>
+            <p-overlayPanel #cart>
+              <ng-template pTemplate>
+                <div class="listItemInCart">
+                  <ul>
+                    <li *ngFor="let product of cartService.items" class="cart-box">
+                      <div class="cart-box-image p-2">
+                        <a href="javascript:void(0)" class="block"><img
+                          src="{{'data:image/jpg;base64,' + product.images[0].data}}" alt="" width="80px"></a>
+                      </div>
+                      <div class="cart-box-text">
+                        <a href="javascript:void(0)">{{ product.name }}</a>
+                        <div><span>{{ product.soluong }} x </span>{{ product.price | currency:'VND' }}</div>
+                      </div>
+                      <button pButton pRipple type="button" icon="pi pi-times"
+                              class="p-button-rounded p-button-danger p-button-text"
+                              (click)="removeFromCart(product)"></button>
+                    </li>
+                  </ul>
+                  <p-divider></p-divider>
+                  <div class="text-center">
+                    <strong>Tổng: </strong><span class="ml-2">{{ cartService.getTotalPrice() | currency:'VND' }}</span>
+                  </div>
+                  <p-divider></p-divider>
+                  <div class="cart-button">
+                    <button pButton pRipple label="Đi tới giỏ hàng" class="w-full p-button-success"
+                            routerLink="cart"></button>
+                  </div>
                 </div>
-
-            </div>
-            <div class="col-lg-6">
-                <nav class="header__menu">
-                    <ul>
-
-                        <li><a href="javascript:void(0)" routerLink="/">Trang Chủ</a></li>
-                        <li><a href="javascript:void(0)">Trang</a>
-                            <ul class="header__menu__dropdown">
-                                <li><a href="javascript:void(0)" routerLink="/about">Giới Thiệu</a></li>
-
-                                <li><a href="javascript:void(0)" routerLink="/policy">Chính Sách</a></li>
-                                <li><a href="javascript:void(0)" routerLink="/product">Sản Phẩm</a></li>
-                                <li><a href="javascript:void(0)" routerLink="/cart">Giỏ Hàng</a></li>
-                                <li><a href="javascript:void(0)" routerLink="/checkorder">Tra Cứu Đơn Hàng</a></li>
-
-                            </ul>
-                        </li>
-                        <li><a href="javascript:void(0)" routerLink="/blog">Tin Tức</a></li>
-                        <li><a href="javascript:void(0)" routerLink="/contact">Liên Hệ</a></li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="col-lg-3">
-                <div class="header__cart">
-                    <ul>
-                        <li>
-                            <a href="javascript:void(0)" (click)="wishlist.toggle($event)">
-                                <fa-icon [icon]="heart"></fa-icon> <span>{{wishlistService.items.length}}</span></a>
-                        </li>
-                        <p-overlayPanel #wishlist>
-                            <ng-template pTemplate>
-                                <div class="listItemInCart">
-                                    <ul>
-                                        <li *ngFor="let product of wishlistService.items" class="cart-box">
-                                            <div class="cart-box-image p-2">
-                                                <a href="javascript:void(0)" class="block"><img src="{{'data:image/jpg;base64,' + product.images[0].data}}" alt="" width="80px"></a>
-                                            </div>
-                                            <div class="cart-box-text">
-                                                <a href="javascript:void(0)">{{product.name}}</a>
-                                            </div>
-                                            <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text" (click)="removeWishList(product)"></button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </ng-template>
-                        </p-overlayPanel>
-                        <li>
-                            <a href="javascript:void(0)" (click)="cart.toggle($event)">
-                                <fa-icon [icon]="bag"></fa-icon> <span>{{cartService.items.length}}</span></a>
-                        </li>
-                        <p-overlayPanel #cart>
-                            <ng-template pTemplate>
-                                <div class="listItemInCart">
-                                    <ul>
-                                        <li *ngFor="let product of cartService.items" class="cart-box">
-                                            <div class="cart-box-image p-2">
-                                                <a href="javascript:void(0)" class="block"><img src="{{'data:image/jpg;base64,' + product.images[0].data}}" alt="" width="80px"></a>
-                                            </div>
-                                            <div class="cart-box-text">
-                                                <a href="javascript:void(0)">{{product.name}}</a>
-                                                <div><span>{{product.soluong}} x </span>{{ product.price | currency:'VND'}}</div>
-                                            </div>
-                                            <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text" (click)="removeFromCart(product)"></button>
-                                        </li>
-                                    </ul>
-                                    <p-divider></p-divider>
-                                    <div class="text-center">
-                                        <strong>Tổng: </strong><span class="ml-2">{{cartService.getTotalPrice() | currency:'VND'}}</span>
-                                    </div>
-                                    <p-divider></p-divider>
-                                    <div class="cart-button">
-                                        <button pButton pRipple label="Đi tới giỏ hàng" class="w-full p-button-success" routerLink="cart"></button>
-                                    </div>
-                                </div>
-                            </ng-template>
-                        </p-overlayPanel>
-                        <li>
-                            <a href="javascript:void(0)" (click)="showAuthForm()" *ngIf="!isLoggedIn">
-                                <fa-icon [icon]="userIcon"></fa-icon>
-                            </a>
-                            <a href="javascript:void(0)" (click)="profile.toggle($event)" *ngIf="isLoggedIn">
-                                <fa-icon [icon]="userIcon"></fa-icon>
-                            </a>
-                            <p-overlayPanel  #profile >
-                                <div>
-                                     <!-- Hiển thị mục "ADMIN" nếu là admin -->
-                                    <!--<a class="dropdown-item" *ngIf="isAdmin" href="javascript:void(0)" routerLink="/admin/charts">
-                                        <fa-icon [icon]="userIcon"></fa-icon>
-                                        Trang Quản Trị
-                                    </a>-->
-                                    <a class="dropdown-item" href="javascript:void(0)" routerLink="/user">
-                                        <fa-icon [icon]="userIcon"></fa-icon>
-                                        Người Dùng
-                                    </a>
-                                    <a class="dropdown-item" href="javascript:void(0)" routerLink="my-order">
-                                        <fa-icon [icon]="bag"></fa-icon>
-                                        Đơn Hàng
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item"  *ngIf="isLoggedIn" (click)="logout();profile.toggle($event)">
-                                        <fa-icon [icon]="logoutIcon"></fa-icon>
-                                        Đăng Xuất
-                                    </a>
-                                </div>
-                            </p-overlayPanel>
-                        </li>
-
-
-                    </ul>
+              </ng-template>
+            </p-overlayPanel>
+            <li>
+              <a href="javascript:void(0)" (click)="showAuthForm()" *ngIf="!isLoggedIn">
+                <fa-icon [icon]="userIcon"></fa-icon>
+              </a>
+              <a href="javascript:void(0)" (click)="profile.toggle($event)" *ngIf="isLoggedIn">
+                <fa-icon [icon]="userIcon"></fa-icon>
+              </a>
+              <p-overlayPanel #profile>
+                <div>
+                  <!-- Hiển thị mục "ADMIN" nếu là admin -->
+                  <!--<a class="dropdown-item" *ngIf="isAdmin" href="javascript:void(0)" routerLink="/admin/charts">
+                      <fa-icon [icon]="userIcon"></fa-icon>
+                      Trang Quản Trị
+                  </a>-->
+                  <a class="dropdown-item" href="javascript:void(0)" routerLink="/user">
+                    <fa-icon [icon]="userIcon"></fa-icon>
+                    Người Dùng
+                  </a>
+                  <a class="dropdown-item" href="javascript:void(0)" routerLink="my-order">
+                    <fa-icon [icon]="bag"></fa-icon>
+                    Đơn Hàng
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" *ngIf="isLoggedIn" (click)="logout();profile.toggle($event)">
+                    <fa-icon [icon]="logoutIcon"></fa-icon>
+                    Đăng Xuất
+                  </a>
                 </div>
-            </div>
+              </p-overlayPanel>
+            </li>
+          </ul>
         </div>
-        <div class="humberger__open">
-            <i class="fa fa-bars"></i>
-        </div>
-    </div>
+      </div>
+    </nav>
+  </div>
 </header>
 
 <section class="hero" style="padding-top: 160px;">
-    <div class="container">
+  <div class="container">
 
 
-        <div class="row">
+    <div class="row">
 
-            <div class="col-lg-3">
-                <div class="hero__categories">
-                    <div class="hero__categories__all" (click)="showDepartmentClick()">
-                        <fa-icon [icon]="bars"></fa-icon>
-                        <span> Danh Mục</span>
-                    </div>
-                    <ul *ngIf="showDepartment" style="max-height: 431px; overflow-y: auto;" class="custom-scrollbar">
-                        <li *ngFor="let category of listCategoryEnabled" >
-                            <a style="margin: 10px;" href="javascript:void(0)" routerLink="category/{{category.id}}" [style.background-color]="getBackgroundColor(category)">{{category.name}}</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col-lg-9">
-                <div class="hero__search">
-                    <div class="hero__search__form">
-                        <form action="#">
-
-                            <input type="text" placeholder="Nhập vào tìm kiếm sản phẩm, ví dụ: iPhone 15 promax" [(ngModel)]="keyword" name="keyword">
-                            <button class="site-btn" routerLink="/search/{{keyword}}">SEARCH</button>
-                        </form>
-                    </div>
-                    <div class="hero__search__phone">
-                        <div class="hero__search__phone__icon">
-                            <fa-icon [icon]="phone"></fa-icon>
-                        </div>
-                        <div class="hero__search__phone__text">
-                            <h5 *ngIf="setchung && setchung.phone">+84 {{setchung.phone}}</h5>
-                            <span>Support 24/7 </span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+      <div class="col-lg-3">
+        <div class="hero__categories">
+          <div class="hero__categories__all" (click)="showDepartmentClick()">
+            <fa-icon [icon]="bars"></fa-icon>
+            <span> Danh Mục</span>
+          </div>
+          <ul *ngIf="showDepartment" style="max-height: 431px; overflow-y: auto;" class="custom-scrollbar">
+            <li *ngFor="let category of listCategoryEnabled">
+              <a style="margin: 10px;" href="javascript:void(0)" routerLink="category/{{category.id}}"
+                 [style.background-color]="getBackgroundColor(category)">{{ category.name }}</a>
+            </li>
+          </ul>
         </div>
-    </div>
-</section>
+      </div>
 
+      <div class="col-lg-9">
+        <div class="hero__search row">
+          <div class="hero__search__form col-lg-8 col-md-12">
+            <form action="#">
+
+              <input type="text" placeholder="Nhập vào tìm kiếm sản phẩm, ví dụ: iPhone 15 promax" [(ngModel)]="keyword"
+                     name="keyword" class="custom-placeholder-search">
+              <button class="site-btn" routerLink="/search/{{keyword}}">SEARCH</button>
+            </form>
+          </div>
+          <div class="hero__search__phone col-lg-4 col-md-12">
+            <div class="hero__search__phone__icon">
+              <fa-icon [icon]="phone"></fa-icon>
+            </div>
+            <div class="hero__search__phone__text">
+              <h5 *ngIf="setchung && setchung.phone">+84 {{ setchung.phone }}</h5>
+              <span>Support 24/7 </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
 
 
 <router-outlet></router-outlet>
 
 
-
 <!--Phần Footer-->
 <footer class="footer spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="footer__about">
-                    <div class="footer__about__logo">
-                        <a *ngIf="setchung && setchung.logo" href="javascript:void(0)"><img src="{{setchung.logo}}" alt=""></a>
-                    </div>
-                    <ul>
-                        <li *ngIf="setchung && setchung.diachi">Address: {{setchung.diachi}}</li>
-                        <li *ngIf="setchung && setchung.phone">Phone: +84 {{setchung.phone}}</li>
-                        <li *ngIf="setchung && setchung.gmail">Email: {{setchung.gmail}}</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
-                <div class="footer__widget">
-                    <h6>Chính sách & quy định chung:</h6>
-
-                    <ul *ngFor="let chi of policy">
-                        <li routerLink="/policy/{{chi.id}}"><a href="javascript:void(0)">{{chi.title}}</a></li>
-                    </ul>
-                    <h6>Thông tin thêm</h6>
-                    <ul *ngFor="let duoi of listpolicy">
-                        <li routerLink="/policy/{{duoi.id}}" ><a href="javascript:void(0)">{{duoi.title}}</a></li>
-                    </ul>
-                    <h6>Chính sách vận chuyển, thanh toán</h6>
-                    <ul *ngFor="let duoi of listpolicy">
-                        <li routerLink="/policy/{{duoi.id}}" ><a href="javascript:void(0)">{{duoi.title}}</a></li>
-                    </ul>
-                    <h6>Chính sách bảo hành, đổi, trả hàng</h6>
-                    <ul *ngFor="let duoi of listpolicy">
-                        <li routerLink="/policy/{{duoi.id}}" ><a href="javascript:void(0)">{{duoi.title}}</a></li>
-                    </ul>
-                    <h6>Quyền riêng tư của Apple</h6>
-                    <ul *ngFor="let duoi of listpolicy">
-                        <li routerLink="/policy/{{duoi.id}}" ><a href="javascript:void(0)">{{duoi.title}}</a></li>
-                    </ul>
-                    <h6>Chính sách bảo mật thông tin</h6>
-                    <ul *ngFor="let duoi of listpolicy">
-                        <li routerLink="/policy/{{duoi.id}}" ><a href="javascript:void(0)">{{duoi.title}}</a></li>
-                    </ul>
-                    <h6>Khách hàng thân thiết</h6>
-                    <ul *ngFor="let duoi of listpolicy">
-                        <li routerLink="/policy/{{duoi.id}}" ><a href="javascript:void(0)">{{duoi.title}}</a></li>
-                    </ul>
-                    <h6>Chăm sóc khách hàng</h6>
-                    <ul *ngFor="let duoi of listpolicy">
-                        <li routerLink="/policy/{{duoi.id}}" ><a href="javascript:void(0)">{{duoi.title}}</a></li>
-                    </ul>
-                    <h6>FAQ hỏi đáp</h6>
-                    <ul *ngFor="let duoi of listpolicy">
-                        <li routerLink="/policy/{{duoi.id}}" ><a href="javascript:void(0)">{{duoi.title}}</a></li>
-                    </ul>
-
-
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-12">
-                <div class="footer__widget">
-                    <h6>Tham gia ngay bây giờ</h6>
-                    <p>Nhận thông tin cập nhật e-mail về cửa hàng mới nhất của chúng tôi và các ưu đãi đặc biệt của chúng tôi.</p>
-                    <form action="#">
-                        <input type="text" placeholder="Mail ...">
-                        <button type="submit" class="site-btn" >Đăng Ký</button>
-                    </form>
-                    <div class="footer__widget__social">
-                        <a *ngIf="setchung && setchung.facebook" href={{setchung.facebook}}>
-                            <fa-icon [icon]="fb"></fa-icon>
-                        </a>
-                        <a *ngIf="setchung && setchung.youtube" href={{setchung.youtube}}>
-                            <fa-icon [icon]="youtube"></fa-icon>
-                        </a>
-                        <a *ngIf="setchung && setchung.telegram" href={{setchung.telegram}}>
-                            <fa-icon [icon]="tele"></fa-icon>
-                        </a>
-                        <a *ngIf="setchung && setchung.instagram" href={{setchung.instagram}}>
-                            <fa-icon [icon]="ins"></fa-icon>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="footer__copyright">
-                        <div class="footer__copyright__text"><p>
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://www.facebook.com/aquarius.loveyourself" target="_blank">Nguyễn Văn Giàu</a>
-  </p></div>
-                        <div class="footer__copyright__payment"><img src="assets/image/payment-item.png" alt=""></div>
-                    </div>
-                </div>
-            </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="footer__about">
+          <div class="footer__about__logo">
+            <a *ngIf="setchung && setchung.logo" href="javascript:void(0)"><img src="{{setchung.logo}}" alt=""></a>
+          </div>
+          <ul>
+            <li *ngIf="setchung && setchung.diachi">Address: {{ setchung.diachi }}</li>
+            <li *ngIf="setchung && setchung.phone">Phone: +84 {{ setchung.phone }}</li>
+            <li *ngIf="setchung && setchung.gmail">Email: {{ setchung.gmail }}</li>
+          </ul>
         </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
+        <div class="footer__widget">
+          <h6>Chính sách & quy định chung:</h6>
+
+          <ul *ngFor="let chi of policy">
+            <li routerLink="/policy/{{chi.id}}"><a href="javascript:void(0)">{{ chi.title }}</a></li>
+          </ul>
+          <h6>Thông tin thêm</h6>
+          <ul *ngFor="let duoi of listpolicy">
+            <li routerLink="/policy/{{duoi.id}}"><a href="javascript:void(0)">{{ duoi.title }}</a></li>
+          </ul>
+          <h6>Chính sách vận chuyển, thanh toán</h6>
+          <ul *ngFor="let duoi of listpolicy">
+            <li routerLink="/policy/{{duoi.id}}"><a href="javascript:void(0)">{{ duoi.title }}</a></li>
+          </ul>
+          <h6>Chính sách bảo hành, đổi, trả hàng</h6>
+          <ul *ngFor="let duoi of listpolicy">
+            <li routerLink="/policy/{{duoi.id}}"><a href="javascript:void(0)">{{ duoi.title }}</a></li>
+          </ul>
+          <h6>Quyền riêng tư của Apple</h6>
+          <ul *ngFor="let duoi of listpolicy">
+            <li routerLink="/policy/{{duoi.id}}"><a href="javascript:void(0)">{{ duoi.title }}</a></li>
+          </ul>
+          <h6>Chính sách bảo mật thông tin</h6>
+          <ul *ngFor="let duoi of listpolicy">
+            <li routerLink="/policy/{{duoi.id}}"><a href="javascript:void(0)">{{ duoi.title }}</a></li>
+          </ul>
+          <h6>Khách hàng thân thiết</h6>
+          <ul *ngFor="let duoi of listpolicy">
+            <li routerLink="/policy/{{duoi.id}}"><a href="javascript:void(0)">{{ duoi.title }}</a></li>
+          </ul>
+          <h6>Chăm sóc khách hàng</h6>
+          <ul *ngFor="let duoi of listpolicy">
+            <li routerLink="/policy/{{duoi.id}}"><a href="javascript:void(0)">{{ duoi.title }}</a></li>
+          </ul>
+          <h6>FAQ hỏi đáp</h6>
+          <ul *ngFor="let duoi of listpolicy">
+            <li routerLink="/policy/{{duoi.id}}"><a href="javascript:void(0)">{{ duoi.title }}</a></li>
+          </ul>
+
+
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-12">
+        <div class="footer__widget">
+          <h6>Tham gia ngay bây giờ</h6>
+          <p>Nhận thông tin cập nhật e-mail về cửa hàng mới nhất của chúng tôi và các ưu đãi đặc biệt của chúng tôi.</p>
+          <form action="#">
+            <input type="text" placeholder="Mail ...">
+            <button type="submit" class="site-btn">Đăng Ký</button>
+          </form>
+          <div class="footer__widget__social">
+            <a *ngIf="setchung && setchung.facebook" href={{setchung.facebook}}>
+              <fa-icon [icon]="fb"></fa-icon>
+            </a>
+            <a *ngIf="setchung && setchung.youtube" href={{setchung.youtube}}>
+              <fa-icon [icon]="youtube"></fa-icon>
+            </a>
+            <a *ngIf="setchung && setchung.telegram" href={{setchung.telegram}}>
+              <fa-icon [icon]="tele"></fa-icon>
+            </a>
+            <a *ngIf="setchung && setchung.instagram" href={{setchung.instagram}}>
+              <fa-icon [icon]="ins"></fa-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="footer__copyright">
+            <div class="footer__copyright__text">
+              <p>
+                Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+                All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a
+                href="https://www.facebook.com/aquarius.loveyourself" target="_blank">Nguyễn Văn Giàu</a>
+              </p>
+            </div>
+            <div class="footer__copyright__payment"><img src="assets/image/payment-item.png" alt=""></div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </footer>
