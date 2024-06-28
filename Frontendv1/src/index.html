@@ -28,6 +28,19 @@
 <app-root></app-root>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script>
+  function updatePlaceholder() {
+    var input = document.querySelector('.custom-placeholder-search');
+    if (window.innerWidth <= 767) {
+      input.setAttribute('placeholder', 'Nhập vào tìm kiếm sản phẩm');
+    } else {
+      input.setAttribute('placeholder', 'Nhập vào tìm kiếm sản phẩm, ví dụ: iPhone 15');
+    }
+  }
+
+  window.addEventListener('resize', updatePlaceholder);
+  window.addEventListener('load', updatePlaceholder);
+</script>
 </body>
 <script>
   document.addEventListener('click', function (event) {

@@ -27,3 +27,9 @@
   max-width: 100%; /* Giới hạn chiều rộng của dropdown content */
   overflow: auto; /* Bật thanh cuộn nếu nội dung quá dài */
 }
+@media (max-width: 575px) {
+  .col-xs-6-custom {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}

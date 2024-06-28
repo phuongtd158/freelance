@@ -21,7 +21,7 @@
 <section class="product-details spad" *ngIf="product != null">
   <div class="container">
     <div class="row">
-      <div class="col-lg-6 col-md-6">
+      <div class="col-lg-6">
         <div class="product__details__pic">
           <div class="product__details__pic__item">
             <img class="product__details__pic__item--large" src="{{'data:image/jpg;base64,' + product.images[0].data}}"
@@ -33,7 +33,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-6 col-md-6">
+      <div class="col-lg-6">
         <div class="product__details__text">
           <h3>{{product.name}}</h3>
           <div class="product__details__rating">
@@ -111,7 +111,7 @@
 
       <div class="col-lg-12" style="border: 1px solid #e3d8d8;
             border-radius: 8px; /* Adjust the radius as needed for the desired effect */
-            padding: 10px; margin: 30px;
+            padding: 10px; margin-top: 30px;
             box-shadow: 0 0 10px rgba(142, 108, 108, 0.2); /* Add a box shadow for the 3D effect */">
         <p-tabView>
           <p-tabPanel header="Giới Thiệu">
@@ -159,7 +159,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-3 col-md-4 col-sm-6" *ngFor="let product of listRelatedProduct">
+      <div class="col-lg-3 col-md-6 col-sm-6" *ngFor="let product of listRelatedProduct">
         <div class="featured__item">
 
           <div class="featured__item__pic set-bg"
