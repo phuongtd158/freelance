@@ -201,10 +201,14 @@ public class OrderServiceImpl implements OrderService {
 
         // Tìm Order theo Id
         Order order = orderRepository.findById(id).orElseThrow(() -> new NotFoundException("Not Found Product With Id: " + id));
+
+        // Trạng thái hiện tại của đơn hàng
         final String currentStatusCode = order.getOrderstatus().getCode();
 
         // Tìm OrderStatus theo id
         Orderstatus orderstatus = orderstatusRepository.findById(request.getStatus()).orElseThrow(() -> new NotFoundException("Not Found Category With Id: " + request.getStatus()));
+
+        // Trạng thái tiếp theo của đơn
         final String newStatusCode = orderstatus.getCode();
 
         // Nếu trạng thái là Đang giao thì cập nhật số lượng
@@ -256,6 +260,7 @@ public class OrderServiceImpl implements OrderService {
         // Lưu Order vào database
         orderRepository.save(order);
 
+        // So sánh nếu Trạng thái hiện tại với Trạng thái tiếp theo Khác nhau thì gửi Email
         if (!currentStatusCode.equals(newStatusCode)) {
             try {
                 emailUtil.sendEmailChangeStatusOrder(order);

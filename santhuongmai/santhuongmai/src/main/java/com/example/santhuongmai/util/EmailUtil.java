@@ -61,8 +61,8 @@ public class EmailUtil {
     }
 
     public void sendEmailChangeStatusOrder(Order order) throws MessagingException {
-        String email = order.getUser().getEmail();
-        String statusName = order.getOrderstatus().getName();
+        String email = order.getEmail(); // Lấy ra email trong Order
+        String statusName = order.getOrderstatus().getName(); // Lấy ra Tên trạng thái tiếp theo Trong order
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
 
