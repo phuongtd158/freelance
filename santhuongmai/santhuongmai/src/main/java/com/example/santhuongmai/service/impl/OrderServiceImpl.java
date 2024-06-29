@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
     private ProductRepository productRepository;
 
     /***
-      Hàm sử dụng để tạo Order
+     Hàm sử dụng để tạo Order
      */
     @Override
     public void placeOrder(CreateOrderRequest request) {
@@ -119,16 +119,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /*
-    * Lấy tất cả danh sách Order sắp xếp theo ID giảm dần
-    * */
+     * Lấy tất cả danh sách Order sắp xếp theo ID giảm dần
+     * */
     @Override
     public List<Order> getList() {
         return orderRepository.findAll(Sort.by("id").descending());
     }
 
     /*
-    * Danh sách order cho biểu đồ thống kê
-    * */
+     * Danh sách order cho biểu đồ thống kê
+     * */
     @Override
     public List<Order> getListOrdercharts(int number) {
         List<Object[]> list = orderRepository.getListOrdercharts(number);
@@ -143,8 +143,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /*
-    * Lấy danh sách trạng thái đơn hàng theo Trạng thái hiện tại của đơn hàng
-    * */
+     * Lấy danh sách trạng thái đơn hàng theo Trạng thái hiện tại của đơn hàng
+     * */
     @Override
     public List<Orderstatus> getListstatus(String currentStatusCode) {
         // Nếu trạng thái là chờ Giao hàng thì trả ra Chờ lấy hàng và Huỷ
@@ -168,8 +168,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /*
-    * Lấy danh sách Order theo username
-    * */
+     * Lấy danh sách Order theo username
+     * */
     @Override
     public List<Order> getOrderByUser(String username) {
         // Tìm User theo username
@@ -180,8 +180,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /*
-    * Tìm kiếm Order theo Order code
-    * */
+     * Tìm kiếm Order theo Order code
+     * */
     @Override
     public Order checkOrder(String orderCode) {
         Order order = orderRepository.findByOrderCode(orderCode).orElseThrow(() -> new NotFoundException("Not Found Blog"));
@@ -194,15 +194,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /*
-    * Hàm cập nhật trạng thái của Order
-    * */
+     * Hàm cập nhật trạng thái của Order
+     * */
     @Override
     public Order updateOrder(long id, CreateOrderRequest request) {
 
         // Tìm Order theo Id
         Order order = orderRepository.findById(id).orElseThrow(() -> new NotFoundException("Not Found Product With Id: " + id));
+        final String currentStatusCode = order.getOrderstatus().getCode();
+
         // Tìm OrderStatus theo id
         Orderstatus orderstatus = orderstatusRepository.findById(request.getStatus()).orElseThrow(() -> new NotFoundException("Not Found Category With Id: " + request.getStatus()));
+        final String newStatusCode = orderstatus.getCode();
 
         // Nếu trạng thái là Đang giao thì cập nhật số lượng
         if (orderstatus.getCode().equals(ON_DELIVERY)) {
@@ -252,6 +255,14 @@ public class OrderServiceImpl implements OrderService {
 
         // Lưu Order vào database
         orderRepository.save(order);
+
+        if (!currentStatusCode.equals(newStatusCode)) {
+            try {
+                emailUtil.sendEmailChangeStatusOrder(order);
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+            }
+        }
 
         return order;
     }

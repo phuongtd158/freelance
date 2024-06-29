@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {
   faBars,
   faEye,
@@ -10,14 +10,14 @@ import {
   faStar,
   faStarHalf
 } from '@fortawesome/free-solid-svg-icons';
-import { CartService } from 'src/app/_service/cart.service';
-import { ProductService } from 'src/app/_service/product.service';
-import { WishlistService } from 'src/app/_service/wishlist.service';
+import {CartService} from 'src/app/_service/cart.service';
+import {ProductService} from 'src/app/_service/product.service';
+import {WishlistService} from 'src/app/_service/wishlist.service';
 
-import { ProductcolorService } from 'src/app/_service/productcolor.service';
-import { ProductroomService } from 'src/app/_service/productroom.service';
-import { ProductsizeService } from 'src/app/_service/productsize.service';
-import { MessageCustomService } from "../../../_service/message-custom.service";
+import {ProductcolorService} from 'src/app/_service/productcolor.service';
+import {ProductroomService} from 'src/app/_service/productroom.service';
+import {ProductsizeService} from 'src/app/_service/productsize.service';
+import {MessageCustomService} from "../../../_service/message-custom.service";
 
 @Component({
   selector: 'app-product-detail',
@@ -158,11 +158,34 @@ export class ProductDetailComponent implements OnInit {
 
 
   addCart(item: any) {
-
+    console.log(item)
+    // if (item?.productcolors && item?.productcolors?.length > 0 && !this.colorsave) {
+    //   this.messageService.showError("Vui lòng chọn Màu sắc!");
+    //   return
+    // }
+    // if (item?.productsizes && item?.productsizes?.length > 0 && !this.sizesave) {
+    //   this.messageService.showError("Vui lòng chọn Kích thước!");
+    //   return
+    // }
+    // if (item?.productrooms && item?.productrooms?.length > 0 && !this.roomsave) {
+    //   this.messageService.showError("Vui lòng chọn Dung lượng!");
+    //   return
+    // }
+    if ((item.category.id === 1 || item.category.id === 2 || item.category.id === 3 || item.category.id === 4 || item.category.id === 5 || item.category.id === 6 || item.category.id === 7) && !this.colorsave) {
+      this.messageService.showError("Vui lòng chọn Màu sắc!");
+      return
+    }
+    if (item.category.id === 1 && !this.sizesave) {
+      this.messageService.showError("Vui lòng chọn Kích thước!");
+      return
+    }
+    if ((item.category.id === 3 || item.category.id === 2 || item.category.id === 1) && !this.roomsave) {
+      this.messageService.showError("Vui lòng chọn Dung lượng!");
+      return
+    }
     item.color = this.colorsave;
     item.size = this.sizesave;
     item.room = this.roomsave;
-    console.log(item)
     // Kiểm tra số lượng sản phẩm
     if (item.quantity <= 0) {
       // Hiển thị thông báo sản phẩm đã hết hàng
