@@ -29,4 +29,12 @@ export class AuthService {
   logout():Observable<any>{
     return this.http.post(AUTH_API + "logout",{},httpOptions);
   }
+
+  forgotPass(value: string): Observable<any> {
+    return this.http.get(AUTH_API + "forgot-pass?value=" + value, httpOptions);
+  }
+
+  changeForgotPass(data: any): Observable<any> {
+    return this.http.post(AUTH_API + "changePassForGot", data, httpOptions);
+  }
 }

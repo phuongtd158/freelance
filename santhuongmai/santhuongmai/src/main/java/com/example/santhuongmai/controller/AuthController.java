@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.example.santhuongmai.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -16,11 +17,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.santhuongmai.model.request.CreateUserRequest;
 import com.example.santhuongmai.model.request.LoginRequest;
@@ -90,5 +87,18 @@ public class AuthController {
       ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
       return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
           .body(new MessageResponse("You've been logout!"));
+    }
+
+    @GetMapping("/forgot-pass")
+    @Operation(summary="Quên mật khẩu")
+    public ResponseEntity<User> forgotPass(@RequestParam String value) {
+        return ResponseEntity.ok(userService.forgotPass(value));
+    }
+
+    @PostMapping("/changePassForGot")
+    @Operation(summary="Đổi mật khẩu khi quên")
+    public ResponseEntity<?> changePassForGot(@RequestBody User user) {
+        userService.changePassForGot(user);
+        return ResponseEntity.ok(true);
     }
 }

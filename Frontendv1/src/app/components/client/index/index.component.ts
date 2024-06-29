@@ -4,7 +4,7 @@ import {faBars, faHeart, faRightFromBracket, faUser, faAnglesUp, faShoppingBag} 
 import {faFacebook, faInstagram, faYahoo, faYoutube, faTelegram} from '@fortawesome/free-brands-svg-icons';
 
 import {faPhone} from '@fortawesome/free-solid-svg-icons'
-import {MessageService} from 'primeng/api';
+import {MenuItem, MessageService} from 'primeng/api';
 import {AuthService} from 'src/app/_service/auth.service';
 import {CartService} from 'src/app/_service/cart.service';
 import {CategoryService} from 'src/app/_service/category.service';
@@ -68,6 +68,11 @@ export class IndexComponent implements OnInit {
   isAdmin: boolean = false; // Khởi tạo isAdmin với giá trị mặc định là false
   redirectLink: string = ''
   redirectText: string = ''
+  showForgotPass = false
+  forgotEmailSdt = ''
+  userForgot:any = null
+  stepForgotPass = 1
+  newPass = ''
 
   constructor(
     public cartService: CartService,
@@ -276,7 +281,7 @@ export class IndexComponent implements OnInit {
         console.error(err.message);
       },
       complete: () => {
-      location.reload()
+        location.reload()
       }
     });
   }
@@ -300,5 +305,52 @@ export class IndexComponent implements OnInit {
     return category.id % 2 === 0 ? '#red' : '#blue';
   }
 
+  submitForgotPass() {
+    if (this.forgotEmailSdt.trim() === '') {
+      return
+    }
 
+    this.authService.forgotPass(this.forgotEmailSdt).subscribe({
+      next: res => {
+        this.userForgot = res;
+        this.stepForgotPass = 2
+      }, error: err => {
+        this.showError("Email hoặc số điện thoại không chính xác");
+      }
+    })
+  }
+
+  handleShowForgotPass() {
+    this.forgotEmailSdt = ''
+    this.userForgot = null
+    this.stepForgotPass = 1
+    this.newPass = ''
+    this.showForgotPass = true
+  }
+
+  nextStepChangePass() {
+    this.stepForgotPass = 3
+  }
+
+  changePassForgot() {
+    if (this.newPass.trim() === '') {
+      return
+    }
+
+    this.userForgot.password = this.newPass
+
+    this.authService.changeForgotPass(this.userForgot).subscribe({
+      next: res => {
+        this.forgotEmailSdt = ''
+        this.userForgot = null
+        this.stepForgotPass = 1
+        this.newPass = ''
+        this.showForgotPass = false
+
+        this.showSuccess("Thay đổi mật khẩu thành công");
+      }, error: err => {
+        this.showError("Lỗi hệ thống");
+      }
+    })
+  }
 }

@@ -13,8 +13,9 @@
         <label for="password">Mật khẩu: </label>
         <input type="password" pPassword class="w-full" [(ngModel)]="loginForm.password" name="password">
       </div>
-
-
+      <div class="p-field mt-2">
+        <a href="#" class="forgot-pass" (click)="handleShowForgotPass()">Quên mật khẩu ?</a>
+      </div>
       <div class="p-field mt-3">
         <button type="submit" pButton (click)="login()">Đăng nhập</button>
       </div>
@@ -39,6 +40,55 @@
       </form>
     </p-tabPanel>
   </p-tabView>
+</p-dialog>
+
+<p-dialog header="Quên mật khẩu"
+          [(visible)]="showForgotPass"
+          [style]=""
+          [baseZIndex]="10000"
+          [modal]="true"
+          [dismissableMask]="true">
+  <form action="" *ngIf="stepForgotPass === 1">
+    <div class="p-field mb-3">
+      <span class="font-weight-bold">Nhập Email hoặc Số điện thoại đăng ký</span>
+    </div>
+    <div class="p-field">
+      <label>Email / Số điện thoại: </label>
+      <input type="text" pInputText class="w-full" [(ngModel)]="forgotEmailSdt" name="emailSdt">
+    </div>
+    <div class="p-field mt-3">
+      <button type="submit" pButton (click)="submitForgotPass()">Xác nhận</button>
+    </div>
+  </form>
+  <form action="" *ngIf="stepForgotPass === 2">
+    <div class="p-field mb-3">
+      <span class="font-weight-bold">Tài khoản của bạn</span>
+    </div>
+    <div class="p-field mr-8">
+     <i class="pi pi-user"></i> Username:  <b>{{ userForgot.username }}</b>
+    </div>
+    <div class="p-field mr-8">
+      <i class="pi pi-envelope"></i> Email:  <b>{{ userForgot.email }}</b>
+    </div>
+    <div class="p-field mr-8">
+      <i class="pi pi-phone"></i> Phone:  <b>{{ userForgot.phone }}</b>
+    </div>
+    <div class="p-field mt-3">
+      <button type="submit" pButton (click)="nextStepChangePass()">Đổi mật khẩu</button>
+    </div>
+  </form>
+  <form action="" *ngIf="stepForgotPass === 3">
+    <div class="p-field mb-3">
+      <span class="font-weight-bold">Thay đổi mật khẩu</span>
+    </div>
+    <div class="p-field">
+      <label>Mật khẩu mới: </label>
+      <input type="text" pInputText class="w-full" [(ngModel)]="newPass" name="newPass">
+    </div>
+    <div class="p-field mt-3">
+      <button type="submit" pButton (click)="changePassForgot()">Xác nhận</button>
+    </div>
+  </form>
 </p-dialog>
 
 

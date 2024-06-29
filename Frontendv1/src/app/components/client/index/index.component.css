@@ -80,3 +80,13 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+.forgot-pass {
+  color: #466de2;
+  text-decoration: none;
+}
+
+.forgot-pass:hover {
+  color: #466de2;
+  text-decoration: none;
+}
