@@ -1069,6 +1069,14 @@ ol {
 	font-weight: 700;
 }
 
+@media only screen and (max-width: 991px) {
+  .breadcrumb__text h2 {
+    font-size: 30px;
+    color: #ffffff;
+    font-weight: 700;
+  }
+}
+
 .breadcrumb__option a {
 	display: inline-block;
 	font-size: 16px;
@@ -3495,4 +3503,14 @@ ol {
 	.blog__details__hero__text h2 {
 		font-size: 24px;
 	}
+}
+
+.title-home {
+  font-size: 36px;
+}
+
+@media only screen and (max-width: 991px) {
+  .title-home {
+    font-size: 24px;
+  }
 }

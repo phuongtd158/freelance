@@ -211,6 +211,7 @@ export class ProductComponent implements OnInit {
     this.imageService.getList().subscribe({
       next:res=>{
         this.listImage =res;
+        this.listImage = this.listImage.reverse()
       },error: err=>{
         console.log(err);
       }
