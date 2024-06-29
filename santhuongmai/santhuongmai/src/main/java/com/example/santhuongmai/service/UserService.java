@@ -26,4 +26,7 @@ public interface UserService {
     void deleleUser(long id);
     User getUser(long id);
     User updatesUser(long id,CreateUserRequest request);
+    User forgotPass(String value);
+
+    void changePassForGot(User user);
 }

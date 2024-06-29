@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -225,6 +226,22 @@ public class UserServiceImpl implements UserService {
         user.setRoles(roles);
         userRepository.save(user);
         return user;
+    }
+
+    @Override
+    public User forgotPass(String value) {
+        Optional<User> user = userRepository.findUserByEmailOrPhone(value);
+        if (user.isPresent()) {
+            return user.get();
+        } else {
+            throw new BadRequestException("Email hoặc số điện thoại không chính xác");
+        }
+    }
+
+    @Override
+    public void changePassForGot(User user) {
+        user.setPassword(encoder.encode(user.getPassword()));
+        userRepository.save(user);
     }
 
 
