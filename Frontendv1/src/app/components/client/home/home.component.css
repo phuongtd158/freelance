@@ -224,4 +224,12 @@
   }
 }
 
+@media (max-width: 575px) {
+  .col-xs-6-custom-home {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+
 
