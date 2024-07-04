@@ -77,13 +77,13 @@
             </ul>
           </div>
           <div class="featured__item__text">
-            <h6><b><a
+            <h6 class="fs-13px-home-res"><b><a
               href="javascript:void(0)">{{ product.name.length > 18 ? product.name.slice(0, 18) + '...' : product.name }}</a></b>
             </h6>
             <div style="display: inline-block;">
-              <h5 class="red-text"
+              <h5 class="red-text fs-13px-home-res"
                   style="display: inline-block; margin-right: 10px;">{{ product.price | currency:'VND' }}</h5>
-              <p style="">Đã bán {{ product.quantitybuy }}</p>
+              <p style="" class="fs-13px-home-res">Đã bán {{ product.quantitybuy }}</p>
             </div>
           </div>
         </div>
@@ -136,13 +136,13 @@
             </ul>
           </div>
           <div class="featured__item__text">
-            <h6><b><a
+            <h6 class="fs-13px-home-res"><b><a
               href="javascript:void(0)">{{ product.name.length > 18 ? product.name.slice(0, 18) + '...' : product.name }}</a></b>
             </h6>
             <div style="display: inline-block;">
-              <h5 class="red-text"
+              <h5 class="red-text fs-13px-home-res"
                   style="display: inline-block; margin-right: 10px;">{{ product.price | currency:'VND' }}</h5>
-              <p style="">Đã bán {{ product.quantitybuy }}</p>
+              <p style="" class="fs-13px-home-res">Đã bán {{ product.quantitybuy }}</p>
             </div>
           </div>
 
@@ -162,17 +162,17 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-4 col-md-4 col-sm-6 mb-4" *ngFor="let blog of listBlogNewest">
+      <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6-custom-home mb-4" *ngFor="let blog of listBlogNewest">
         <div class="blog__item">
           <div class="blog__item__pic">
             <img src="{{'data:image/jpg;base64,' + blog.image.data}}" alt="" routerLink="/blog/{{blog.id}}">
           </div>
           <div class="blog__item__text" routerLink="/blog/{{blog.id}}">
             <ul>
-              <li><i class="fa fa-calendar-o"></i>{{ blog.createAt | date: 'dd/MM/yyyy HH:mm:ss' }}</li>
+              <li class="tin-tuc-time"><i class="fa fa-calendar-o"></i>{{ blog.createAt | date: 'dd/MM/yyyy HH:mm:ss' }}</li>
               <!-- <li><i class="fa fa-comment-o"></i> 5</li> -->
             </ul>
-            <h5><a routerLink="/blog/{{blog.id}}">{{ blog.title }}</a></h5>
+            <h5><a class="tin-tuc-title" routerLink="/blog/{{blog.id}}">{{ blog.title }}</a></h5>
             <!-- <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p> -->
           </div>
         </div>

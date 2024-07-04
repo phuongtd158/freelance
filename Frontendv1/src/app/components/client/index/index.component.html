@@ -1,7 +1,7 @@
 <p-toast>
 </p-toast>
 
-<p-dialog [(visible)]="authModal" [style]="" [baseZIndex]="10000" [modal]="true"
+<p-dialog [(visible)]="authModal" [style]="{margin: '0px 10px 0px 10px'}" [baseZIndex]="10000" [modal]="true"
           [dismissableMask]="true">
   <p-tabView>
     <p-tabPanel header="Đăng nhập">
@@ -267,7 +267,7 @@
               <button class="site-btn" routerLink="/search/{{keyword}}">SEARCH</button>
             </form>
           </div>
-          <div class="hero__search__phone col-lg-4 col-md-12">
+          <div class="hero__search__phone col-lg-4 col-md-12 sdt">
             <div class="hero__search__phone__icon">
               <fa-icon [icon]="phone"></fa-icon>
             </div>

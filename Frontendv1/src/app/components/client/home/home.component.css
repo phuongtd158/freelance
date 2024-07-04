@@ -231,5 +231,16 @@
   }
 }
 
+@media screen and (max-width: 767px) {
+  .fs-13px-home-res {
+    font-size: 13px;
+  }
+  .tin-tuc-time {
+    font-size: 14px;
+  }
+  .tin-tuc-title {
+    font-size: 16px;
+  }
+}
 
 

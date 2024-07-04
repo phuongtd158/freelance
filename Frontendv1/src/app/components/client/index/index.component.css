@@ -90,3 +90,9 @@
   color: #466de2;
   text-decoration: none;
 }
+
+@media screen and (max-width: 767px) {
+  .sdt {
+    display: none;
+  }
+}
